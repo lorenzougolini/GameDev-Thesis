@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class gui : MonoBehaviour {
     public static gui S;
 
-	public Text rightScore;
+    public Text rightScore;
     public Text leftScore;
     public GameObject goalText;
 

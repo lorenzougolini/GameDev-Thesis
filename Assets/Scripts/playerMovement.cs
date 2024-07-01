@@ -6,8 +6,8 @@ public class playerMovement : MonoBehaviour {
 
     public int playerNumber;
 
-	Rigidbody2D rigid;
-	Animator anim;
+	Rigidbody2D playerRigid;
+	Animator animator;
 	BoxCollider2D foot;
 
 	public float speed = 0f;
@@ -16,32 +16,38 @@ public class playerMovement : MonoBehaviour {
 	public float moveY = 0f;
 	public float kick = 0f;
 	public bool kickbool;
-    public float katana = 0f;
+    public bool katana;
     public bool katanabool;
 
 
 	void Start () {
 		S = this;
-		rigid = GetComponent<Rigidbody2D> ();
-		anim = GetComponentInChildren<Animator> ();
+		playerRigid = GetComponent<Rigidbody2D> ();
+		animator = GetComponentInChildren<Animator> ();
 	}
 	
 	void FixedUpdate () {
 		moveX = Input.GetAxis ("Horizontal" + playerNumber);
 		moveY = Input.GetAxis ("Vertical" + playerNumber);
-		kick = Input.GetAxis ("Jump" + playerNumber);//spacebar
-        //katana = Input.GetAxis("Jump");//spacebar
-        rigid.velocity = new Vector2 (moveX * speed, rigid.velocity.y);
-        kickbool = System.Convert.ToBoolean (kick);
-        //katanabool = System.Convert.ToBoolean(katana);
-        anim.SetBool ("kick", kickbool);
-        //anim.SetBool("katana", katanabool);
+		kick = Input.GetAxis ("Jump" + playerNumber);// spacebar
+        katana = Input.GetButton("Fire" + playerNumber);// left ctrl
+        
+		playerRigid.velocity = new Vector2 (moveX * speed, playerRigid.velocity.y);
+        
+		kickbool = System.Convert.ToBoolean (kick);
+        katanabool = System.Convert.ToBoolean(katana);
+        katanabool = katana;
+
+		Debug.Log("Katana Input: " + katana);
+
+        animator.SetBool ("kick", kickbool);
+        animator.SetBool("katana", katanabool);
     }
 
 	void OnCollisionStay2D(Collision2D coll )
 	{
-		if (coll.gameObject.tag == "Ground" && (moveY > 0)) {//if grounded
-			rigid.AddForce (Vector2.up * jump, ForceMode2D.Impulse);
+		if (coll.gameObject.tag == "Ground" && (moveY > 0)) { // if grounded
+			playerRigid.AddForce (Vector2.up * jump, ForceMode2D.Impulse);
 		}
 	}
 }
