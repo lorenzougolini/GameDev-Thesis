@@ -1,0 +1,4 @@
+repository "GameDev - Thesis@lore_10@cloud"
+  path "/"
+    br "/main"
+    co "/main"

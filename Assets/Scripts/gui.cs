@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class gui : MonoBehaviour {
     public static gui S;
 
-    public Text rightScore;
-    public Text leftScore;
+    public Text scoreText;
     public GameObject goalText;
 
     public int player1Goals;
@@ -17,16 +17,14 @@ public class gui : MonoBehaviour {
         S = this;
         player1Goals = 0;
         player2Goals = 0;
-		rightScore = GameObject.Find("ScoreRight").GetComponent<Text> ();
-        leftScore = GameObject.Find("ScoreLeft").GetComponent<Text>();
+		scoreText = GameObject.Find("ScoreText").GetComponent<Text> ();
         goalText = GameObject.Find("GoalText");
         goalText.SetActive(false);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		rightScore.text = player2Goals.ToString();
-        leftScore.text = player1Goals.ToString();
+		scoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();
     }
 
     public void ScoreGoalText(int i)
