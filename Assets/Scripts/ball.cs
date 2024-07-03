@@ -18,12 +18,14 @@ public class ball : MonoBehaviour {
 			gui.S.player1Goals++;
             gui.S.ScoreGoalText(1);
             ResetObjects.S.Reset();
+			gui.S.progressBar2.UpdateCurrent(15f);
 		}
         if (coll.gameObject.tag == "GoalLeft")
         {
             gui.S.player2Goals++;
             gui.S.ScoreGoalText(2);
             ResetObjects.S.Reset();
+			gui.S.progressBar1.UpdateCurrent(15f);
         }
     }
 }

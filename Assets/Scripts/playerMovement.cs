@@ -30,7 +30,7 @@ public class playerMovement : MonoBehaviour {
 		moveX = Input.GetAxis ("Horizontal" + playerNumber);
 		moveY = Input.GetAxis ("Vertical" + playerNumber);
 		kick = Input.GetAxis ("Jump" + playerNumber);// spacebar
-        katana = Input.GetButton("Fire" + playerNumber);// left ctrl
+        katana = Input.GetKeyDown(KeyCode.Comma);
         
 		playerRigid.velocity = new Vector2 (moveX * speed, playerRigid.velocity.y);
         
