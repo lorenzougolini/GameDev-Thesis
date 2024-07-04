@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteInEditMode()]
-public class ProgressBar : MonoBehaviour
-{
+public class ProgressBar : MonoBehaviour {
 
     public int max;
     public float current;
@@ -16,8 +15,8 @@ public class ProgressBar : MonoBehaviour
     void Start()
     {
         current = 0;
-        if (pulsatingEffect = null) 
-            pulsatingEffect = GetComponent<PulsatingEffect>();
+        // if (pulsatingEffect = null) 
+        //     pulsatingEffect = GetComponent<PulsatingEffect>();
     }
 
     // Update is called once per frame

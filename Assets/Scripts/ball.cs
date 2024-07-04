@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ball : MonoBehaviour {
+public class Ball : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -15,17 +15,17 @@ public class ball : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "GoalRight") {
-			gui.S.player1Goals++;
-            gui.S.ScoreGoalText(1);
+			Gui.S.player1Goals++;
+            Gui.S.ScoreGoalText(1);
             ResetObjects.S.Reset();
-			gui.S.progressBar2.UpdateCurrent(15f);
+			Gui.S.progressBar2.UpdateCurrent(15f);
 		}
         if (coll.gameObject.tag == "GoalLeft")
         {
-            gui.S.player2Goals++;
-            gui.S.ScoreGoalText(2);
+            Gui.S.player2Goals++;
+            Gui.S.ScoreGoalText(2);
             ResetObjects.S.Reset();
-			gui.S.progressBar1.UpdateCurrent(15f);
+			Gui.S.progressBar1.UpdateCurrent(15f);
         }
     }
 }

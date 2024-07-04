@@ -6,8 +6,8 @@ using TMPro;
 using System.Data;
 using UnityEngine.SceneManagement;
 
-public class gui : MonoBehaviour {
-    public static gui S;
+public class Gui : MonoBehaviour {
+    public static Gui S;
     public Text scoreText;
     public TextMeshProUGUI finalScoreText;
     public GameObject goalText;

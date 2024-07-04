@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class foot : MonoBehaviour {
+public class Foot : MonoBehaviour {
 	public float kickPower;
 	// Use this for initialization
 	void Start () {
@@ -14,7 +14,7 @@ public class foot : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if (coll.gameObject.tag == "Ball" && GetComponentInParent<playerMovement>().kickbool) {
+		if (coll.gameObject.tag == "Ball" && GetComponentInParent<PlayerMovement>().kickPressed) {
 			coll.rigidbody.AddForce(Vector2.up * kickPower, ForceMode2D.Impulse);
 		}
 	}
