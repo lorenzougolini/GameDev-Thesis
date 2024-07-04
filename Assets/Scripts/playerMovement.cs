@@ -10,11 +10,14 @@ public class playerMovement : MonoBehaviour {
 	Animator animator;
 	BoxCollider2D foot;
 
+	[SerializeField]
 	public float speed = 0f;
+	[SerializeField]
 	public float jump = 0f;
+	[SerializeField]
+	public float kick = 0f;
 	public float moveX = 0f;
 	public float moveY = 0f;
-	public float kick = 0f;
 	public bool kickbool;
     public bool katana;
     public bool katanabool;
@@ -44,7 +47,7 @@ public class playerMovement : MonoBehaviour {
         animator.SetBool("katana", katanabool);
     }
 
-	void OnCollisionStay2D(Collision2D coll )
+	void OnCollisionStay2D(Collision2D coll)
 	{
 		if (coll.gameObject.tag == "Ground" && (moveY > 0)) { // if grounded
 			playerRigid.AddForce (Vector2.up * jump, ForceMode2D.Impulse);

@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class gui : MonoBehaviour {
     public static gui S;
     public Text scoreText;
+    public TextMeshProUGUI finalScoreText;
     public GameObject goalText;
     public ProgressBar progressBar1;
     public ProgressBar progressBar2;
@@ -21,15 +22,19 @@ public class gui : MonoBehaviour {
     public int player2Goals;
 
     private bool isPaused = false;
+    private bool isEnded = false;
 
 	// Use this for initialization
 	void Start () {
         S = this;
+
         player1Goals = 0;
         player2Goals = 0;
 		scoreText = GameObject.Find("ScoreText").GetComponent<Text> ();
         goalText = GameObject.Find("GoalText");
-        goalText.SetActive(false);
+
+        // finalScoreText = GameObject.Find("FinalScoreText").GetComponent<Text>();
+
         Time.timeScale = 1;
     }
 	
@@ -38,13 +43,14 @@ public class gui : MonoBehaviour {
 	void Update () {
 
         // pause and time logic
-        if (Input.GetKeyDown    (KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             TogglePause();
         }
         if (remainingTimeInSec > 0) {
             remainingTimeInSec -= Time.deltaTime;
-        } else if (remainingTimeInSec <= 0) {
+        } else if (remainingTimeInSec < 0) {
             remainingTimeInSec = 0;
+            isEnded = true;
             endGame();
             Time.timeScale = 0;
         }
@@ -53,8 +59,10 @@ public class gui : MonoBehaviour {
         timerText.text = string.Format("{0:00}:{1:00}", min, sec);
 
         // progress bar logic
-        progressBar1.UpdateCurrent(0.05f);
-        progressBar2.UpdateCurrent(0.05f);
+        if (!isPaused && !isEnded) {
+            progressBar1.UpdateCurrent(0.05f);
+            progressBar2.UpdateCurrent(0.05f);
+        }
 
 		scoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();
     }
@@ -86,6 +94,7 @@ public class gui : MonoBehaviour {
     }
     public void endGame() {
         endGameMenu.SetActive(true);
+        finalScoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();
         Time.timeScale = 0;
     }
     public void Home() {

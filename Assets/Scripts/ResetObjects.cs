@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ResetObjects : MonoBehaviour {
     public static ResetObjects S;
@@ -23,8 +24,21 @@ public class ResetObjects : MonoBehaviour {
         StartCoroutine(ResetEnum());
     }
 
-    IEnumerator ResetEnum()
-    {
+    IEnumerator ResetEnum() {
+
+        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
+        GameObject[] goals = GameObject.FindGameObjectsWithTag("GoalRight").Concat(GameObject.FindGameObjectsWithTag("GoalLeft")).ToArray();
+
+        if (ball) {
+            Collider2D ballCollider = ball.GetComponent<Collider2D>();
+            foreach (GameObject goal in goals)
+            {
+                Collider2D goalCollider = goal.GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(ballCollider, goalCollider, true);
+            }
+
+        }
+
         for(int i = 0; i < ObjectsToReset.Count; i++)
         {
             ObjectsToReset[i].GetComponent<TrailRenderer>().enabled = false;
@@ -40,6 +54,16 @@ public class ResetObjects : MonoBehaviour {
         for (int i = 0; i < ObjectsToReset.Count; i++)
         {
             ObjectsToReset[i].GetComponent<TrailRenderer>().enabled = true;
+        }
+
+        if (ball) {
+            Collider2D ballCollider = ball.GetComponent<Collider2D>();
+            foreach (GameObject goal in goals)
+            {
+                Collider2D goalCollider = goal.GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(ballCollider, goalCollider, false);
+            }
+
         }
     }
 
