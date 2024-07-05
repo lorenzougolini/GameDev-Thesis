@@ -30,6 +30,7 @@ public class ResetObjects : MonoBehaviour {
         GameObject[] goals = GameObject.FindGameObjectsWithTag("GoalRight").Concat(GameObject.FindGameObjectsWithTag("GoalLeft")).ToArray();
 
         if (ball) {
+            ball.GetComponent<TrailRenderer>().enabled = false;
             Collider2D ballCollider = ball.GetComponent<Collider2D>();
             foreach (GameObject goal in goals)
             {
@@ -39,10 +40,10 @@ public class ResetObjects : MonoBehaviour {
 
         }
 
-        for(int i = 0; i < ObjectsToReset.Count; i++)
-        {
-            ObjectsToReset[i].GetComponent<TrailRenderer>().enabled = false;
-        }
+        // for(int i = 0; i < ObjectsToReset.Count; i++)
+        // {
+        //     ObjectsToReset[i].GetComponent<TrailRenderer>().enabled = false;
+        // }
         yield return new WaitForSeconds(1f);
         foreach (GameObject obj in ObjectsToReset)
         {
@@ -51,12 +52,13 @@ public class ResetObjects : MonoBehaviour {
             obj.GetComponent<Rigidbody2D>().angularVelocity = 0f;
         }
         yield return new WaitForSeconds(.25f);
-        for (int i = 0; i < ObjectsToReset.Count; i++)
-        {
-            ObjectsToReset[i].GetComponent<TrailRenderer>().enabled = true;
-        }
+        // for (int i = 0; i < ObjectsToReset.Count; i++)
+        // {
+        //     ObjectsToReset[i].GetComponent<TrailRenderer>().enabled = true;
+        // }
 
         if (ball) {
+            ball.GetComponent<TrailRenderer>().enabled = true;
             Collider2D ballCollider = ball.GetComponent<Collider2D>();
             foreach (GameObject goal in goals)
             {

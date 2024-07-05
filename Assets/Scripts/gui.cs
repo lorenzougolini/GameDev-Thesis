@@ -32,6 +32,7 @@ public class Gui : MonoBehaviour {
         player2Goals = 0;
 		scoreText = GameObject.Find("ScoreText").GetComponent<Text> ();
         goalText = GameObject.Find("GoalText");
+        goalText.SetActive(false);
 
         // finalScoreText = GameObject.Find("FinalScoreText").GetComponent<Text>();
 

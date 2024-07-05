@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public int playerNumber;
 
-	Rigidbody2D playerRigid;
+	private Rigidbody2D playerRigid;
 	Animator animator;
 	private BoxCollider2D foot;
 
