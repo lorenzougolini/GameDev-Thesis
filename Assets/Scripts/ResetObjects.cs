@@ -6,8 +6,8 @@ using System.Linq;
 public class ResetObjects : MonoBehaviour {
     public static ResetObjects S;
 
-    public List<GameObject> ObjectsToReset;
-    public List<Vector3> OriginalPositions;
+    public List<GameObject> ObjectsToReset = new List<GameObject>();
+    public List<Vector3> OriginalPositions = new List<Vector3>();
 
     // Use this for initialization
     void Awake () {
@@ -18,6 +18,13 @@ public class ResetObjects : MonoBehaviour {
             OriginalPositions.Add(obj.transform.position);
         }
 	}
+
+    public void AddObjectToReset(GameObject obj) {
+        if (!ObjectsToReset.Contains(obj)) {
+            ObjectsToReset.Add(obj);
+            OriginalPositions.Add(obj.transform.position);
+        }
+    }
 
     public void Reset ()
     {

@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
-	public static PlayerMovement S;
-
     public int playerNumber;
 
 	private Rigidbody2D playerRigid;
@@ -13,18 +11,17 @@ public class PlayerMovement : MonoBehaviour {
 	[SerializeField]
 	public float speed;
 	[SerializeField]
-	public float jump;
+	public float jumpForce;
 	[SerializeField]
 	public float moveX;
 
 	public bool kickPressed;
 	public bool jumpPressed;
-    public bool katana;
-    public bool katanabool;
+    // public bool katana;
+    // public bool katanabool;
 
 
 	void Start () {
-		S = this;
 		playerRigid = GetComponent<Rigidbody2D> ();
 		animator = GetComponentInChildren<Animator> ();
 	}
@@ -41,13 +38,13 @@ public class PlayerMovement : MonoBehaviour {
         // katanabool = katana;
 
         animator.SetBool ("kick", kickPressed);
-        animator.SetBool("katana", katanabool);
+        // animator.SetBool("katana", katanabool);
     }
 
 	void OnCollisionStay2D(Collision2D coll)
 	{
 		if (coll.gameObject.tag == "Ground" && jumpPressed) { // if grounded
-			playerRigid.AddForce (Vector2.up * jump, ForceMode2D.Impulse);
+			playerRigid.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);
 		}
 	}
 }

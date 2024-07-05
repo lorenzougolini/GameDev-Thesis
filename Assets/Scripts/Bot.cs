@@ -6,7 +6,7 @@ public class Bot : MonoBehaviour
 
     public float defenseRange;
     public float speed, jump;
-    public Transform defence;
+    private Transform defense;
     public GameObject ball;
     Rigidbody2D rb;
     public bool isGrounded = false;
@@ -16,6 +16,9 @@ public class Bot : MonoBehaviour
     {
         ball = GameObject.FindGameObjectWithTag("Ball");
         rb = GetComponent<Rigidbody2D>();
+        
+        // defence is a child named "Defense"
+        defense = transform.Find("Defense");
     }
 
     // Update is called once per frame
@@ -34,7 +37,7 @@ public class Bot : MonoBehaviour
             else if (ball.transform.position.x == transform.position.x)
                 transform.position = new Vector2(transform.position.x + 1.5f, transform.position.y);
         } else {
-            if (transform.position.x < defence.position.x)
+            if (transform.position.x < defense.position.x)
                 transform.Translate(Time.deltaTime * speed, 0, 0);
             else
                 transform.Translate(0, 0, 0);

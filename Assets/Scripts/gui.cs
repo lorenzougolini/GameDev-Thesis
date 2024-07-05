@@ -8,11 +8,14 @@ using UnityEngine.SceneManagement;
 
 public class Gui : MonoBehaviour {
     public static Gui S;
+
     public Text scoreText;
     public TextMeshProUGUI finalScoreText;
     public GameObject goalText;
     public ProgressBar progressBar1;
     public ProgressBar progressBar2;
+    
+    // [SerializeField] PlayingMode mode;
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] float remainingTimeInSec;
     [SerializeField] GameObject endGameMenu;
@@ -28,8 +31,6 @@ public class Gui : MonoBehaviour {
 	void Start () {
         S = this;
 
-        player1Goals = 0;
-        player2Goals = 0;
 		scoreText = GameObject.Find("ScoreText").GetComponent<Text> ();
         goalText = GameObject.Find("GoalText");
         goalText.SetActive(false);

@@ -13,9 +13,9 @@ public class katana : MonoBehaviour {
 	
 	}
 
-	void OnCollisionEnter2D(Collision2D coll) {
-		if (coll.gameObject.tag == "Ball" && GetComponentInParent<PlayerMovement>().katanabool) {
-			coll.rigidbody.AddForce (Vector2.right * katanaPower, ForceMode2D.Impulse);
-		}
-	}
+	// void OnCollisionEnter2D(Collision2D coll) {
+	// 	if (coll.gameObject.tag == "Ball" && GetComponentInParent<PlayerMovement>().katanabool) {
+	// 		coll.rigidbody.AddForce (Vector2.right * katanaPower, ForceMode2D.Impulse);
+	// 	}
+	// }
 }

@@ -2,9 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+public enum PlayingMode { SINGLE, MULTI }
+
 public class MainMenu : MonoBehaviour
 {
-    public void PlayGame() {
+
+    public static PlayingMode mode;
+
+    public void PlaySingleGame() {
+        mode = PlayingMode.SINGLE;
+        SceneManager.LoadSceneAsync("PlayScene");
+    }
+
+    public void PlayMultiGame() {
+        mode = PlayingMode.MULTI;
         SceneManager.LoadSceneAsync("PlayScene");
     }
 
