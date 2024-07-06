@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 public class Gui : MonoBehaviour {
     public static Gui S;
 
+    public bool gameStarted = false;
+
     public Text scoreText;
     public TextMeshProUGUI finalScoreText;
     public GameObject goalText;
@@ -44,10 +46,29 @@ public class Gui : MonoBehaviour {
     [ExecuteInEditMode()]
 	void Update () {
 
-        // pause and time logic
+        // pause logic
         if (Input.GetKeyDown(KeyCode.Escape)) {
             TogglePause();
         }
+
+        // timer logic
+        if (gameStarted) {
+            UpdateTimer();
+        }
+        int min = Mathf.FloorToInt(remainingTimeInSec/60);
+        int sec = Mathf.FloorToInt(remainingTimeInSec%60);
+        timerText.text = string.Format("{0:00}:{1:00}", min, sec);
+
+        // progress bar logic
+        if (gameStarted && !isPaused && !isEnded) {
+            progressBar1.UpdateCurrent(0.05f);
+            progressBar2.UpdateCurrent(0.05f);
+        }
+
+		scoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();
+    }
+
+    private void UpdateTimer() {
         if (remainingTimeInSec > 0) {
             remainingTimeInSec -= Time.deltaTime;
         } else if (remainingTimeInSec < 0) {
@@ -56,17 +77,6 @@ public class Gui : MonoBehaviour {
             endGame();
             Time.timeScale = 0;
         }
-        int min = Mathf.FloorToInt(remainingTimeInSec/60);
-        int sec = Mathf.FloorToInt(remainingTimeInSec%60);
-        timerText.text = string.Format("{0:00}:{1:00}", min, sec);
-
-        // progress bar logic
-        if (!isPaused && !isEnded) {
-            progressBar1.UpdateCurrent(0.05f);
-            progressBar2.UpdateCurrent(0.05f);
-        }
-
-		scoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();
     }
 
     public void ScoreGoalText(int i)

@@ -18,6 +18,4 @@ public class Foot : MonoBehaviour {
 			coll.rigidbody.AddForce(Vector2.up * kickPower, ForceMode2D.Impulse);
 		}
 	}
-
-
 }

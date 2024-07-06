@@ -5,7 +5,7 @@ public class Bot : MonoBehaviour
 {
 
     public float defenseRange;
-    public float speed, jump;
+    public float speed, jumpForce;
     private Transform defense;
     public GameObject ball;
     Rigidbody2D rb;
@@ -47,7 +47,7 @@ public class Bot : MonoBehaviour
     private void Jump() {
         float dist = Vector2.Distance(ball.transform.position, transform.position);
         if (dist < 1 && isGrounded)
-            rb.AddForce(Vector2.up * jump, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
     }
     
