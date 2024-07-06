@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
         Gui.S.player1Goals = 0;
         Gui.S.player2Goals = 0;
-        Gui.S.gameStarted = false;
+        Gui.S.playing = false;
     }
 
     IEnumerator SetUpMultiGame() {
@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
         p1Move.playerNumber = 1;
         p1Move.speed = 8f;
         p1Move.jumpForce = 16f;
+        Transform footP1 = player1.transform.Find("Foot");
+        footP1.GetComponent<Animator>().SetBool("isFlipped", true);
         ResetObjects.S.AddObjectToReset(player1);
 
         GameObject player2 = Instantiate(playerPrefab, new Vector3(7, 0, 0), Quaternion.identity);
@@ -49,8 +51,7 @@ public class GameManager : MonoBehaviour
         if (bodyP2) 
             bodyP2.GetComponent<SpriteRenderer>().flipX = false;
         Transform footP2 = player2.transform.Find("Foot");
-        if (footP2) 
-            footP2.GetComponent<SpriteRenderer>().flipX = true;
+        footP2.GetComponent<Animator>().SetBool("isFlipped", false);
         ResetObjects.S.AddObjectToReset(player2);
 
         StartCountdown();
@@ -69,6 +70,8 @@ public class GameManager : MonoBehaviour
         p1Move.playerNumber = 1;
         p1Move.speed = 8f;
         p1Move.jumpForce = 16f;
+        Transform footP1 = player1.transform.Find("Foot");
+        footP1.GetComponent<Animator>().SetBool("isFlipped", true);
         ResetObjects.S.AddObjectToReset(player1);
 
         GameObject bot = Instantiate(botPrefab, new Vector3(7, 0, 0), Quaternion.identity);
@@ -105,7 +108,7 @@ public class GameManager : MonoBehaviour
             countdown--;
         }
         Gui.S.goalText.GetComponent<Text>().text = "GO!";
-        Gui.S.gameStarted = true;
+        Gui.S.playing = true;
         ballRb.isKinematic = false;
         
         yield return new WaitForSeconds(1f);

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class Gui : MonoBehaviour {
     public static Gui S;
 
-    public bool gameStarted = false;
+    public bool playing = false;
 
     public Text scoreText;
     public TextMeshProUGUI finalScoreText;
@@ -52,7 +52,7 @@ public class Gui : MonoBehaviour {
         }
 
         // timer logic
-        if (gameStarted) {
+        if (playing) {
             UpdateTimer();
         }
         int min = Mathf.FloorToInt(remainingTimeInSec/60);
@@ -60,7 +60,7 @@ public class Gui : MonoBehaviour {
         timerText.text = string.Format("{0:00}:{1:00}", min, sec);
 
         // progress bar logic
-        if (gameStarted && !isPaused && !isEnded) {
+        if (playing && !isPaused && !isEnded) {
             progressBar1.UpdateCurrent(0.05f);
             progressBar2.UpdateCurrent(0.05f);
         }

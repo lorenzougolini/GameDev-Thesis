@@ -14,13 +14,11 @@ public class PlayerMovement : MonoBehaviour {
 	private bool isDashing;
 	private float dashPower = 16f;
 	private float dashTime = 0.2f;
-	private float dashCooldown = 1f;
+	private float dashCooldown = 0.5f;
 
 	private float lastLeftPressTime = 0f;
 	private float lastRightPressTime = 0f;
 	private float doubleClickThreshold = 0.25f;
-	private float previousHorizontalInput = 0f;
-
 
 	[SerializeField] private Rigidbody2D rb;
 	[SerializeField] private Transform groundCheck;
@@ -38,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update() {
 
-		if (isDashing || !Gui.S.gameStarted) return;
+		if (isDashing || !Gui.S.playing) return;
 
 		// Move
 		horizontal = Input.GetAxis("Horizontal" + playerNumber);      
@@ -50,7 +48,7 @@ public class PlayerMovement : MonoBehaviour {
 			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 		
 		// Kick
-		kickPressed = System.Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));
+		kickPressed = Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));
 
 		// Dash
 		// if (Input.GetKeyDown(KeyCode.LeftShift) && rb.velocity.y == 0f && canDash)
