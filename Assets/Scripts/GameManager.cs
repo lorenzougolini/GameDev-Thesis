@@ -2,15 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
 
     public GameObject ballPrefab;
     public GameObject playerPrefab;
     public GameObject botPrefab;
 
+    public static List<GameObject> gameObjects = new List<GameObject>();
+    public static List<Vector3> originalPositions = new List<Vector3>();
+
     private Rigidbody2D ballRb;
+ 
+    // private void Awake() {
+    //     if (Instance == null)
+    //         Instance = this;
+    // }
 
     // Start is called before the first frame update
     void Start() {
@@ -27,12 +37,26 @@ public class GameManager : MonoBehaviour
         Gui.S.playing = false;
     }
 
+    private void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable() {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        ClearGameObjects();
+    }
+
     IEnumerator SetUpMultiGame() {
+        // Instantiate ball
         GameObject ball = Instantiate(ballPrefab, new Vector3(0, 2, 0), Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody2D>();
         ballRb.isKinematic = true;
-        ResetObjects.S.AddObjectToReset(ball);
+        AddGameObject(ball);
 
+        // Instantiate player 1
         GameObject player1 = Instantiate(playerPrefab, new Vector3(-7, 0, 0), Quaternion.identity);
         PlayerMovement p1Move = player1.GetComponent<PlayerMovement>();
         p1Move.playerNumber = 1;
@@ -40,9 +64,11 @@ public class GameManager : MonoBehaviour
         p1Move.jumpForce = 16f;
         Transform footP1 = player1.transform.Find("Foot");
         footP1.GetComponent<Animator>().SetBool("isFlipped", true);
-        ResetObjects.S.AddObjectToReset(player1);
+        AddGameObject(player1);
 
+        // Instantiate player 2
         GameObject player2 = Instantiate(playerPrefab, new Vector3(7, 0, 0), Quaternion.identity);
+        player2.tag = "Enemy";
         PlayerMovement p2Move = player2.GetComponent<PlayerMovement>();
         p2Move.playerNumber = 2;
         p2Move.speed = 8f;
@@ -52,7 +78,7 @@ public class GameManager : MonoBehaviour
             bodyP2.GetComponent<SpriteRenderer>().flipX = false;
         Transform footP2 = player2.transform.Find("Foot");
         footP2.GetComponent<Animator>().SetBool("isFlipped", false);
-        ResetObjects.S.AddObjectToReset(player2);
+        AddGameObject(player2);
 
         StartCountdown();
         yield return null;
@@ -60,11 +86,13 @@ public class GameManager : MonoBehaviour
     
     IEnumerator SetUpSingleGame() {
 
+        // Instantiate ball
         GameObject ball = Instantiate(ballPrefab, new Vector3(0, 2, 0), Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody2D>();
         ballRb.isKinematic = true;
-        ResetObjects.S.AddObjectToReset(ball);
+        AddGameObject(ball);
 
+        // Instantiate player 1
         GameObject player1 = Instantiate(playerPrefab, new Vector3(-7, 0, 0), Quaternion.identity);
         PlayerMovement p1Move = player1.GetComponent<PlayerMovement>();
         p1Move.playerNumber = 1;
@@ -72,13 +100,15 @@ public class GameManager : MonoBehaviour
         p1Move.jumpForce = 16f;
         Transform footP1 = player1.transform.Find("Foot");
         footP1.GetComponent<Animator>().SetBool("isFlipped", true);
-        ResetObjects.S.AddObjectToReset(player1);
+        AddGameObject(player1);
 
+        // Instantiate player 2 bot
         GameObject bot = Instantiate(botPrefab, new Vector3(7, 0, 0), Quaternion.identity);
+        bot.tag = "Enemy";
         Bot botMove = bot.GetComponent<Bot>();
         botMove.speed = 8f;
         botMove.jumpForce = 16f;
-        ResetObjects.S.AddObjectToReset(bot);
+        AddGameObject(bot);
 
         StartCountdown();
         yield return null;
@@ -89,7 +119,7 @@ public class GameManager : MonoBehaviour
         GameObject ball = Instantiate(ballPrefab, new Vector3(0, 2, 0), Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody2D>();
         ballRb.isKinematic = true;
-        ResetObjects.S.AddObjectToReset(ball);
+        AddGameObject(ball);
 
         StartCountdown();
         yield return null;
@@ -113,5 +143,30 @@ public class GameManager : MonoBehaviour
         
         yield return new WaitForSeconds(1f);
         Gui.S.goalText.SetActive(false);
+    }
+
+    public void AddGameObject(GameObject obj) {
+        if (!gameObjects.Contains(obj)) {
+            gameObjects.Add(obj);
+            originalPositions.Add(obj.transform.position);
+        }
+    }
+
+    public static void ClearGameObjects() {
+        gameObjects.Clear();
+        originalPositions.Clear();
+    }
+
+    public static void KickOpponent(string kickedTag) {
+        if (kickedTag == "Player") {
+            GameObject enemy = gameObjects.Find(obj => obj.CompareTag("Player"));
+            if (enemy)
+               enemy.GetComponent<PlayerMovement>().TakeDamage(-1);
+        }
+        else if (kickedTag == "Enemy") {
+            GameObject player = gameObjects.Find(obj => obj.CompareTag("Enemy"));
+            if (player)
+                player.GetComponent<PlayerMovement>().TakeDamage(1);
+        }
     }
 }

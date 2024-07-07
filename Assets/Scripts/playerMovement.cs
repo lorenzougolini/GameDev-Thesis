@@ -20,18 +20,20 @@ public class PlayerMovement : MonoBehaviour {
 	private float lastRightPressTime = 0f;
 	private float doubleClickThreshold = 0.25f;
 
+	private float knockbackDistance = 1.5f;
+
 	[SerializeField] private Rigidbody2D rb;
 	[SerializeField] private Transform groundCheck;
 	[SerializeField] private LayerMask groundLayer;
 	[SerializeField] private TrailRenderer tr;
-	private Animator animator;
+	private Animator footAnimator;
 
 	public bool kickPressed;
     // public bool katana;
     // public bool katanabool;
 
 	void Start () {
-		animator = GetComponentInChildren<Animator> ();
+		footAnimator = GetComponentInChildren<Animator> ();
 	}
 
 	void Update() {
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (isDashing) return;
 
 		rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-		animator.SetBool ("kick", kickPressed);
+		footAnimator.SetBool ("kick", kickPressed);
 	}
 
 	private void HandleDoubleClickDash() {
@@ -88,6 +90,11 @@ public class PlayerMovement : MonoBehaviour {
 			lastRightPressTime = currentTime;
 		}
 	}
+	
+	public void TakeDamage(int direction) {
+        Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
+        StartCoroutine(Knockback(knockbackPosition));
+    }
 
 	private IEnumerator Dash(int direction) {
 		canDash = false;
@@ -100,6 +107,25 @@ public class PlayerMovement : MonoBehaviour {
 		yield return new WaitForSeconds(dashCooldown);
 		canDash = true;
 	}
+
+	private IEnumerator Knockback(Vector3 targetPosition) {
+		float elapsedTime = 0f;	
+        float duration = 0.2f;
+        Vector3 startingPosition = transform.position;
+		transform.Find("Body").GetComponent<SpriteRenderer>().color = new Color(1f, 0.482f, 0.482f);
+
+        while (elapsedTime < duration)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+			
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+		transform.Find("Body").GetComponent<SpriteRenderer>().color = Color.white;	
+	}
+
 }
 
 

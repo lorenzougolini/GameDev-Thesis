@@ -6,28 +6,21 @@ using System.Linq;
 public class ResetObjects : MonoBehaviour {
     public static ResetObjects S;
 
-    public List<GameObject> ObjectsToReset = new List<GameObject>();
-    public List<Vector3> OriginalPositions = new List<Vector3>();
+    public GameManager GM;
 
     // Use this for initialization
     void Awake () {
         S = this;
 
-	    foreach(GameObject obj in ObjectsToReset)
-        {
-            OriginalPositions.Add(obj.transform.position);
-        }
+	    // foreach(GameObject obj in GM.gameObjects)
+        // {
+        //     GM.originalPositions.Add(obj.transform.position);
+        // }
 	}
-
-    public void AddObjectToReset(GameObject obj) {
-        if (!ObjectsToReset.Contains(obj)) {
-            ObjectsToReset.Add(obj);
-            OriginalPositions.Add(obj.transform.position);
-        }
-    }
 
     public void Reset ()
     {
+        // GM = GameManager.Instance;
         StartCoroutine(ResetEnum());
     }
 
@@ -52,9 +45,9 @@ public class ResetObjects : MonoBehaviour {
         //     ObjectsToReset[i].GetComponent<TrailRenderer>().enabled = false;
         // }
         yield return new WaitForSeconds(1f);
-        foreach (GameObject obj in ObjectsToReset)
+        foreach (GameObject obj in GameManager.gameObjects)
         {
-            obj.transform.position = OriginalPositions[ObjectsToReset.IndexOf(obj)];
+            obj.transform.position = GameManager.originalPositions[GameManager.gameObjects.IndexOf(obj)];
             obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             obj.GetComponent<Rigidbody2D>().angularVelocity = 0f;
         }
