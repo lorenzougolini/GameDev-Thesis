@@ -53,10 +53,17 @@ public class PlayerMovement : MonoBehaviour {
 		kickPressed = Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));
 
 		// Dash
-		// if (Input.GetKeyDown(KeyCode.LeftShift) && rb.velocity.y == 0f && canDash)
-		// 	StartCoroutine(Dash());
 		HandleDoubleClickDash();
 
+		// Position check
+		if (transform.position.x < -10f) {
+			Vector3 newPosition = new Vector3(-10f, transform.position.y, transform.position.z);
+			transform.position = newPosition;
+		}
+		if (transform.position.x > 10f) {
+			Vector3 newPosition = new Vector3(10f, transform.position.y, transform.position.z);
+			transform.position = newPosition;
+		}
 	}
 
 	private bool isGrounded(){

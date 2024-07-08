@@ -93,7 +93,6 @@ public class Bot : MonoBehaviour
         }
 
         if (ballDistance > defenseRangeMax && opponentDistance > defenseRangeMax && canDash) {
-            //* TO TEST: add Dash function from player
             Vector3 dashDirection = (ball.transform.position - transform.position).normalized;
             int direction = dashDirection.x > 0 ? 1 : -1;
             
@@ -113,7 +112,6 @@ public class Bot : MonoBehaviour
 
     private void Kick() {
 
-        //* TO TEST: use GameManager.KickOpponent
         float opponentDistance = Vector3.Distance(opponent.transform.position, transform.position);
         float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
         if (opponentDistance < kickRange || ballDistance < kickRange) {

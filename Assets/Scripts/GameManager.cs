@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         GameObject bot = Instantiate(botPrefab, new Vector3(7, 0, 0), Quaternion.identity);
         bot.tag = "Enemy";
         Bot botMove = bot.GetComponent<Bot>();
-        botMove.speed = 8f;
+        botMove.speed = 6f;
         botMove.jumpForce = 16f;
         Transform footBot = bot.transform.Find("Foot");
         footBot.GetComponent<Animator>().SetBool("isFlipped", true);
