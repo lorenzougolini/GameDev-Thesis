@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject ballPrefab;
     public GameObject playerPrefab;
     public GameObject botPrefab;
+    public GameObject defensePrefab;
 
     public static List<GameObject> gameObjects = new List<GameObject>();
     public static List<Vector3> originalPositions = new List<Vector3>();
@@ -108,6 +109,12 @@ public class GameManager : MonoBehaviour
         Bot botMove = bot.GetComponent<Bot>();
         botMove.speed = 8f;
         botMove.jumpForce = 16f;
+        Transform footBot = bot.transform.Find("Foot");
+        footBot.GetComponent<Animator>().SetBool("isFlipped", true);
+
+        GameObject defense = Instantiate(defensePrefab, new Vector3(9.5f, 0, 0), Quaternion.identity);
+        bot.GetComponent<Bot>().defense = defense.transform;
+
         AddGameObject(bot);
 
         StartCountdown();
@@ -159,14 +166,17 @@ public class GameManager : MonoBehaviour
 
     public static void KickOpponent(string kickedTag) {
         if (kickedTag == "Player") {
-            GameObject enemy = gameObjects.Find(obj => obj.CompareTag("Player"));
-            if (enemy)
-               enemy.GetComponent<PlayerMovement>().TakeDamage(-1);
+            GameObject player = gameObjects.Find(obj => obj.CompareTag("Player"));
+            if (player)
+               player.GetComponent<PlayerMovement>().TakeDamage(-1);
         }
         else if (kickedTag == "Enemy") {
-            GameObject player = gameObjects.Find(obj => obj.CompareTag("Enemy"));
-            if (player)
-                player.GetComponent<PlayerMovement>().TakeDamage(1);
+            GameObject enemy = gameObjects.Find(obj => obj.CompareTag("Enemy"));
+            if (enemy)
+                if (MainMenu.mode == PlayingMode.MULTI)
+                    enemy.GetComponent<PlayerMovement>().TakeDamage(1);
+                else
+                    enemy.GetComponent<Bot>().TakeDamage(1);
         }
     }
 }

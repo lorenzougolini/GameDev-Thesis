@@ -108,14 +108,15 @@ public class PlayerMovement : MonoBehaviour {
 		canDash = true;
 	}
 
+	/* ----------- 	COROUTINES 	----------- */
+
 	private IEnumerator Knockback(Vector3 targetPosition) {
 		float elapsedTime = 0f;	
         float duration = 0.2f;
         Vector3 startingPosition = transform.position;
 		transform.Find("Body").GetComponent<SpriteRenderer>().color = new Color(1f, 0.482f, 0.482f);
 
-        while (elapsedTime < duration)
-        {
+        while (elapsedTime < duration) {
             transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
 			
