@@ -41,16 +41,20 @@ public class PlayerMovement : MonoBehaviour {
 		if (isDashing || !Gui.S.playing) return;
 
 		// Move
-		horizontal = Input.GetAxis("Horizontal" + playerNumber);      
+		horizontal = Input.GetAxis("Horizontal" + playerNumber);
 		
 		// Jump
-		if (Input.GetButtonDown("Vertical" + playerNumber) && isGrounded())
+		if (Input.GetButtonDown("Vertical" + playerNumber) && isGrounded()) {
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+			GameLogger.Instance.LogEvent("Player " + playerNumber + " Jumped at Position: " + transform.position);
+		}
 		if (Input.GetButtonDown("Vertical" + playerNumber) && rb.velocity.y > 0f)
 			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 		
 		// Kick
 		kickPressed = Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));
+		if (kickPressed)
+			GameLogger.Instance.LogEvent("Player " + playerNumber + " Kicked at Position: " + transform.position);
 
 		// Dash
 		HandleDoubleClickDash();
@@ -75,6 +79,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (isDashing) return;
 
 		rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
 		footAnimator.SetBool ("kick", kickPressed);
 	}
 
@@ -83,6 +88,7 @@ public class PlayerMovement : MonoBehaviour {
 		if ((Input.GetKeyDown(KeyCode.A) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.LeftArrow) && playerNumber == 2)) {
 			float currentTime = Time.time;
 			if (currentTime - lastLeftPressTime < doubleClickThreshold && canDash && rb.velocity.y == 0f) {
+				GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
 				StartCoroutine(Dash(-1));
 			}
 			lastLeftPressTime = currentTime;
@@ -92,6 +98,7 @@ public class PlayerMovement : MonoBehaviour {
 		if ((Input.GetKeyDown(KeyCode.D) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.RightArrow) && playerNumber == 2)) {
 			float currentTime = Time.time;
 			if (currentTime - lastRightPressTime < doubleClickThreshold && canDash && rb.velocity.y == 0f) {
+				GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
 				StartCoroutine(Dash(1));
 			}
 			lastRightPressTime = currentTime;
@@ -100,8 +107,11 @@ public class PlayerMovement : MonoBehaviour {
 	
 	public void TakeDamage(int direction) {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
+		GameLogger.Instance.LogEvent("Player " + playerNumber + " Took Damage at Position: " + transform.position);
         StartCoroutine(Knockback(knockbackPosition));
     }
+
+	/* ----------- 	COROUTINES 	----------- */
 
 	private IEnumerator Dash(int direction) {
 		canDash = false;
@@ -115,7 +125,6 @@ public class PlayerMovement : MonoBehaviour {
 		canDash = true;
 	}
 
-	/* ----------- 	COROUTINES 	----------- */
 
 	private IEnumerator Knockback(Vector3 targetPosition) {
 		float elapsedTime = 0f;	

@@ -19,6 +19,7 @@ public class Ball : MonoBehaviour {
             Gui.S.ScoreGoalText(1);
             ResetObjects.S.Reset();
 			Gui.S.progressBar2.UpdateCurrent(15f);
+			GameLogger.Instance.LogEvent("Player 1 Scored a Goal");
 		}
         if (coll.gameObject.tag == "GoalLeft")
         {
@@ -26,6 +27,7 @@ public class Ball : MonoBehaviour {
             Gui.S.ScoreGoalText(2);
             ResetObjects.S.Reset();
 			Gui.S.progressBar1.UpdateCurrent(15f);
+			GameLogger.Instance.LogEvent("Player 2 Scored a Goal");
         }
     }
 }

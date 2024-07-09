@@ -14,7 +14,7 @@ public class Foot : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		Debug.Log("Kick to: " + coll.gameObject.tag);
+		// Debug.Log("Kick to: " + coll.gameObject.tag);
 
 		if (MainMenu.mode == PlayingMode.MULTI) {
 

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SocialPlatforms.Impl;
 using TMPro;
-using System.Data;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 public class Gui : MonoBehaviour {
@@ -74,7 +74,7 @@ public class Gui : MonoBehaviour {
         } else if (remainingTimeInSec < 0) {
             remainingTimeInSec = 0;
             isEnded = true;
-            endGame();
+            EndGame();
             Time.timeScale = 0;
         }
     }
@@ -104,22 +104,33 @@ public class Gui : MonoBehaviour {
         Time.timeScale = 0;
         isPaused = true;
     }
-    public void endGame() {
+
+    public void EndGame() {
         endGameMenu.SetActive(true);
         finalScoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();
         Time.timeScale = 0;
+
+        GameLogger.Instance.SaveLogsToFile();
     }
+
     public void Home() {
         SceneManager.LoadScene("MenuScene");
         Time.timeScale = 1;
     }
+
     public void Resume() {
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
         isPaused = false;
     }
+
     public void Restart() {
         Time.timeScale = 1;
+
+        string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
+        GameLogger.Instance.SetLogFilePath(logFilePath);
+        GameLogger.Instance.ClearLogs();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    // public static GameManager Instance { get; private set; }
 
     public GameObject ballPrefab;
     public GameObject playerPrefab;
@@ -18,10 +19,7 @@ public class GameManager : MonoBehaviour
 
     private Rigidbody2D ballRb;
  
-    // private void Awake() {
-    //     if (Instance == null)
-    //         Instance = this;
-    // }
+    public GameLogger gameLogger;
 
     // Start is called before the first frame update
     void Start() {
@@ -36,6 +34,11 @@ public class GameManager : MonoBehaviour
         Gui.S.player1Goals = 0;
         Gui.S.player2Goals = 0;
         Gui.S.playing = false;
+
+        string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
+        GameLogger.Instance.SetLogFilePath(logFilePath);
+        GameLogger.Instance.LogEvent("Game Started in " + MainMenu.mode + " mode");
+
     }
 
     private void OnEnable() {
@@ -147,6 +150,8 @@ public class GameManager : MonoBehaviour
         Gui.S.goalText.GetComponent<Text>().text = "GO!";
         Gui.S.playing = true;
         ballRb.isKinematic = false;
+
+       GameLogger.Instance.LogEvent("Game Started");
         
         yield return new WaitForSeconds(1f);
         Gui.S.goalText.SetActive(false);
@@ -156,6 +161,8 @@ public class GameManager : MonoBehaviour
         if (!gameObjects.Contains(obj)) {
             gameObjects.Add(obj);
             originalPositions.Add(obj.transform.position);
+            
+            GameLogger.Instance.LogEvent("Instantiated GameObject: " + obj.name + " at Position: " + obj.transform.position);
         }
     }
 
