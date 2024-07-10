@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,10 +43,18 @@ public class ProgressBar : MonoBehaviour {
 
     void CheckPulsatingEffect() {
         if (current >= max) {
-            associatedPlayer.GetComponent<PlayerMovement>().powerReady = true;
+            try {
+                associatedPlayer.GetComponent<PlayerMovement>().powerReady = true;
+            } catch (Exception) {
+                associatedPlayer.GetComponent<Bot>().powerReady = true;
+            }
             pulsatingEffect.StartPulsating(powerText.gameObject, 1f, 2f, 5f);
         } else {
-            associatedPlayer.GetComponent<PlayerMovement>().powerReady = false;
+            try {
+                associatedPlayer.GetComponent<PlayerMovement>().powerReady = false;
+            } catch (Exception) {
+                associatedPlayer.GetComponent<Bot>().powerReady = false;
+            }
             pulsatingEffect.StopPulsating();
         }
     }

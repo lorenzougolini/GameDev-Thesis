@@ -22,6 +22,9 @@ public class Bot : MonoBehaviour
     private bool canKick = true;
 
 	private float knockbackDistance = 1.5f;
+
+    public bool powerReady = false;
+    public bool powerSetUp = false;
     
     public Transform defense;
 
@@ -32,6 +35,9 @@ public class Bot : MonoBehaviour
     private TrailRenderer tr;
     private Animator footAnimator;
 
+    private ProgressBar progressBar;
+    private PulsatingEffect pulsatingEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +46,8 @@ public class Bot : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
         footAnimator = GetComponentInChildren<Animator>();   
+		pulsatingEffect = gameObject.AddComponent<PulsatingEffect>();
+        progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
     }
 
     // Update is called once per frame
@@ -49,6 +57,7 @@ public class Bot : MonoBehaviour
         Move();
         Jump();
         Kick();
+        UsePowerUp();
     }
 
     private void FixedUpdate() {
@@ -59,18 +68,6 @@ public class Bot : MonoBehaviour
     }
 
     private void Move() {
-
-        // float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
-        // float opponentDistance = Vector3.Distance(opponent.transform.position, transform.position);
-
-        // if (ballDistance > defenseRange) {
-        //     Vector3 targetPosition = new Vector3(ball.transform.position.x, transform.position.y, transform.position.z);
-        //     transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
-        // } else {
-        //     if (transform.position.x < defense.position.x) {
-        //         transform.Translate(Time.deltaTime * speed, 0, 0);
-        //     }
-        // }
 
         float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
         float opponentDistance = Vector3.Distance(opponent.transform.position, transform.position);
@@ -121,6 +118,24 @@ public class Bot : MonoBehaviour
             kickPressed = false;
         }
     }
+
+    private void UsePowerUp() {
+        if (powerReady) {
+            powerSetUp = true;
+            pulsatingEffect.StartPulsating(gameObject, 1f, 1.2f, 2f);
+            
+            Transform body = transform.Find("Body");
+            body.GetComponent<SpriteRenderer>().flipX = true;
+
+			progressBar.current = 0f;
+        }
+    }
+
+    public void PowerUsed() {
+		powerReady = false;
+		powerSetUp = false;
+		pulsatingEffect.StopPulsating();
+	}
 
     public void TakeDamage(int direction) {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;

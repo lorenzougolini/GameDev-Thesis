@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour {
 		HandleDoubleClickDash();
 
 		// Powerup
-		if (Input.GetKeyDown(KeyCode.LeftControl) && powerReady) {
+		if (Input.GetButtonDown("Fire" + playerNumber) && powerReady) {
 			powerSetUp = true;
 			pulsatingEffect.StartPulsating(gameObject, 1f, 1.2f, 2f);
 			progressBar.current = 0f;
@@ -90,6 +90,12 @@ public class PlayerMovement : MonoBehaviour {
 
 	private bool isGrounded(){
 		return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+	}
+
+	public void PowerUsed() {
+		powerReady = false;
+		powerSetUp = false;
+		pulsatingEffect.StopPulsating();
 	}
 
 	private void FixedUpdate() {

@@ -6,6 +6,8 @@ public class GameLogger : MonoBehaviour
 {
     public static GameLogger Instance { get; private set; }
 
+    [SerializeField] public bool logToFile;
+
     private List<string> eventLogs;
     private string logFilePath;
 
@@ -29,9 +31,9 @@ public class GameLogger : MonoBehaviour
     }
 
     public void SaveLogsToFile() {
-        if (!string.IsNullOrEmpty(logFilePath))
+        if (!string.IsNullOrEmpty(logFilePath) && logToFile)
             File.WriteAllLines(logFilePath, eventLogs);
-        Debug.Log($"File saved at: {logFilePath}");
+            Debug.Log($"File saved at: {logFilePath}");
     }
 
     public void SetLogFilePath(string path) {
