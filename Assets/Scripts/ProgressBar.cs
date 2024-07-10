@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +9,17 @@ public class ProgressBar : MonoBehaviour {
 
     public int max;
     public float current;
+
+    public GameObject associatedPlayer;
+
     public Image mask;
+    public GameObject powerText;
     public PulsatingEffect pulsatingEffect;
 
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         current = 0;
-        // if (pulsatingEffect = null) 
-        //     pulsatingEffect = GetComponent<PulsatingEffect>();
     }
 
     // Update is called once per frame
@@ -39,9 +42,12 @@ public class ProgressBar : MonoBehaviour {
     }
 
     void CheckPulsatingEffect() {
-        if (current >= max) 
-            pulsatingEffect.StartPulsating();
-        else
+        if (current >= max) {
+            associatedPlayer.GetComponent<PlayerMovement>().powerReady = true;
+            pulsatingEffect.StartPulsating(powerText.gameObject, 1f, 2f, 5f);
+        } else {
+            associatedPlayer.GetComponent<PlayerMovement>().powerReady = false;
             pulsatingEffect.StopPulsating();
+        }
     }
 }

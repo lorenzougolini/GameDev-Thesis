@@ -14,6 +14,7 @@ public class Gui : MonoBehaviour {
     public Text scoreText;
     public TextMeshProUGUI finalScoreText;
     public GameObject goalText;
+
     public ProgressBar progressBar1;
     public ProgressBar progressBar2;
     
@@ -61,8 +62,8 @@ public class Gui : MonoBehaviour {
 
         // progress bar logic
         if (playing && !isPaused && !isEnded) {
-            progressBar1.UpdateCurrent(0.05f);
-            progressBar2.UpdateCurrent(0.05f);
+            progressBar1.GetComponent<ProgressBar>().UpdateCurrent(0.05f);
+            progressBar2.GetComponent<ProgressBar>().UpdateCurrent(0.05f);
         }
 
 		scoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();

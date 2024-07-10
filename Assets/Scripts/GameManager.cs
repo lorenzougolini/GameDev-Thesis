@@ -7,12 +7,15 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
-    // public static GameManager Instance { get; private set; }
+
+    public GameObject gameCanva;
 
     public GameObject ballPrefab;
     public GameObject playerPrefab;
     public GameObject botPrefab;
     public GameObject defensePrefab;
+
+    public GameObject progressBar;
 
     public static List<GameObject> gameObjects = new List<GameObject>();
     public static List<Vector3> originalPositions = new List<Vector3>();
@@ -83,6 +86,24 @@ public class GameManager : MonoBehaviour
         Transform footP2 = player2.transform.Find("Foot");
         footP2.GetComponent<Animator>().SetBool("isFlipped", false);
         AddGameObject(player2);
+
+        // Instantiate progress bar 1
+        GameObject progBar1 = Instantiate(progressBar, new Vector3(-469, 426, 0), Quaternion.identity);
+        progBar1.transform.SetParent(gameCanva.transform, false);
+        ProgressBar progBar1controller = progBar1.GetComponent<ProgressBar>();
+        Gui.S.progressBar1 = progBar1controller;
+        progBar1controller.associatedPlayer = player1;
+
+        // Instantiate progress bar 2
+        GameObject progBar2 = Instantiate(progressBar, new Vector3(469, 426, 0), Quaternion.identity);
+        progBar2.transform.SetParent(gameCanva.transform, false);
+        ProgressBar progBar2controller = progBar2.GetComponent<ProgressBar>();
+        Gui.S.progressBar2 = progBar2controller;    
+        progBar2controller.associatedPlayer = player2;
+        
+        Transform maskTransform = progBar2.transform.Find("Mask");
+        Image maskImage = maskTransform.GetComponent<Image>();
+        maskImage.fillOrigin = 0;
 
         StartCountdown();
         yield return null;

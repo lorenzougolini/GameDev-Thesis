@@ -2,19 +2,20 @@ using System.Collections;
 using UnityEngine;
 
 public class PulsatingEffect : MonoBehaviour {
-    public float pulseSpeed = 5f;
-    public float maxScale = 2f;
-    public float minScale = 1.0f;
+    // public float pulseSpeed = 5f;
+    // public float maxScale = 2f;
+    // public float minScale = 1.0f;
 
-    public GameObject text;
+    public GameObject target;
 
     private bool isPulsating = false;
     private Coroutine pulseCoroutine;
 
-    public void StartPulsating() {
+    public void StartPulsating(GameObject targetObj, float minScale, float maxScale, float pulseSpeed) {
+        target = targetObj;
         if (!isPulsating) {
             isPulsating = true;
-            pulseCoroutine = StartCoroutine(Pulse());
+            pulseCoroutine = StartCoroutine(Pulse(minScale, maxScale, pulseSpeed));
         }
     }
 
@@ -25,14 +26,17 @@ public class PulsatingEffect : MonoBehaviour {
                 StopCoroutine(pulseCoroutine);
                 pulseCoroutine = null;
             }
-            text.transform.localScale = Vector3.one;
+            if (target) {
+                target.transform.localScale = Vector3.one;
+                target = null;
+            }
         }
     }
 
-    private IEnumerator Pulse() {
-        while (isPulsating) {
+    private IEnumerator Pulse(float minScale, float maxScale, float pulseSpeed) {
+        while (isPulsating && target) {
             float scale = Mathf.PingPong(Time.time * pulseSpeed, maxScale - minScale) + minScale;
-            text.transform.localScale = new Vector3(scale, scale, scale);
+            target.transform.localScale = new Vector3(scale, scale, scale);
             yield return null;
         }
     }

@@ -22,18 +22,29 @@ public class PlayerMovement : MonoBehaviour {
 
 	private float knockbackDistance = 1.5f;
 
+	public bool powerReady = false;
+	public bool powerSetUp = false;
+
 	[SerializeField] private Rigidbody2D rb;
 	[SerializeField] private Transform groundCheck;
 	[SerializeField] private LayerMask groundLayer;
 	[SerializeField] private TrailRenderer tr;
+	private ProgressBar progressBar;
 	private Animator footAnimator;
 
 	public bool kickPressed;
-    // public bool katana;
-    // public bool katanabool;
+
+	private PulsatingEffect pulsatingEffect;
 
 	void Start () {
 		footAnimator = GetComponentInChildren<Animator> ();
+		
+		pulsatingEffect = gameObject.AddComponent<PulsatingEffect>();
+		if (playerNumber == 1)
+			progressBar = Gui.S.progressBar1.GetComponent<ProgressBar>();
+		else
+			progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
+			
 	}
 
 	void Update() {
@@ -58,6 +69,13 @@ public class PlayerMovement : MonoBehaviour {
 
 		// Dash
 		HandleDoubleClickDash();
+
+		// Powerup
+		if (Input.GetKeyDown(KeyCode.LeftControl) && powerReady) {
+			powerSetUp = true;
+			pulsatingEffect.StartPulsating(gameObject, 1f, 1.2f, 2f);
+			progressBar.current = 0f;
+		}
 
 		// Position check
 		if (transform.position.x < -10f) {
