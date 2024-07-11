@@ -36,7 +36,6 @@ public class Bot : MonoBehaviour
     private Animator footAnimator;
 
     private ProgressBar progressBar;
-    private PulsatingEffect pulsatingEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +44,7 @@ public class Bot : MonoBehaviour
         opponent = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
-        footAnimator = GetComponentInChildren<Animator>();   
-		pulsatingEffect = gameObject.AddComponent<PulsatingEffect>();
+        footAnimator = transform.Find("Foot").GetComponent<Animator>();   
         progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
     }
 
@@ -122,10 +120,9 @@ public class Bot : MonoBehaviour
     private void UsePowerUp() {
         if (powerReady) {
             powerSetUp = true;
-            pulsatingEffect.StartPulsating(gameObject, 1f, 1.2f, 2f);
             
-            Transform body = transform.Find("Body");
-            body.GetComponent<SpriteRenderer>().flipX = true;
+            Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
+			bodyAnimator.enabled = true;
 
 			progressBar.current = 0f;
         }
@@ -134,7 +131,12 @@ public class Bot : MonoBehaviour
     public void PowerUsed() {
 		powerReady = false;
 		powerSetUp = false;
-		pulsatingEffect.StopPulsating();
+        
+        Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
+		bodyAnimator.enabled = false;
+
+		SpriteRenderer bodySprite = transform.Find("Body").GetComponent<SpriteRenderer>();
+		bodySprite.color = Color.white;
 	}
 
     public void TakeDamage(int direction) {

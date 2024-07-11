@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public static List<GameObject> gameObjects = new List<GameObject>();
     public static List<Vector3> originalPositions = new List<Vector3>();
 
+    [SerializeField] public float matchDuration;
+
     private Rigidbody2D ballRb;
  
     public GameLogger gameLogger;
@@ -32,16 +34,19 @@ public class GameManager : MonoBehaviour
         else if (MainMenu.mode == PlayingMode.MULTI)
             StartCoroutine(SetUpMultiGame());
         else if (MainMenu.mode == PlayingMode.NONE)
-            StartCoroutine(SetUpTestGame());
+            StartCoroutine(SetUpBotGame());
 
         Gui.S.player1Goals = 0;
         Gui.S.player2Goals = 0;
         Gui.S.playing = false;
 
+        Gui.S.matchDuration = matchDuration;
+
         string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
         GameLogger.Instance.SetLogFilePath(logFilePath);
         GameLogger.Instance.LogEvent("Game Started in " + MainMenu.mode + " mode");
 
+        StartCoroutine(LogGameState());
     }
 
     private void OnEnable() {
@@ -163,12 +168,62 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator SetUpTestGame() {
+    IEnumerator SetUpBotGame() {
 
+        // Instantiate ball
         GameObject ball = Instantiate(ballPrefab, new Vector3(0, 2, 0), Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody2D>();
         ballRb.isKinematic = true;
         AddGameObject(ball);
+
+        // Instantiate player 1
+        GameObject bot1 = Instantiate(botPrefab, new Vector3(-7, 0, 0), Quaternion.identity);
+        bot1.tag = "Player";
+        Bot botMove1 = bot1.GetComponent<Bot>();
+        botMove1.speed = 6f;
+        botMove1.jumpForce = 16f;
+        Transform bodyP2 = bot1.transform.Find("Body");
+        if (bodyP2) 
+            bodyP2.GetComponent<SpriteRenderer>().flipX = false;
+        Transform footBot1 = bot1.transform.Find("Foot");
+        footBot1.GetComponent<Animator>().SetBool("isFlipped", false);
+
+        GameObject defense1 = Instantiate(defensePrefab, new Vector3(-9.5f, 0, 0), Quaternion.identity);
+        bot1.GetComponent<Bot>().defense = defense1.transform;
+
+        AddGameObject(bot1);
+
+        // Instantiate player 2 bot
+        GameObject bot2 = Instantiate(botPrefab, new Vector3(7, 0, 0), Quaternion.identity);
+        bot2.tag = "Enemy";
+        Bot botMove2 = bot2.GetComponent<Bot>();
+        botMove2.speed = 6f;
+        botMove2.jumpForce = 16f;
+        Transform footBot2 = bot2.transform.Find("Foot");
+        footBot2.GetComponent<Animator>().SetBool("isFlipped", true);
+
+        GameObject defense2 = Instantiate(defensePrefab, new Vector3(9.5f, 0, 0), Quaternion.identity);
+        bot2.GetComponent<Bot>().defense = defense2.transform;
+
+        AddGameObject(bot2);
+
+        // Instantiate progress bar 1
+        GameObject progBar1 = Instantiate(progressBar, new Vector3(-469, 426, 0), Quaternion.identity);
+        progBar1.transform.SetParent(gameCanva.transform, false);
+        ProgressBar progBar1controller = progBar1.GetComponent<ProgressBar>();
+        Gui.S.progressBar1 = progBar1controller;
+        progBar1controller.associatedPlayer = bot1;
+
+        // Instantiate progress bar 2
+        GameObject progBar2 = Instantiate(progressBar, new Vector3(469, 426, 0), Quaternion.identity);
+        progBar2.transform.SetParent(gameCanva.transform, false);
+        ProgressBar progBar2controller = progBar2.GetComponent<ProgressBar>();
+        Gui.S.progressBar2 = progBar2controller;    
+        progBar2controller.associatedPlayer = bot2;
+        
+        Transform maskTransform = progBar2.transform.Find("Mask");
+        Image maskImage = maskTransform.GetComponent<Image>();
+        maskImage.fillOrigin = 0;
 
         StartCountdown();
         yield return null;
@@ -223,6 +278,29 @@ public class GameManager : MonoBehaviour
                     enemy.GetComponent<PlayerMovement>().TakeDamage(1);
                 else
                     enemy.GetComponent<Bot>().TakeDamage(1);
+        }
+    }
+
+    IEnumerator LogGameState() {
+        while (true) {
+            yield return new WaitForSeconds(0.05f * 3); // Approximately every 3 frames at 60fps
+
+            float elapsedTime = Time.time;
+            float timeRemaining = Gui.S.matchDuration;
+
+            Vector3 player1Position = Vector3.zero;
+            Vector3 player2Position = Vector3.zero;
+            Vector3 ballPosition = Vector3.zero;
+
+            GameObject player1 = gameObjects.Find(obj => obj.CompareTag("Player") && (obj.GetComponent<PlayerMovement>().playerNumber == 1 || obj.GetComponent<Bot>() != null));
+            GameObject player2 = gameObjects.Find(obj => obj.CompareTag("Enemy") && (obj.GetComponent<PlayerMovement>().playerNumber == 2 || obj.GetComponent<Bot>() != null));
+            GameObject ball = gameObjects.Find(obj => obj.CompareTag("Ball"));
+
+            if (player1 != null) player1Position = player1.transform.position;
+            if (player2 != null) player2Position = player2.transform.position;
+            if (ball != null) ballPosition = ball.transform.position;
+
+            GameLogger.Instance.LogEvent($"Elapsed Time: {elapsedTime}, Time Remaining: {timeRemaining}, Player 1 Position: {player1Position}, Player 2 Position: {player2Position}, Ball Position: {ballPosition}");
         }
     }
 }

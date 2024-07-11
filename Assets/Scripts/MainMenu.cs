@@ -21,6 +21,9 @@ public class MainMenu : MonoBehaviour
     }
 
     public void QuitGame() {
-        Application.Quit();
+        //! TO CHANGE
+        // Application.Quit();
+        mode = PlayingMode.NONE;
+        SceneManager.LoadSceneAsync("PlayScene");
     }
 }

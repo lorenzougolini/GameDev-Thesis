@@ -22,7 +22,7 @@ public class GameLogger : MonoBehaviour
     }
 
     public void LogEvent(string eventMessage) {
-        string logMessage = $"{Time.time}: {eventMessage}\n";
+        string logMessage = $"{Time.time}: {eventMessage}";
         eventLogs.Add(logMessage);
     }
 
@@ -31,9 +31,12 @@ public class GameLogger : MonoBehaviour
     }
 
     public void SaveLogsToFile() {
-        if (!string.IsNullOrEmpty(logFilePath) && logToFile)
+        if (!string.IsNullOrEmpty(logFilePath) && logToFile) {
             File.WriteAllLines(logFilePath, eventLogs);
             Debug.Log($"File saved at: {logFilePath}");
+        } else {
+            Debug.Log("Log file path is empty or logToFile is false");
+        }
     }
 
     public void SetLogFilePath(string path) {

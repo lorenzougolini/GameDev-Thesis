@@ -18,11 +18,11 @@ public class Gui : MonoBehaviour {
     public ProgressBar progressBar1;
     public ProgressBar progressBar2;
     
-    // [SerializeField] PlayingMode mode;
     [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] float remainingTimeInSec;
     [SerializeField] GameObject endGameMenu;
     [SerializeField] GameObject pauseMenu;
+    
+    public float matchDuration;
 
     public int player1Goals;
     public int player2Goals;
@@ -56,8 +56,8 @@ public class Gui : MonoBehaviour {
         if (playing) {
             UpdateTimer();
         }
-        int min = Mathf.FloorToInt(remainingTimeInSec/60);
-        int sec = Mathf.FloorToInt(remainingTimeInSec%60);
+        int min = Mathf.FloorToInt(matchDuration/60);
+        int sec = Mathf.FloorToInt(matchDuration%60);
         timerText.text = string.Format("{0:00}:{1:00}", min, sec);
 
         // progress bar logic
@@ -72,10 +72,10 @@ public class Gui : MonoBehaviour {
     }
 
     private void UpdateTimer() {
-        if (remainingTimeInSec > 0) {
-            remainingTimeInSec -= Time.deltaTime;
-        } else if (remainingTimeInSec < 0) {
-            remainingTimeInSec = 0;
+        if (matchDuration > 0) {
+            matchDuration -= Time.deltaTime;
+        } else if (matchDuration < 0) {
+            matchDuration = 0;
             isEnded = true;
             EndGame();
             Time.timeScale = 0;

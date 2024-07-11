@@ -9,17 +9,16 @@ public class Foot : MonoBehaviour {
     private Vector2 currentVelocity;
 
     void Start() {
-        previousPosition = transform.position;
+        previousPosition = transform.localPosition;
     }
 
 	private void Update() {
-		Vector2 currentPosition = transform.position;
+		Vector2 currentPosition = transform.localPosition;
         currentVelocity = (currentPosition - previousPosition) / Time.deltaTime;
         previousPosition = currentPosition;
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		// Debug.Log("Kick to: " + coll.gameObject.tag);
 
 		if (MainMenu.mode == PlayingMode.MULTI) {
 
@@ -28,19 +27,6 @@ public class Foot : MonoBehaviour {
 		} else {
 			
 			HandleCollision(coll, isSinglePlayer: true);
-			// if ((coll.gameObject.tag == "Ball" && transform.parent.gameObject.CompareTag("Player") && GetComponentInParent<PlayerMovement>().kickPressed) || 
-			// 	(coll.gameObject.tag == "Ball" && transform.parent.gameObject.CompareTag("Enemy") && GetComponentInParent<Bot>().kickPressed))
-			// 	coll.rigidbody.AddForce(Vector2.up * kickPower, ForceMode2D.Impulse);
-
-			// if (coll.gameObject.tag == "Enemy"  && GetComponentInParent<PlayerMovement>().kickPressed) {
-			// 	if (coll.gameObject != this.transform.parent.gameObject) {
-			// 		GameManager.KickOpponent(coll.gameObject.tag);
-			// 	}
-			// } else if (coll.gameObject.tag == "Player" && GetComponentInParent<Bot>().kickPressed) {
-			// 	if (coll.gameObject != this.transform.parent.gameObject) {
-			// 		GameManager.KickOpponent(coll.gameObject.tag);
-			// 	}
-			// }
 		}
 	}
 

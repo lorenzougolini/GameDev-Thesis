@@ -34,12 +34,10 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool kickPressed;
 
-	private PulsatingEffect pulsatingEffect;
-
 	void Start () {
-		footAnimator = GetComponentInChildren<Animator> ();
-		
-		pulsatingEffect = gameObject.AddComponent<PulsatingEffect>();
+
+		footAnimator = transform.Find("Foot").GetComponent<Animator>();
+
 		if (playerNumber == 1)
 			progressBar = Gui.S.progressBar1.GetComponent<ProgressBar>();
 		else
@@ -49,7 +47,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update() {
 
-		if (isDashing || !Gui.S.playing) return;
+		// if (isDashing || !Gui.S.playing) return;
+		if (!Gui.S.playing) return;
 
 		// Move
 		horizontal = Input.GetAxis("Horizontal" + playerNumber);
@@ -74,7 +73,10 @@ public class PlayerMovement : MonoBehaviour {
 		// Powerup
 		if (Input.GetButtonDown("Fire" + playerNumber) && powerReady) {
 			powerSetUp = true;
-			pulsatingEffect.StartPulsating(gameObject, 1f, 1.2f, 2f);
+			
+			Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
+			bodyAnimator.enabled = true;
+
 			progressBar.current = 0f;
 		}
 
@@ -96,7 +98,12 @@ public class PlayerMovement : MonoBehaviour {
 	public void PowerUsed() {
 		powerReady = false;
 		powerSetUp = false;
-		pulsatingEffect.StopPulsating();
+
+		Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
+		bodyAnimator.enabled = false;
+
+		SpriteRenderer bodySprite = transform.Find("Body").GetComponent<SpriteRenderer>();
+		bodySprite.color = Color.white;
 	}
 
 	private void FixedUpdate() {
@@ -150,7 +157,6 @@ public class PlayerMovement : MonoBehaviour {
 		canDash = true;
 	}
 
-
 	private IEnumerator Knockback(Vector3 targetPosition) {
 		float elapsedTime = 0f;	
         float duration = 0.2f;
@@ -167,35 +173,4 @@ public class PlayerMovement : MonoBehaviour {
         transform.position = targetPosition;
 		transform.Find("Body").GetComponent<SpriteRenderer>().color = Color.white;	
 	}
-
 }
-
-
-
-// ---------------------------------- OLD CODE ----------------------------------
-	// void Start () {
-	// 	rb = GetComponent<Rigidbody2D> ();
-	// 	animator = GetComponentInChildren<Animator> ();
-	// }
-	
-	// void FixedUpdate () {
-	// 	horizontal = Input.GetAxis ("Horizontal" + playerNumber);
-	// 	jumpPressed = System.Convert.ToBoolean(Input.GetAxis("Vertical" + playerNumber));
-	// 	kickPressed = System.Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));// spacebar
-    //     // katana = Input.GetKeyDown(KeyCode.Comma);
-        
-	// 	rb.velocity = new Vector2 (horizontal * speed, rb.velocity.y);
-        
-    //     // katanabool = System.Convert.ToBoolean(katana);
-    //     // katanabool = katana;
-
-    //     animator.SetBool ("kick", kickPressed);
-    //     // animator.SetBool("katana", katanabool);
-    // }
-
-	// void OnCollisionStay2D(Collision2D coll)
-	// {
-	// 	if (coll.gameObject.tag == "Ground" && jumpPressed) { // if grounded
-	// 		rb.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);
-	// 	}
-	// }

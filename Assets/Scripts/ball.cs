@@ -10,22 +10,22 @@ public class Ball : MonoBehaviour {
 		if (ResetObjects.S.resetting) return;
 		if (coll.gameObject.tag == "Player" && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
 			
-			coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
 			StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
+			coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
 			GameLogger.Instance.LogEvent("Player 1 Used Power");
 
 		} else if (coll.gameObject.tag == "Enemy") {
 			
 			if (coll.gameObject.GetComponent<PlayerMovement>() && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
 			
-				coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
 				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
+				coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
 				GameLogger.Instance.LogEvent("Player 2 Used Power");
 			
 			} else if (coll.gameObject.GetComponent<Bot>() && coll.gameObject.GetComponent<Bot>().powerSetUp) {
 			
-				coll.gameObject.GetComponent<Bot>().PowerUsed();
 				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
+				coll.gameObject.GetComponent<Bot>().PowerUsed();
 				GameLogger.Instance.LogEvent("Player 2 Used Power");
 			}
 
@@ -80,8 +80,22 @@ public class Ball : MonoBehaviour {
 		isShooting = true;
 
 		//! NOT WORKING
-		// TrailRenderer tr = GetComponent<TrailRenderer>();
-		// tr.material.SetColor("_TintColor", Color.blue);
+		/* 
+		TrailRenderer tr = gameObject.GetComponent<TrailRenderer>();
+
+		// Create a new gradient
+		Gradient gradient = new Gradient();
+
+		// Set the color keys at the relative time 0 and 1 (start and end)
+		gradient.SetKeys(
+			new GradientColorKey[] { new GradientColorKey(Color.blue, 0.0f), new GradientColorKey(Color.blue, 1.0f) },
+			new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) }
+		);
+
+		// Assign the gradient to the TrailRenderer
+		tr.colorGradient = gradient;
+		*/
+		//!
 
 		Vector3 newPos = player.transform.position + new Vector3(direction.x > 0 ? 1 : -1, 1, 0);
 		transform.position = newPos;
@@ -108,6 +122,7 @@ public class Ball : MonoBehaviour {
 
 		//! NOT WORKING
 		// tr.material.SetColor("_TintColor", Color.white);
+		//!
 		isShooting = false;
 	}
 }
