@@ -8,6 +8,8 @@ public class ResetObjects : MonoBehaviour {
 
     public GameManager GM;
 
+    public bool resetting = false;
+
     // Use this for initialization
     void Awake () {
         S = this;
@@ -25,6 +27,8 @@ public class ResetObjects : MonoBehaviour {
     }
 
     IEnumerator ResetEnum() {
+
+        resetting = true;
 
         GameObject ball = GameObject.FindGameObjectWithTag("Ball");
         GameObject[] goals = GameObject.FindGameObjectsWithTag("GoalRight").Concat(GameObject.FindGameObjectsWithTag("GoalLeft")).ToArray();
@@ -65,8 +69,9 @@ public class ResetObjects : MonoBehaviour {
                 Collider2D goalCollider = goal.GetComponent<Collider2D>();
                 Physics2D.IgnoreCollision(ballCollider, goalCollider, false);
             }
-
         }
+
+        resetting = false;
     }
 
 }

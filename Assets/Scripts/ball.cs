@@ -6,31 +6,31 @@ public class Ball : MonoBehaviour {
 	
 	private bool isShooting = false;
 
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	private void OnCollisionEnter2D(Collision2D coll) {
+		if (ResetObjects.S.resetting) return;
 		if (coll.gameObject.tag == "Player" && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
+			
 			coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
 			StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
 			GameLogger.Instance.LogEvent("Player 1 Used Power");
+
 		} else if (coll.gameObject.tag == "Enemy") {
-            if (coll.gameObject.GetComponent<PlayerMovement>() && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
+			
+			if (coll.gameObject.GetComponent<PlayerMovement>() && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
+			
 				coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
-                StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
-                GameLogger.Instance.LogEvent("Player 2 Used Power");
+				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
+				GameLogger.Instance.LogEvent("Player 2 Used Power");
+			
 			} else if (coll.gameObject.GetComponent<Bot>() && coll.gameObject.GetComponent<Bot>().powerSetUp) {
+			
 				coll.gameObject.GetComponent<Bot>().PowerUsed();
 				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
 				GameLogger.Instance.LogEvent("Player 2 Used Power");
 			}
+
 		} else if (isShooting) {
+			
 			StopCoroutine("UsePowerUp");
 			isShooting = false;
 			Rigidbody2D rb = GetComponent<Rigidbody2D>();

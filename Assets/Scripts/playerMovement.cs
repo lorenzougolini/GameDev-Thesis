@@ -68,7 +68,8 @@ public class PlayerMovement : MonoBehaviour {
 			GameLogger.Instance.LogEvent("Player " + playerNumber + " Kicked at Position: " + transform.position);
 
 		// Dash
-		HandleDoubleClickDash();
+		if (!ResetObjects.S.resetting)
+			HandleDoubleClickDash();
 
 		// Powerup
 		if (Input.GetButtonDown("Fire" + playerNumber) && powerReady) {
