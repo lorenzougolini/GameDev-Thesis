@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
+
+    private bool moveLeftToRight;
 
     public float speed = 8f;
     public float jumpForce = 16f;
@@ -31,6 +34,7 @@ public class Bot : MonoBehaviour
 
     private GameObject ball;
     private GameObject opponent;
+    public Vector3 opponentGoalPosition;
 
     private Rigidbody2D rb;
     private TrailRenderer tr;
@@ -55,11 +59,28 @@ public class Bot : MonoBehaviour
 			progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();   
             opponent = GameObject.FindGameObjectWithTag("Player");
         }
+
+        moveLeftToRight = opponentGoalPosition.x > transform.position.x;
     }
 
     // Update is called once per frame
     void Update() {
         if (isDashing || !Gui.S.playing) return;
+
+        if (IsFieldClear()) {
+            MoveTowardsGoal();
+            return;
+        }
+
+        if (HasToDefend()) {
+            Defend();
+            return;
+        }
+
+        if (BallIsOverhead()) {
+            MoveFromBall();
+            return;
+        }
 
         Move();
         Jump();
@@ -83,12 +104,6 @@ public class Bot : MonoBehaviour
         float ballToGoalDistance = Vector3.Distance(ball.transform.position, defense.position);
 
         if (transform.CompareTag("Enemy")) {
-            // Check if the ball is overhead
-            if (Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f && Mathf.Abs(ball.transform.position.y - transform.position.y) < 0.5f) {
-                transform.Translate(-speed * Time.deltaTime, 0, 0); // Move back
-                if (canKick && random.NextDouble() < 0.5) Kick();
-            }
-    
             // Check if the bot should attack
             if (ball.transform.position.x < transform.position.x || ballDistance >= opponentDistance) {
                 Vector3 targetPosition = new Vector3(ball.transform.position.x, transform.position.y, transform.position.z);
@@ -98,13 +113,8 @@ public class Bot : MonoBehaviour
                 Vector3 targetPosition = new Vector3(defense.position.x, transform.position.y, transform.position.z);
                 transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
             }
-        } else {
-            // Check if the ball is overhead
-            if (Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f && Mathf.Abs(ball.transform.position.y - transform.position.y) < 0.5f) {
-                transform.Translate(speed * Time.deltaTime, 0, 0); // Move forward
-                if (canKick && random.NextDouble() < 0.5) Kick();
-            }
-    
+
+        } else {    
             // Check if the bot should attack
             if (ball.transform.position.x > transform.position.x || ballDistance >= opponentDistance) {
                 Vector3 targetPosition = new Vector3(ball.transform.position.x, transform.position.y, transform.position.z);
@@ -116,7 +126,7 @@ public class Bot : MonoBehaviour
             }
         }
 
-        if (ballDistance > defenseRangeMax && opponentDistance > defenseRangeMax && canDash && random.NextDouble() < 0.5) {
+        if (ballDistance > (ballDistance + Vector3.Distance(opponent.transform.position, ball.transform.position)) && canDash && random.NextDouble() < 0.5) {
             Vector3 dashDirection = (ball.transform.position - transform.position).normalized;
             int direction = dashDirection.x > 0 ? 1 : -1;
             
@@ -124,12 +134,81 @@ public class Bot : MonoBehaviour
         }
     }
 
+    private bool BallIsOverhead() {
+        return Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f 
+                && Mathf.Abs(ball.transform.position.y - transform.position.y) < 0.5f;
+    }
+
+    private IEnumerator MoveFromBall() {
+
+        if (moveLeftToRight) {
+            transform.Translate(speed * Time.deltaTime, 0, 0); // Move back
+            yield return new WaitForSeconds(1f);
+            if (canKick && random.NextDouble() < 0.5) Kick();
+        } else {
+            transform.Translate(-speed * Time.deltaTime, 0, 0); // Move forward
+            yield return new WaitForSeconds(1f);
+            if (canKick && random.NextDouble() < 0.5) Kick();
+        }
+    }
+
+    private bool IsFieldClear() {
+        // Check if the opponent is between the bot and the opponent's goal
+        float botToGoalDistance = Vector3.Distance(transform.position, opponentGoalPosition);
+        float opponentToGoalDistance = Vector3.Distance(opponent.transform.position, opponentGoalPosition);
+
+        return botToGoalDistance < opponentToGoalDistance;
+    }
+
+    private void MoveTowardsGoal() {
+        Vector3 targetPosition = new Vector3(ball.transform.position.x, transform.position.y, transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+
+        // Stay behind the ball and push it towards the goal
+        if (moveLeftToRight) { // Bot moving left to right
+            if (transform.position.x < ball.transform.position.x) {
+                transform.Translate(speed * Time.deltaTime, 0, 0); // Move forward
+            } else {
+                transform.Translate(-speed * Time.deltaTime, 0, 0); // Move back
+            }
+        } else { // Bot moving right to left
+            if (transform.position.x > ball.transform.position.x) {
+                transform.Translate(-speed * Time.deltaTime, 0, 0); // Move back
+            } else {
+                transform.Translate(speed * Time.deltaTime, 0, 0); // Move forward
+            }
+        }
+    }
+
+    private bool HasToDefend() {
+        float ballToGoalDistance = Vector3.Distance(ball.transform.position, defense.position);
+        float botToGoalDistance = Vector3.Distance(transform.position, defense.position);
+
+        if (moveLeftToRight) {
+            return ball.transform.position.x < transform.position.x && ballToGoalDistance < defenseRangeMax;
+        } else {
+            return ball.transform.position.x > transform.position.x && ballToGoalDistance < defenseRangeMax;
+        }
+    }
+
+    private void Defend() {
+        Vector3 targetPosition = new Vector3(ball.transform.position.x, transform.position.y, transform.position.z);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+
+        // Optionally add more defensive actions such as kicking the ball away
+        if (Vector3.Distance(transform.position, ball.transform.position) < kickRange) {
+            Kick();
+        }
+    }
+
+
     private void Jump() {
         float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
 
         if (ballDistance <= 3 && ball.transform.position.y > transform.position.y && isGrounded && random.NextDouble() < 0.5) {
-            Vector2 jumpDirection = Vector3.up;
-            rb.AddForce(jumpDirection * jumpForce, ForceMode2D.Impulse);
+            // Vector2 jumpDirection = Vector3.up;
+            // rb.AddForce(jumpDirection * jumpForce, ForceMode2D.Impulse);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
         }
     }
@@ -169,12 +248,24 @@ public class Bot : MonoBehaviour
 	}
 
     private void ReactToOpponentPower() {
-        // Debug.Log($"Opponent power: {opponent.GetComponent<Bot>().powerSetUp} - Power ready: {powerReady}");
-        if (opponent.GetComponent<Bot>().powerSetUp && powerReady) {
+         
+        bool opponent_powerSetUp;
+        try {
+            opponent_powerSetUp = opponent.GetComponent<Bot>().powerSetUp;
+        } catch (Exception) {
+            opponent_powerSetUp = opponent.GetComponent<PlayerMovement>().powerSetUp;
+        }
+        if (opponent_powerSetUp && powerReady) {
             UsePowerUp(prob: 1f);
         }
 
-        if (ball.GetComponent<Ball>().isShooting && opponent.GetComponent<Bot>().isUsingPower) {
+        bool opponent_isUsingPower;
+        try {
+            opponent_isUsingPower = opponent.GetComponent<Bot>().isUsingPower;
+        } catch (Exception) {
+            opponent_isUsingPower = opponent.GetComponent<PlayerMovement>().isUsingPower;
+        }
+        if (ball.GetComponent<Ball>().isShooting && opponent_isUsingPower) {
             StartCoroutine(WaitAndJump());
         }
     }

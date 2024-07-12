@@ -126,9 +126,9 @@ public class Ball : MonoBehaviour {
 		ballRb.constraints = RigidbodyConstraints2D.None;
 		ballRb.velocity = direction * moveSpeed;
 
-		while (isShooting) {
-            yield return new WaitForSeconds(1f);
-        }
+		// while (isShooting) {
+        //     yield return new WaitForSeconds(1f);
+        // }
 
 		playerRb.gravityScale = 3;
 		playerRb.constraints = RigidbodyConstraints2D.None;

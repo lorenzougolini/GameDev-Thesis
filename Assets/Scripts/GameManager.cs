@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
         Bot botMove = bot.GetComponent<Bot>();
         botMove.speed = 6f;
         botMove.jumpForce = 16f;
+        botMove.opponentGoalPosition = new Vector3(-9.8f, 0, 0);
         Transform footBot = bot.transform.Find("Foot");
         footBot.GetComponent<Animator>().SetBool("isFlipped", true);
 
@@ -182,6 +183,7 @@ public class GameManager : MonoBehaviour
         Bot botMove1 = bot1.GetComponent<Bot>();
         botMove1.speed = 3f;
         botMove1.jumpForce = 10f;
+        botMove1.opponentGoalPosition = new Vector3(-9.8f, 0, 0);
         Transform bodyP2 = bot1.transform.Find("Body");
         if (bodyP2) 
             bodyP2.GetComponent<SpriteRenderer>().flipX = false;
@@ -199,6 +201,7 @@ public class GameManager : MonoBehaviour
         Bot botMove2 = bot2.GetComponent<Bot>();
         botMove2.speed = 3f;
         botMove2.jumpForce = 10f;
+        botMove2.opponentGoalPosition = new Vector3(9.8f, 0, 0);
         Transform footBot2 = bot2.transform.Find("Foot");
         footBot2.GetComponent<Animator>().SetBool("isFlipped", true);
 
@@ -271,7 +274,9 @@ public class GameManager : MonoBehaviour
             if (player)
                 if (MainMenu.mode == PlayingMode.MULTI)
                     player.GetComponent<PlayerMovement>().TakeDamage(-1);
-                else
+                else if (MainMenu.mode == PlayingMode.SINGLE)
+                    player.GetComponent<PlayerMovement>().TakeDamage(-1);
+                else if (MainMenu.mode == PlayingMode.NONE)
                     player.GetComponent<Bot>().TakeDamage(-1);
         }
         else if (kickedTag == "Enemy") {
