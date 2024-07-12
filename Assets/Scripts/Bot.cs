@@ -25,6 +25,7 @@ public class Bot : MonoBehaviour
 
     public bool powerReady = false;
     public bool powerSetUp = false;
+    public bool isUsingPower = false;
     
     public Transform defense;
 
@@ -37,15 +38,23 @@ public class Bot : MonoBehaviour
 
     private ProgressBar progressBar;
 
+    private System.Random random = new();
+
     // Start is called before the first frame update
     void Start()
     {
         ball = GameObject.FindGameObjectWithTag("Ball");
-        opponent = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
         tr = GetComponent<TrailRenderer>();
-        footAnimator = transform.Find("Foot").GetComponent<Animator>();   
-        progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
+        footAnimator = transform.Find("Foot").GetComponent<Animator>();
+
+        if (transform.CompareTag("Player")) {
+			progressBar = Gui.S.progressBar1.GetComponent<ProgressBar>();
+            opponent = GameObject.FindGameObjectWithTag("Enemy");
+        } else {
+			progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();   
+            opponent = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
     // Update is called once per frame
@@ -56,6 +65,8 @@ public class Bot : MonoBehaviour
         Jump();
         Kick();
         UsePowerUp();
+
+        ReactToOpponentPower();
     }
 
     private void FixedUpdate() {
@@ -71,23 +82,41 @@ public class Bot : MonoBehaviour
         float opponentDistance = Vector3.Distance(opponent.transform.position, transform.position);
         float ballToGoalDistance = Vector3.Distance(ball.transform.position, defense.position);
 
-        // Check if the ball is overhead
-        if (Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f && ball.transform.position.y > transform.position.y) {
-            transform.Translate(-speed * Time.deltaTime, 0, 0); // Move back
-            if (canKick) Kick();
+        if (transform.CompareTag("Enemy")) {
+            // Check if the ball is overhead
+            if (Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f && Mathf.Abs(ball.transform.position.y - transform.position.y) < 0.5f) {
+                transform.Translate(-speed * Time.deltaTime, 0, 0); // Move back
+                if (canKick && random.NextDouble() < 0.5) Kick();
+            }
+    
+            // Check if the bot should attack
+            if (ball.transform.position.x < transform.position.x || ballDistance >= opponentDistance) {
+                Vector3 targetPosition = new Vector3(ball.transform.position.x, transform.position.y, transform.position.z);
+                transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+            } 
+            else if (ballToGoalDistance > defenseRangeMax || ballToGoalDistance < defenseRangeMin) {
+                Vector3 targetPosition = new Vector3(defense.position.x, transform.position.y, transform.position.z);
+                transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+            }
+        } else {
+            // Check if the ball is overhead
+            if (Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f && Mathf.Abs(ball.transform.position.y - transform.position.y) < 0.5f) {
+                transform.Translate(speed * Time.deltaTime, 0, 0); // Move forward
+                if (canKick && random.NextDouble() < 0.5) Kick();
+            }
+    
+            // Check if the bot should attack
+            if (ball.transform.position.x > transform.position.x || ballDistance >= opponentDistance) {
+                Vector3 targetPosition = new Vector3(ball.transform.position.x, transform.position.y, transform.position.z);
+                transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+            } 
+            else if (ballToGoalDistance > defenseRangeMax || ballToGoalDistance < defenseRangeMin) {
+                Vector3 targetPosition = new Vector3(defense.position.x, transform.position.y, transform.position.z);
+                transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+            }
         }
 
-        // Check if the bot should attack
-        if (ball.transform.position.x < transform.position.x || ballDistance >= opponentDistance) {
-            Vector3 targetPosition = new Vector3(ball.transform.position.x, transform.position.y, transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
-        } 
-        else if (ballToGoalDistance > defenseRangeMax || ballToGoalDistance < defenseRangeMin) {
-            Vector3 targetPosition = new Vector3(defense.position.x, transform.position.y, transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
-        }
-
-        if (ballDistance > defenseRangeMax && opponentDistance > defenseRangeMax && canDash) {
+        if (ballDistance > defenseRangeMax && opponentDistance > defenseRangeMax && canDash && random.NextDouble() < 0.5) {
             Vector3 dashDirection = (ball.transform.position - transform.position).normalized;
             int direction = dashDirection.x > 0 ? 1 : -1;
             
@@ -96,10 +125,10 @@ public class Bot : MonoBehaviour
     }
 
     private void Jump() {
-        float dist = Vector2.Distance(ball.transform.position, transform.position);
+        float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
 
-        if (dist <= 3 && ball.transform.position.y > transform.position.y && isGrounded) {
-            Vector2 jumpDirection = Vector2.up + Vector2.left;
+        if (ballDistance <= 3 && ball.transform.position.y > transform.position.y && isGrounded && random.NextDouble() < 0.5) {
+            Vector2 jumpDirection = Vector3.up;
             rb.AddForce(jumpDirection * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
@@ -109,7 +138,7 @@ public class Bot : MonoBehaviour
 
         float opponentDistance = Vector3.Distance(opponent.transform.position, transform.position);
         float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
-        if (opponentDistance < kickRange || ballDistance < kickRange) {
+        if ((opponentDistance < kickRange || ballDistance < kickRange) && random.NextDouble() < 0.5) {
             kickPressed = true;
             StartCoroutine(KickCooldown());
         } else {
@@ -117,8 +146,8 @@ public class Bot : MonoBehaviour
         }
     }
 
-    private void UsePowerUp() {
-        if (powerReady) {
+    private void UsePowerUp(float prob = 0.5f) {
+        if (powerReady && random.NextDouble() < prob) {
             powerSetUp = true;
             
             Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
@@ -138,6 +167,17 @@ public class Bot : MonoBehaviour
 		SpriteRenderer bodySprite = transform.Find("Body").GetComponent<SpriteRenderer>();
 		bodySprite.color = Color.white;
 	}
+
+    private void ReactToOpponentPower() {
+        // Debug.Log($"Opponent power: {opponent.GetComponent<Bot>().powerSetUp} - Power ready: {powerReady}");
+        if (opponent.GetComponent<Bot>().powerSetUp && powerReady) {
+            UsePowerUp(prob: 1f);
+        }
+
+        if (ball.GetComponent<Ball>().isShooting && opponent.GetComponent<Bot>().isUsingPower) {
+            StartCoroutine(WaitAndJump());
+        }
+    }
 
     public void TakeDamage(int direction) {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
@@ -190,4 +230,15 @@ public class Bot : MonoBehaviour
 		yield return new WaitForSeconds(dashCooldown);
 		canDash = true;
 	}
+
+    private IEnumerator WaitAndJump() {
+        float waitTime = random.Next(1, 3);
+        yield return new WaitForSeconds(waitTime);
+
+        if (isGrounded) {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            isGrounded = false;
+        }
+
+    }
 }

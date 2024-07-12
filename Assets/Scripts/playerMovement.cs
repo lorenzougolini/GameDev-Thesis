@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool powerReady = false;
 	public bool powerSetUp = false;
+    public bool isUsingPower = false;
 
 	[SerializeField] private Rigidbody2D rb;
 	[SerializeField] private Transform groundCheck;
@@ -117,7 +118,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void HandleDoubleClickDash() {
 		// Check left direction
-		if ((Input.GetKeyDown(KeyCode.A) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.LeftArrow) && playerNumber == 2)) {
+		// if ((Input.GetKeyDown(KeyCode.A) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.LeftArrow) && playerNumber == 2)) {
+		if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
 			float currentTime = Time.time;
 			if (currentTime - lastLeftPressTime < doubleClickThreshold && canDash && rb.velocity.y == 0f) {
 				GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);

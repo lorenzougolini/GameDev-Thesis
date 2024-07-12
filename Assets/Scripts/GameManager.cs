@@ -180,8 +180,8 @@ public class GameManager : MonoBehaviour
         GameObject bot1 = Instantiate(botPrefab, new Vector3(-7, 0, 0), Quaternion.identity);
         bot1.tag = "Player";
         Bot botMove1 = bot1.GetComponent<Bot>();
-        botMove1.speed = 6f;
-        botMove1.jumpForce = 16f;
+        botMove1.speed = 3f;
+        botMove1.jumpForce = 10f;
         Transform bodyP2 = bot1.transform.Find("Body");
         if (bodyP2) 
             bodyP2.GetComponent<SpriteRenderer>().flipX = false;
@@ -197,8 +197,8 @@ public class GameManager : MonoBehaviour
         GameObject bot2 = Instantiate(botPrefab, new Vector3(7, 0, 0), Quaternion.identity);
         bot2.tag = "Enemy";
         Bot botMove2 = bot2.GetComponent<Bot>();
-        botMove2.speed = 6f;
-        botMove2.jumpForce = 16f;
+        botMove2.speed = 3f;
+        botMove2.jumpForce = 10f;
         Transform footBot2 = bot2.transform.Find("Foot");
         footBot2.GetComponent<Animator>().SetBool("isFlipped", true);
 
@@ -269,7 +269,10 @@ public class GameManager : MonoBehaviour
         if (kickedTag == "Player") {
             GameObject player = gameObjects.Find(obj => obj.CompareTag("Player"));
             if (player)
-               player.GetComponent<PlayerMovement>().TakeDamage(-1);
+                if (MainMenu.mode == PlayingMode.MULTI)
+                    player.GetComponent<PlayerMovement>().TakeDamage(-1);
+                else
+                    player.GetComponent<Bot>().TakeDamage(-1);
         }
         else if (kickedTag == "Enemy") {
             GameObject enemy = gameObjects.Find(obj => obj.CompareTag("Enemy"));
@@ -282,6 +285,9 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator LogGameState() {
+        GameObject player1 = null;
+        GameObject player2 = null;
+
         while (true) {
             yield return new WaitForSeconds(0.05f * 3); // Approximately every 3 frames at 60fps
 
@@ -292,8 +298,21 @@ public class GameManager : MonoBehaviour
             Vector3 player2Position = Vector3.zero;
             Vector3 ballPosition = Vector3.zero;
 
-            GameObject player1 = gameObjects.Find(obj => obj.CompareTag("Player") && (obj.GetComponent<PlayerMovement>().playerNumber == 1 || obj.GetComponent<Bot>() != null));
-            GameObject player2 = gameObjects.Find(obj => obj.CompareTag("Enemy") && (obj.GetComponent<PlayerMovement>().playerNumber == 2 || obj.GetComponent<Bot>() != null));
+            foreach (GameObject obj in gameObjects) {
+                if (obj.GetComponent<PlayerMovement>())
+                    if (obj.GetComponent<PlayerMovement>().playerNumber == 1)
+                        player1 = obj;
+                    else
+                        player2 = obj;
+                else
+                    if (obj.CompareTag("Player"))
+                        player1 = obj;
+                    else
+                        player2 = obj;
+            }
+
+            // GameObject player1 = gameObjects.Find(obj => obj.CompareTag("Player") && (obj.GetComponent<PlayerMovement>().playerNumber == 1 || obj.GetComponent<Bot>() != null));
+            // GameObject player2 = gameObjects.Find(obj => obj.CompareTag("Enemy") && (obj.GetComponent<PlayerMovement>().playerNumber == 2 || obj.GetComponent<Bot>() != null));
             GameObject ball = gameObjects.Find(obj => obj.CompareTag("Ball"));
 
             if (player1 != null) player1Position = player1.transform.position;

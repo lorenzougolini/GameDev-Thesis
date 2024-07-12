@@ -26,11 +26,11 @@ public class Foot : MonoBehaviour {
 			
 		} else {
 			
-			HandleCollision(coll, isSinglePlayer: true);
+			HandleCollision(coll);
 		}
 	}
 
-	void HandleCollision(Collision2D coll, bool isSinglePlayer = false) {
+	void HandleCollision(Collision2D coll) {
 		if (coll.gameObject.tag == "Ball" && IsKickPressed()) {
 			Vector2 kickForce = CalculateKickForce();
             coll.rigidbody.AddForce(kickForce, ForceMode2D.Impulse);
@@ -47,13 +47,15 @@ public class Foot : MonoBehaviour {
 	bool IsKickPressed() {
 		if (MainMenu.mode == PlayingMode.MULTI) {
             return GetComponentInParent<PlayerMovement>().kickPressed;
-        } else {
+        } else if (MainMenu.mode == PlayingMode.SINGLE) {
             if (transform.parent.gameObject.CompareTag("Player")) {
                 return GetComponentInParent<PlayerMovement>().kickPressed;
             } else if (transform.parent.gameObject.CompareTag("Enemy")) {
                 return GetComponentInParent<Bot>().kickPressed;
             }
-        }
+        } else if (MainMenu.mode == PlayingMode.NONE) {
+			return GetComponentInParent<Bot>().kickPressed;
+		}
         return false;
 	}
 

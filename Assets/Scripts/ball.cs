@@ -1,18 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Runtime.CompilerServices;
+using System;
 
 public class Ball : MonoBehaviour {
 	
-	private bool isShooting = false;
+	public bool isShooting = false;
 
 	private void OnCollisionEnter2D(Collision2D coll) {
 		if (ResetObjects.S.resetting) return;
-		if (coll.gameObject.tag == "Player" && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
+		if (coll.gameObject.tag == "Player") {
+
+			if (coll.gameObject.GetComponent<PlayerMovement>() && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
+				
+				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
+				coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
+				GameLogger.Instance.LogEvent("Player 1 Used Power");
 			
-			StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
-			coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
-			GameLogger.Instance.LogEvent("Player 1 Used Power");
+			} else if (coll.gameObject.GetComponent<Bot>() && coll.gameObject.GetComponent<Bot>().powerSetUp) {
+			
+				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
+				coll.gameObject.GetComponent<Bot>().PowerUsed();
+				GameLogger.Instance.LogEvent("Player 1 Used Power");
+			}
 
 		} else if (coll.gameObject.tag == "Enemy") {
 			
@@ -64,6 +74,12 @@ public class Ball : MonoBehaviour {
     }
 
 	IEnumerator UsePowerUp(GameObject player, Vector2 direction) {
+		try {
+			player.GetComponent<PlayerMovement>().isUsingPower = true;
+		} catch (Exception) {
+			player.GetComponent<Bot>().isUsingPower = true;
+		}
+
 		float rotationDuration = 1f;
 		float moveSpeed = 80f;
 
@@ -97,7 +113,7 @@ public class Ball : MonoBehaviour {
 		*/
 		//!
 
-		Vector3 newPos = player.transform.position + new Vector3(direction.x > 0 ? 1 : -1, 1, 0);
+		Vector3 newPos = player.transform.position + new Vector3(direction.x > 0 ? 1 : -1, 0.5f, 0);
 		transform.position = newPos;
 
 		float t = 0;
@@ -124,5 +140,10 @@ public class Ball : MonoBehaviour {
 		// tr.material.SetColor("_TintColor", Color.white);
 		//!
 		isShooting = false;
+		try {
+			player.GetComponent<PlayerMovement>().isUsingPower = false;
+		} catch (Exception) {
+			player.GetComponent<Bot>().isUsingPower = false;
+		}
 	}
 }
