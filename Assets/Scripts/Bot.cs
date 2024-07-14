@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class Bot : MonoBehaviour
@@ -67,21 +68,6 @@ public class Bot : MonoBehaviour
     void Update() {
         if (isDashing || !Gui.S.playing) return;
 
-        if (IsFieldClear()) {
-            MoveTowardsGoal();
-            return;
-        }
-
-        if (HasToDefend()) {
-            Defend();
-            return;
-        }
-
-        if (BallIsOverhead()) {
-            MoveFromBall();
-            return;
-        }
-
         Move();
         Jump();
         Kick();
@@ -102,6 +88,21 @@ public class Bot : MonoBehaviour
         float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
         float opponentDistance = Vector3.Distance(opponent.transform.position, transform.position);
         float ballToGoalDistance = Vector3.Distance(ball.transform.position, defense.position);
+
+        if (BallIsOverhead()) {
+            MoveFromBall();
+            // return;
+        }
+
+        if (HasToDefend()) {
+            Defend();
+            // return;
+        }
+
+        if (IsFieldClear()) {
+            MoveTowardsGoal();
+            // return;
+        }
 
         if (transform.CompareTag("Enemy")) {
             // Check if the bot should attack
@@ -139,17 +140,26 @@ public class Bot : MonoBehaviour
                 && Mathf.Abs(ball.transform.position.y - transform.position.y) < 0.5f;
     }
 
-    private IEnumerator MoveFromBall() {
+    // private IEnumerator MoveFromBall() {
+    private void MoveFromBall() {
 
         if (moveLeftToRight) {
             transform.Translate(speed * Time.deltaTime, 0, 0); // Move back
-            yield return new WaitForSeconds(1f);
+            // yield return new WaitForSeconds(1f);
             if (canKick && random.NextDouble() < 0.5) Kick();
         } else {
             transform.Translate(-speed * Time.deltaTime, 0, 0); // Move forward
-            yield return new WaitForSeconds(1f);
+            // yield return new WaitForSeconds(1f);
             if (canKick && random.NextDouble() < 0.5) Kick();
         }
+
+        // if (moveLeftToRight) {
+        //     // dash back
+        //     StartCoroutine(Dash(1));
+        // } else {
+        //     // dash forward
+        //     StartCoroutine(Dash(-1));
+        // }
     }
 
     private bool IsFieldClear() {
@@ -217,7 +227,7 @@ public class Bot : MonoBehaviour
 
         float opponentDistance = Vector3.Distance(opponent.transform.position, transform.position);
         float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
-        if ((opponentDistance < kickRange || ballDistance < kickRange) && random.NextDouble() < 0.5) {
+        if ((opponentDistance < kickRange) ^ (ballDistance < kickRange) && random.NextDouble() < 0.5) {
             kickPressed = true;
             StartCoroutine(KickCooldown());
         } else {

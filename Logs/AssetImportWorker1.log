@@ -319,3 +319,1097 @@ AssetImportParameters requested are different than current active one (requested
   custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
   custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
   custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.819 seconds
+Refreshing native plugins compatible for Editor in 54.14 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  5.149 seconds
+Domain Reload Profiling: 6962ms
+	BeginReloadAssembly (555ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (30ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (81ms)
+	RebuildCommonClasses (112ms)
+	RebuildNativeTypeToScriptingClass (34ms)
+	initialDomainReloadingComplete (111ms)
+	LoadAllAssembliesAndSetupDomain (999ms)
+		LoadAssemblies (1269ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (93ms)
+			TypeCache.Refresh (40ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (1ms)
+			ResolveRequiredComponents (49ms)
+	FinalizeReload (5150ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2729ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (55ms)
+			SetLoadedEditorAssemblies (15ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (224ms)
+			ProcessInitializeOnLoadAttributes (2279ms)
+			ProcessInitializeOnLoadMethodAttributes (118ms)
+			AfterProcessingInitializeOnLoad (37ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (43ms)
+Refreshing native plugins compatible for Editor in 27.30 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.4 KB). Loaded Objects now: 1511.
+Memory consumption went from 82.0 MB to 82.0 MB.
+Total: 14.434800 ms (FindLiveObjects: 0.299400 ms CreateObjectMapping: 0.224900 ms MarkObjects: 13.425500 ms  DeleteObjects: 0.480100 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in 19.639 seconds
+Refreshing native plugins compatible for Editor in 25.61 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in 24.355 seconds
+Domain Reload Profiling: 43973ms
+	BeginReloadAssembly (1071ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (79ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (1ms)
+		CreateAndSetChildDomain (347ms)
+	RebuildCommonClasses (943ms)
+	RebuildNativeTypeToScriptingClass (86ms)
+	initialDomainReloadingComplete (293ms)
+	LoadAllAssembliesAndSetupDomain (17223ms)
+		LoadAssemblies (17591ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (83ms)
+			TypeCache.Refresh (42ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (2ms)
+			ResolveRequiredComponents (33ms)
+	FinalizeReload (24357ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (3978ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (83ms)
+			SetLoadedEditorAssemblies (35ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (418ms)
+			ProcessInitializeOnLoadAttributes (3319ms)
+			ProcessInitializeOnLoadMethodAttributes (102ms)
+			AfterProcessingInitializeOnLoad (20ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (20ms)
+Refreshing native plugins compatible for Editor in 16.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.5 KB). Loaded Objects now: 1514.
+Memory consumption went from 84.0 MB to 84.0 MB.
+Total: 8.067200 ms (FindLiveObjects: 0.256500 ms CreateObjectMapping: 0.109500 ms MarkObjects: 7.547700 ms  DeleteObjects: 0.151000 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.446 seconds
+Refreshing native plugins compatible for Editor in 6.60 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.039 seconds
+Domain Reload Profiling: 4476ms
+	BeginReloadAssembly (644ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (26ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (83ms)
+	RebuildCommonClasses (114ms)
+	RebuildNativeTypeToScriptingClass (35ms)
+	initialDomainReloadingComplete (94ms)
+	LoadAllAssembliesAndSetupDomain (549ms)
+		LoadAssemblies (946ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (54ms)
+			TypeCache.Refresh (34ms)
+				TypeCache.ScanAssembly (3ms)
+			ScanForSourceGeneratedMonoScriptInfo (9ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (3040ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (1612ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (26ms)
+			SetLoadedEditorAssemblies (21ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (138ms)
+			ProcessInitializeOnLoadAttributes (1329ms)
+			ProcessInitializeOnLoadMethodAttributes (67ms)
+			AfterProcessingInitializeOnLoad (30ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (25ms)
+Refreshing native plugins compatible for Editor in 9.15 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.6 KB). Loaded Objects now: 1517.
+Memory consumption went from 85.9 MB to 85.9 MB.
+Total: 7.512700 ms (FindLiveObjects: 0.231900 ms CreateObjectMapping: 0.075600 ms MarkObjects: 7.128000 ms  DeleteObjects: 0.074700 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.102 seconds
+Refreshing native plugins compatible for Editor in 9.86 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.890 seconds
+Domain Reload Profiling: 4987ms
+	BeginReloadAssembly (424ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (18ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (74ms)
+	RebuildCommonClasses (109ms)
+	RebuildNativeTypeToScriptingClass (52ms)
+	initialDomainReloadingComplete (80ms)
+	LoadAllAssembliesAndSetupDomain (429ms)
+		LoadAssemblies (672ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (24ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (15ms)
+	FinalizeReload (3893ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2588ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (21ms)
+			SetLoadedEditorAssemblies (17ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (119ms)
+			ProcessInitializeOnLoadAttributes (2229ms)
+			ProcessInitializeOnLoadMethodAttributes (151ms)
+			AfterProcessingInitializeOnLoad (51ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (53ms)
+Refreshing native plugins compatible for Editor in 12.06 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.5 KB). Loaded Objects now: 1520.
+Memory consumption went from 87.8 MB to 87.8 MB.
+Total: 9.890000 ms (FindLiveObjects: 0.189700 ms CreateObjectMapping: 0.082400 ms MarkObjects: 9.337500 ms  DeleteObjects: 0.275400 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Import Request.
+  Time since last request: 169300.550380 seconds.
+  path: Assets/Prefabs/PlayerBot Variant.prefab
+  artifactKey: Guid(2e9fa6788f8fc394dae2f98816546c6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/PlayerBot Variant.prefab using Guid(2e9fa6788f8fc394dae2f98816546c6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54bfd6aa7eb53dc417ecb75f971cf5f4') in 0.826381 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 73
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.307 seconds
+Refreshing native plugins compatible for Editor in 10.12 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.661 seconds
+Domain Reload Profiling: 4963ms
+	BeginReloadAssembly (437ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (16ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (70ms)
+	RebuildCommonClasses (105ms)
+	RebuildNativeTypeToScriptingClass (39ms)
+	initialDomainReloadingComplete (100ms)
+	LoadAllAssembliesAndSetupDomain (619ms)
+		LoadAssemblies (869ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (36ms)
+			TypeCache.Refresh (18ms)
+				TypeCache.ScanAssembly (3ms)
+			ScanForSourceGeneratedMonoScriptInfo (5ms)
+			ResolveRequiredComponents (11ms)
+	FinalizeReload (3664ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2015ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (33ms)
+			SetLoadedEditorAssemblies (16ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (177ms)
+			ProcessInitializeOnLoadAttributes (1655ms)
+			ProcessInitializeOnLoadMethodAttributes (92ms)
+			AfterProcessingInitializeOnLoad (40ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (37ms)
+Refreshing native plugins compatible for Editor in 10.79 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1010 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.5 KB). Loaded Objects now: 1523.
+Memory consumption went from 89.5 MB to 89.5 MB.
+Total: 9.741400 ms (FindLiveObjects: 0.860800 ms CreateObjectMapping: 0.163100 ms MarkObjects: 8.625400 ms  DeleteObjects: 0.089500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.282 seconds
+Refreshing native plugins compatible for Editor in 12.42 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.647 seconds
+Domain Reload Profiling: 4924ms
+	BeginReloadAssembly (453ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (72ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (73ms)
+	RebuildCommonClasses (103ms)
+	RebuildNativeTypeToScriptingClass (20ms)
+	initialDomainReloadingComplete (85ms)
+	LoadAllAssembliesAndSetupDomain (612ms)
+		LoadAssemblies (806ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (34ms)
+			TypeCache.Refresh (11ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (1ms)
+			ResolveRequiredComponents (21ms)
+	FinalizeReload (3649ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2418ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (21ms)
+			SetLoadedEditorAssemblies (10ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (115ms)
+			ProcessInitializeOnLoadAttributes (2074ms)
+			ProcessInitializeOnLoadMethodAttributes (149ms)
+			AfterProcessingInitializeOnLoad (48ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (47ms)
+Refreshing native plugins compatible for Editor in 14.68 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.5 KB). Loaded Objects now: 1526.
+Memory consumption went from 91.7 MB to 91.7 MB.
+Total: 10.628200 ms (FindLiveObjects: 0.520500 ms CreateObjectMapping: 0.285600 ms MarkObjects: 9.675100 ms  DeleteObjects: 0.140100 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.263 seconds
+Refreshing native plugins compatible for Editor in 11.62 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.567 seconds
+Domain Reload Profiling: 4818ms
+	BeginReloadAssembly (438ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (18ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (73ms)
+	RebuildCommonClasses (109ms)
+	RebuildNativeTypeToScriptingClass (36ms)
+	initialDomainReloadingComplete (95ms)
+	LoadAllAssembliesAndSetupDomain (571ms)
+		LoadAssemblies (801ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (43ms)
+			TypeCache.Refresh (17ms)
+				TypeCache.ScanAssembly (3ms)
+			ScanForSourceGeneratedMonoScriptInfo (11ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (3568ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2025ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (30ms)
+			SetLoadedEditorAssemblies (10ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (171ms)
+			ProcessInitializeOnLoadAttributes (1701ms)
+			ProcessInitializeOnLoadMethodAttributes (81ms)
+			AfterProcessingInitializeOnLoad (32ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (46ms)
+Refreshing native plugins compatible for Editor in 11.89 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.6 KB). Loaded Objects now: 1529.
+Memory consumption went from 93.6 MB to 93.6 MB.
+Total: 11.741400 ms (FindLiveObjects: 0.224200 ms CreateObjectMapping: 0.060500 ms MarkObjects: 11.351300 ms  DeleteObjects: 0.102500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.071 seconds
+Refreshing native plugins compatible for Editor in 5.96 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.834 seconds
+Domain Reload Profiling: 4899ms
+	BeginReloadAssembly (401ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (23ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (72ms)
+	RebuildCommonClasses (113ms)
+	RebuildNativeTypeToScriptingClass (37ms)
+	initialDomainReloadingComplete (103ms)
+	LoadAllAssembliesAndSetupDomain (407ms)
+		LoadAssemblies (619ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (22ms)
+			TypeCache.Refresh (9ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (11ms)
+	FinalizeReload (3838ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2523ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (23ms)
+			SetLoadedEditorAssemblies (9ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (125ms)
+			ProcessInitializeOnLoadAttributes (2136ms)
+			ProcessInitializeOnLoadMethodAttributes (163ms)
+			AfterProcessingInitializeOnLoad (67ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (73ms)
+Refreshing native plugins compatible for Editor in 17.43 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.6 KB). Loaded Objects now: 1532.
+Memory consumption went from 95.6 MB to 95.5 MB.
+Total: 13.234100 ms (FindLiveObjects: 0.484300 ms CreateObjectMapping: 0.160100 ms MarkObjects: 12.487300 ms  DeleteObjects: 0.099200 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.040 seconds
+Refreshing native plugins compatible for Editor in 9.54 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.718 seconds
+Domain Reload Profiling: 4750ms
+	BeginReloadAssembly (384ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (17ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (67ms)
+	RebuildCommonClasses (90ms)
+	RebuildNativeTypeToScriptingClass (28ms)
+	initialDomainReloadingComplete (82ms)
+	LoadAllAssembliesAndSetupDomain (447ms)
+		LoadAssemblies (670ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (18ms)
+			TypeCache.Refresh (8ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (3719ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2361ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (30ms)
+			SetLoadedEditorAssemblies (12ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (234ms)
+			ProcessInitializeOnLoadAttributes (1929ms)
+			ProcessInitializeOnLoadMethodAttributes (114ms)
+			AfterProcessingInitializeOnLoad (42ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (26ms)
+Refreshing native plugins compatible for Editor in 17.17 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.6 KB). Loaded Objects now: 1535.
+Memory consumption went from 97.5 MB to 97.4 MB.
+Total: 19.404000 ms (FindLiveObjects: 0.352500 ms CreateObjectMapping: 0.168300 ms MarkObjects: 18.721400 ms  DeleteObjects: 0.158100 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.309 seconds
+Refreshing native plugins compatible for Editor in 9.96 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.252 seconds
+Domain Reload Profiling: 4553ms
+	BeginReloadAssembly (469ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (15ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (86ms)
+	RebuildCommonClasses (97ms)
+	RebuildNativeTypeToScriptingClass (41ms)
+	initialDomainReloadingComplete (125ms)
+	LoadAllAssembliesAndSetupDomain (566ms)
+		LoadAssemblies (832ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (33ms)
+			TypeCache.Refresh (16ms)
+				TypeCache.ScanAssembly (3ms)
+			ScanForSourceGeneratedMonoScriptInfo (5ms)
+			ResolveRequiredComponents (10ms)
+	FinalizeReload (3254ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (1855ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (47ms)
+			SetLoadedEditorAssemblies (13ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (152ms)
+			ProcessInitializeOnLoadAttributes (1521ms)
+			ProcessInitializeOnLoadMethodAttributes (89ms)
+			AfterProcessingInitializeOnLoad (33ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (31ms)
+Refreshing native plugins compatible for Editor in 10.84 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1011 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.5 KB). Loaded Objects now: 1538.
+Memory consumption went from 99.4 MB to 99.4 MB.
+Total: 8.013100 ms (FindLiveObjects: 0.219300 ms CreateObjectMapping: 0.102300 ms MarkObjects: 7.606000 ms  DeleteObjects: 0.082700 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
+========================================================================
+Received Import Request.
+  Time since last request: 1621.345758 seconds.
+  path: Assets/Prefabs/PlayerBot Variant.prefab
+  artifactKey: Guid(2e9fa6788f8fc394dae2f98816546c6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/PlayerBot Variant.prefab using Guid(2e9fa6788f8fc394dae2f98816546c6e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cd81cc132d9aba2ca61a9fa1a9bf2ba2') in 0.254554 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 73
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.799 seconds
+Refreshing native plugins compatible for Editor in 5.72 ms, found 2 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  5.188 seconds
+Domain Reload Profiling: 5989ms
+	BeginReloadAssembly (317ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (8ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (60ms)
+	RebuildCommonClasses (57ms)
+	RebuildNativeTypeToScriptingClass (17ms)
+	initialDomainReloadingComplete (57ms)
+	LoadAllAssembliesAndSetupDomain (345ms)
+		LoadAssemblies (522ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (17ms)
+			TypeCache.Refresh (9ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (7ms)
+	FinalizeReload (5196ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2705ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (95ms)
+			SetLoadedEditorAssemblies (50ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (125ms)
+			ProcessInitializeOnLoadAttributes (2313ms)
+			ProcessInitializeOnLoadMethodAttributes (93ms)
+			AfterProcessingInitializeOnLoad (29ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (52ms)
+Refreshing native plugins compatible for Editor in 25.13 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1010 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 13 unused Assets / (27.5 KB). Loaded Objects now: 1541.
+Memory consumption went from 101.1 MB to 101.1 MB.
+Total: 17.418000 ms (FindLiveObjects: 2.096300 ms CreateObjectMapping: 0.559100 ms MarkObjects: 14.650400 ms  DeleteObjects: 0.104500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/CreateRepositoryDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 5cec3e66b09e0dbe1f805953c5c64af9
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesTab.cs: 8f6297df34271fdb1ce2d9607ec6261d -> af2f8b65a736cbc2c6197311f8f8caf3
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/ChangesetsTab.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 46dde8f7856048792ad2e75490bb8c5e
+  custom:scripting/monoscript/fileName/AutoLogin.cs: 90647cc400823b41df847a6cbfc29026 -> cac363a2d5471994de278e71f937b032
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/LaunchDependenciesDialog.cs: 90647cc400823b41df847a6cbfc29026 -> 2cabf22eb95430074b6c730a84e03493
+  custom:scripting/monoscript/fileName/ViewSwitcher.cs: 90647cc400823b41df847a6cbfc29026 -> 1700c042de8c16a5c0f6851d66df802a
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/IncomingChangesNotifier.cs: 8f6297df34271fdb1ce2d9607ec6261d -> 10fad815611441fb3a805150421ed991
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForDialogs.cs: a53f96815da50de15010b1c479bc70cf -> 7e6bd1727985204e3b64e1946e589b1c
+  custom:scripting/monoscript/fileName/CloudEditionWelcomeWindow.cs: c1777a498406cd95bc755aaf92ab946f -> b1721e471183956468462f6b64901640
+  custom:scripting/monoscript/fileName/DiffPanel.cs: 90647cc400823b41df847a6cbfc29026 -> 210366dab3631628227b9406f87a9b7f
+  custom:scripting/monoscript/fileName/CredentialsUIImpl.cs: 90647cc400823b41df847a6cbfc29026 -> dbacf67c37819fd95562fe169e706732
+  custom:scripting/monoscript/fileName/UnityPlasticGuiMessage.cs: 90647cc400823b41df847a6cbfc29026 -> 24eef0792e3802809607a7f9d04b8f1d
+  custom:scripting/monoscript/fileName/ProgressOperationHandler.cs: 8da79525110cdcf421ce08e37577cfbc -> ec62666c0ca1649dd33cc6bc6834c6f7
+  custom:scripting/monoscript/fileName/UnityPlasticTimer.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 6c887e722e951c2964523825cad70c4c
+  custom:scripting/monoscript/fileName/SSOCredentialsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e140ede12a96f68f30062138385171c3
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ConfirmContinueWithPendingChangesDialog.cs: 0fd6c484965f7cb9b268e798298a9886 -> 77462b1904ad8f6fee2f8da4523d59fe
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:scripting/monoscript/fileName/BranchesTab.cs: 90647cc400823b41df847a6cbfc29026 -> 57c33f76c527a5aba4d269245ffff188
+  custom:scripting/monoscript/fileName/UpdateReportDialog.cs: d1628edb27b556e9e45af714e1b3ce2e -> 087837d8f73228f1a817d0de82c77260
+  custom:scripting/monoscript/fileName/RepositoriesListView.cs: 90647cc400823b41df847a6cbfc29026 -> 95287f65338ca0073ad04002a16eaaf7
+  custom:scripting/monoscript/fileName/ChannelCertificateUiImpl.cs: 90647cc400823b41df847a6cbfc29026 -> cefccf1e13b7bcf15e3c9f2dd4cd2fc8
+  custom:scripting/monoscript/fileName/LaunchCheckinConflictsDialog.cs: 90647cc400823b41df847a6cbfc29026 -> e2c1e3f8f4e14a62e4363fe6259adbc2
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CreateWorkspaceView.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 04b4ce6556541af6541e1f1c2ea97052
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/ProgressControlsForViews.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> a8a18a90f46aa63848e1e45d8d7ff9af
+  custom:scripting/monoscript/fileName/RepositoryExplorerDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> eea34924da79ad7254f3e141a891c78d
+  custom:scripting/monoscript/fileName/CheckinDialog.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 702fdb8d0a3b4bfcb9ba109e71325cad
+  custom:scripting/monoscript/fileName/MissingEncryptionPasswordPromptHandler.cs: 90647cc400823b41df847a6cbfc29026 -> 5d7b9646eb14a39b6d3d5bab19d266ff
+  custom:scripting/monoscript/fileName/NotificationBar.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 0daf459fa0c4269b16bcc20cd072c021
+  custom:scripting/monoscript/fileName/UnityThreadWaiter.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> 99333406d92d10003984b4d1920de2f9
+  custom:scripting/monoscript/fileName/PlasticWindow.cs: 0cdf409b5aa8d4c25876d72b5c6a3b60 -> fc467478941f610919bc69526ba2c215
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/EditorProgressControls.cs: 90647cc400823b41df847a6cbfc29026 -> 2e606eb01a6e6a567f3de9a0379ed3ae
+  custom:scripting/monoscript/fileName/HistoryTab.cs: 90647cc400823b41df847a6cbfc29026 -> d57f000c65fde42a2228c7a105a836e5
