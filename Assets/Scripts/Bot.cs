@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bot : MonoBehaviour
 {
 
-    private bool moveLeftToRight;
+    public bool moveLeftToRight;
 
     public float speed = 8f;
     public float jumpForce = 16f;
@@ -73,6 +73,7 @@ public class Bot : MonoBehaviour
         Kick();
         UsePowerUp();
 
+        HandleBotOverlap();
         ReactToOpponentPower();
     }
 
@@ -91,7 +92,7 @@ public class Bot : MonoBehaviour
 
         if (BallIsOverhead()) {
             MoveFromBall();
-            // return;
+            return;
         }
 
         if (HasToDefend()) {
@@ -137,29 +138,30 @@ public class Bot : MonoBehaviour
 
     private bool BallIsOverhead() {
         return Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f 
-                && Mathf.Abs(ball.transform.position.y - transform.position.y) < 0.5f;
+            && (ball.transform.position.y >= transform.position.y)
+            && (ball.transform.position.y - transform.position.y) < 0.5f;
     }
 
     // private IEnumerator MoveFromBall() {
     private void MoveFromBall() {
 
         if (moveLeftToRight) {
-            transform.Translate(speed * Time.deltaTime, 0, 0); // Move back
-            // yield return new WaitForSeconds(1f);
-            if (canKick && random.NextDouble() < 0.5) Kick();
+            if (ball.transform.position.x > transform.position.x)
+                // Move left
+                rb.velocity = new Vector2(-speed, rb.velocity.y);
+            else
+                // Move right
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+            // transform.Translate(speed * Time.deltaTime, 0, 0); // Move back
         } else {
-            transform.Translate(-speed * Time.deltaTime, 0, 0); // Move forward
-            // yield return new WaitForSeconds(1f);
-            if (canKick && random.NextDouble() < 0.5) Kick();
+            if (ball.transform.position.x > transform.position.x)
+                // Move right
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+            else
+                // Move left
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+            // transform.Translate(-speed * Time.deltaTime, 0, 0); // Move forward
         }
-
-        // if (moveLeftToRight) {
-        //     // dash back
-        //     StartCoroutine(Dash(1));
-        // } else {
-        //     // dash forward
-        //     StartCoroutine(Dash(-1));
-        // }
     }
 
     private bool IsFieldClear() {
@@ -227,7 +229,7 @@ public class Bot : MonoBehaviour
 
         float opponentDistance = Vector3.Distance(opponent.transform.position, transform.position);
         float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
-        if ((opponentDistance < kickRange) ^ (ballDistance < kickRange) && random.NextDouble() < 0.5) {
+        if ((opponentDistance < kickRange) ^ (ballDistance < kickRange) && random.NextDouble() < 0.5 && canKick) {
             kickPressed = true;
             StartCoroutine(KickCooldown());
         } else {
@@ -277,6 +279,23 @@ public class Bot : MonoBehaviour
         }
         if (ball.GetComponent<Ball>().isShooting && opponent_isUsingPower) {
             StartCoroutine(WaitAndJump());
+        }
+    }
+
+    private void HandleBotOverlap() {
+        float overlapThreshold = 0.1f; // Adjust as needed
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, overlapThreshold);
+        foreach (var collider in colliders) {
+            if (collider.gameObject != gameObject && (collider.CompareTag("Player") || collider.CompareTag("Enemy"))) {
+                if (collider.transform.position.y > transform.position.y) {
+                    // The other bot is above this bot
+                    if (random.NextDouble() < 0.5)
+                        rb.velocity = new Vector2(speed, rb.velocity.y); // Move forward
+                    else
+                        rb.velocity = new Vector2(-speed, rb.velocity.y); // Move back
+                }
+            }
         }
     }
 
@@ -334,12 +353,18 @@ public class Bot : MonoBehaviour
 
     private IEnumerator WaitAndJump() {
         float waitTime = random.Next(1, 3);
+
+        if (canDash && !isDashing)
+            if (moveLeftToRight)
+                StartCoroutine(Dash(-1));
+            else
+                StartCoroutine(Dash(1));
+
         yield return new WaitForSeconds(waitTime);
 
         if (isGrounded) {
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             isGrounded = false;
         }
-
     }
 }

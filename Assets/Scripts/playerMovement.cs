@@ -4,6 +4,8 @@ using System;
 using System.IO;
 
 public class PlayerMovement : MonoBehaviour {
+
+	public bool moveLeftToRight;
 	
     public int playerNumber;
 	private float horizontal;
@@ -43,7 +45,8 @@ public class PlayerMovement : MonoBehaviour {
 			progressBar = Gui.S.progressBar1.GetComponent<ProgressBar>();
 		else
 			progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
-			
+		
+        moveLeftToRight = GameObject.FindGameObjectWithTag("Ball").transform.position.x > transform.position.x;
 	}
 
 	void Update() {
@@ -118,8 +121,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	private void HandleDoubleClickDash() {
 		// Check left direction
-		// if ((Input.GetKeyDown(KeyCode.A) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.LeftArrow) && playerNumber == 2)) {
-		if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+		if ((Input.GetKeyDown(KeyCode.A) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.LeftArrow) && playerNumber == 2)) {
 			float currentTime = Time.time;
 			if (currentTime - lastLeftPressTime < doubleClickThreshold && canDash && rb.velocity.y == 0f) {
 				GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);

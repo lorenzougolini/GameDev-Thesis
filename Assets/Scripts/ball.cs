@@ -7,6 +7,12 @@ public class Ball : MonoBehaviour {
 	
 	public bool isShooting = false;
 
+	private Animator animator;
+
+	private void Start() {
+		animator = GetComponent<Animator>();
+	}
+
 	private void OnCollisionEnter2D(Collision2D coll) {
 		if (ResetObjects.S.resetting) return;
 		if (coll.gameObject.tag == "Player") {
@@ -125,10 +131,6 @@ public class Ball : MonoBehaviour {
 
 		ballRb.constraints = RigidbodyConstraints2D.None;
 		ballRb.velocity = direction * moveSpeed;
-
-		// while (isShooting) {
-        //     yield return new WaitForSeconds(1f);
-        // }
 
 		playerRb.gravityScale = 3;
 		playerRb.constraints = RigidbodyConstraints2D.None;

@@ -63,13 +63,13 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SetUpMultiGame() {
         // Instantiate ball
-        GameObject ball = Instantiate(ballPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+        GameObject ball = Instantiate(ballPrefab, new Vector3(0, 3, 0), Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody2D>();
         ballRb.isKinematic = true;
         AddGameObject(ball);
 
         // Instantiate player 1
-        GameObject player1 = Instantiate(playerPrefab, new Vector3(-7, 0, 0), Quaternion.identity);
+        GameObject player1 = Instantiate(playerPrefab, new Vector3(-7, 1, 0), Quaternion.identity);
         PlayerMovement p1Move = player1.GetComponent<PlayerMovement>();
         p1Move.playerNumber = 1;
         p1Move.speed = 8f;
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
         AddGameObject(player1);
 
         // Instantiate player 2
-        GameObject player2 = Instantiate(playerPrefab, new Vector3(7, 0, 0), Quaternion.identity);
+        GameObject player2 = Instantiate(playerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
         player2.tag = "Enemy";
         PlayerMovement p2Move = player2.GetComponent<PlayerMovement>();
         p2Move.playerNumber = 2;
@@ -117,13 +117,13 @@ public class GameManager : MonoBehaviour
     IEnumerator SetUpSingleGame() {
 
         // Instantiate ball
-        GameObject ball = Instantiate(ballPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+        GameObject ball = Instantiate(ballPrefab, new Vector3(0, 3, 0), Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody2D>();
         ballRb.isKinematic = true;
         AddGameObject(ball);
 
         // Instantiate player 1
-        GameObject player1 = Instantiate(playerPrefab, new Vector3(-7, 0, 0), Quaternion.identity);
+        GameObject player1 = Instantiate(playerPrefab, new Vector3(-7, 1, 0), Quaternion.identity);
         PlayerMovement p1Move = player1.GetComponent<PlayerMovement>();
         p1Move.playerNumber = 1;
         p1Move.speed = 8f;
@@ -133,16 +133,16 @@ public class GameManager : MonoBehaviour
         AddGameObject(player1);
 
         // Instantiate player 2 bot
-        GameObject bot = Instantiate(botPrefab, new Vector3(7, 0, 0), Quaternion.identity);
+        GameObject bot = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
         bot.tag = "Enemy";
         Bot botMove = bot.GetComponent<Bot>();
         botMove.speed = 6f;
         botMove.jumpForce = 16f;
-        botMove.opponentGoalPosition = new Vector3(-9.8f, 0, 0);
+        botMove.opponentGoalPosition = new Vector3(-9.8f, 1, 0);
         Transform footBot = bot.transform.Find("Foot");
-        footBot.GetComponent<Animator>().SetBool("isFlipped", true);
+        footBot.GetComponent<Animator>().SetBool("isFlipped", false);
 
-        GameObject defense = Instantiate(defensePrefab, new Vector3(9.5f, 0, 0), Quaternion.identity);
+        GameObject defense = Instantiate(defensePrefab, new Vector3(9.5f, 1, 0), Quaternion.identity);
         bot.GetComponent<Bot>().defense = defense.transform;
 
         AddGameObject(bot);
@@ -172,40 +172,40 @@ public class GameManager : MonoBehaviour
     IEnumerator SetUpBotGame() {
 
         // Instantiate ball
-        GameObject ball = Instantiate(ballPrefab, new Vector3(0, 2, 0), Quaternion.identity);
+        GameObject ball = Instantiate(ballPrefab, new Vector3(0, 3, 0), Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody2D>();
         ballRb.isKinematic = true;
         AddGameObject(ball);
 
-        // Instantiate player 1
-        GameObject bot1 = Instantiate(botPrefab, new Vector3(-7, 0, 0), Quaternion.identity);
+        // Instantiate bot 1
+        GameObject bot1 = Instantiate(botPrefab, new Vector3(-7, 1, 0), Quaternion.identity);
         bot1.tag = "Player";
         Bot botMove1 = bot1.GetComponent<Bot>();
         botMove1.speed = 3f;
         botMove1.jumpForce = 10f;
-        botMove1.opponentGoalPosition = new Vector3(-9.8f, 0, 0);
+        botMove1.opponentGoalPosition = new Vector3(-9.8f, 1, 0);
         Transform bodyP2 = bot1.transform.Find("Body");
         if (bodyP2) 
-            bodyP2.GetComponent<SpriteRenderer>().flipX = false;
+            bodyP2.GetComponent<SpriteRenderer>().flipX = true;
         Transform footBot1 = bot1.transform.Find("Foot");
-        footBot1.GetComponent<Animator>().SetBool("isFlipped", false);
+        footBot1.GetComponent<Animator>().SetBool("isFlipped", true);
 
-        GameObject defense1 = Instantiate(defensePrefab, new Vector3(-9.5f, 0, 0), Quaternion.identity);
+        GameObject defense1 = Instantiate(defensePrefab, new Vector3(-9.5f, 1, 0), Quaternion.identity);
         bot1.GetComponent<Bot>().defense = defense1.transform;
 
         AddGameObject(bot1);
 
-        // Instantiate player 2 bot
-        GameObject bot2 = Instantiate(botPrefab, new Vector3(7, 0, 0), Quaternion.identity);
+        // Instantiate bot 2
+        GameObject bot2 = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
         bot2.tag = "Enemy";
         Bot botMove2 = bot2.GetComponent<Bot>();
         botMove2.speed = 3f;
         botMove2.jumpForce = 10f;
-        botMove2.opponentGoalPosition = new Vector3(9.8f, 0, 0);
+        botMove2.opponentGoalPosition = new Vector3(9.8f, 1, 0);
         Transform footBot2 = bot2.transform.Find("Foot");
-        footBot2.GetComponent<Animator>().SetBool("isFlipped", true);
+        footBot2.GetComponent<Animator>().SetBool("isFlipped", false);
 
-        GameObject defense2 = Instantiate(defensePrefab, new Vector3(9.5f, 0, 0), Quaternion.identity);
+        GameObject defense2 = Instantiate(defensePrefab, new Vector3(9.5f, 1, 0), Quaternion.identity);
         bot2.GetComponent<Bot>().defense = defense2.transform;
 
         AddGameObject(bot2);
