@@ -132,6 +132,7 @@ public class Bot : MonoBehaviour
             Vector3 dashDirection = (ball.transform.position - transform.position).normalized;
             int direction = dashDirection.x > 0 ? 1 : -1;
             
+            GameLogger.Instance.LogEvent("Bot Dashed at Position: " + transform.position);
             StartCoroutine(Dash(direction));
         }
     }
@@ -222,6 +223,7 @@ public class Bot : MonoBehaviour
             // rb.AddForce(jumpDirection * jumpForce, ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
+            GameLogger.Instance.LogEvent("Bot Jumped at Position: " + transform.position);
         }
     }
 
@@ -231,6 +233,7 @@ public class Bot : MonoBehaviour
         float ballDistance = Vector3.Distance(ball.transform.position, transform.position);
         if ((opponentDistance < kickRange) ^ (ballDistance < kickRange) && random.NextDouble() < 0.5 && canKick) {
             kickPressed = true;
+            GameLogger.Instance.LogEvent("Bot Kicked at Position: " + transform.position);
             StartCoroutine(KickCooldown());
         } else {
             kickPressed = false;
@@ -301,6 +304,7 @@ public class Bot : MonoBehaviour
 
     public void TakeDamage(int direction) {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
+        GameLogger.Instance.LogEvent("Bot Took Damage at Position: " + transform.position);
         StartCoroutine(Knockback(knockbackPosition));
     }
 

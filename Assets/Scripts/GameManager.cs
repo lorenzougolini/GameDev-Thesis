@@ -42,7 +42,8 @@ public class GameManager : MonoBehaviour
 
         Gui.S.matchDuration = matchDuration;
 
-        string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
+        // string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
+        string logFilePath = Path.Combine("C:/Users/lore1/OneDrive - uniroma1.it/Thesis/GameDev - Thesis/Match Logs", $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
         GameLogger.Instance.SetLogFilePath(logFilePath);
         GameLogger.Instance.LogEvent("Game Started in " + MainMenu.mode + " mode");
 
@@ -72,7 +73,7 @@ public class GameManager : MonoBehaviour
         GameObject player1 = Instantiate(playerPrefab, new Vector3(-7, 1, 0), Quaternion.identity);
         PlayerMovement p1Move = player1.GetComponent<PlayerMovement>();
         p1Move.playerNumber = 1;
-        p1Move.speed = 8f;
+        p1Move.speed = 6f;
         p1Move.jumpForce = 16f;
         Transform footP1 = player1.transform.Find("Foot");
         footP1.GetComponent<Animator>().SetBool("isFlipped", true);
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
         player2.tag = "Enemy";
         PlayerMovement p2Move = player2.GetComponent<PlayerMovement>();
         p2Move.playerNumber = 2;
-        p2Move.speed = 8f;
+        p2Move.speed = 6f;
         p2Move.jumpForce = 16f;
         Transform bodyP2 = player2.transform.Find("Body");
         if (bodyP2) 
@@ -126,7 +127,7 @@ public class GameManager : MonoBehaviour
         GameObject player1 = Instantiate(playerPrefab, new Vector3(-7, 1, 0), Quaternion.identity);
         PlayerMovement p1Move = player1.GetComponent<PlayerMovement>();
         p1Move.playerNumber = 1;
-        p1Move.speed = 8f;
+        p1Move.speed = 6f;
         p1Move.jumpForce = 16f;
         Transform footP1 = player1.transform.Find("Foot");
         footP1.GetComponent<Animator>().SetBool("isFlipped", true);
