@@ -3,7 +3,9 @@ using System.Collections;
 using System;
 using System.IO;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour 
+{
+	public static PlayerMovement Instance;
 
 	public bool moveLeftToRight;
 	
@@ -37,7 +39,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool kickPressed;
 
-	void Start () {
+	private void Awake() {
+		Instance = this;
+	}
+
+	void Start() {
 
 		footAnimator = transform.Find("Foot").GetComponent<Animator>();
 
@@ -55,18 +61,30 @@ public class PlayerMovement : MonoBehaviour {
 		if (!Gui.S.playing) return;
 
 		// Move
-		horizontal = Input.GetAxis("Horizontal" + playerNumber);
+		if (TouchControls.leftPressed)
+			horizontal = -1f;
+		else if (TouchControls.rightPressed)
+			horizontal = 1f;
+		else
+			horizontal = Input.GetAxis("Horizontal" + playerNumber);
 		
 		// Jump
-		if (Input.GetButtonDown("Vertical" + playerNumber) && isGrounded()) {
+		if (Input.GetButtonDown("Vertical" + playerNumber) && isGrounded()) 
+		{
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 			GameLogger.Instance.LogEvent("Player " + playerNumber + " Jumped at Position: " + transform.position);
+			
+		} else if (TouchControls.jumpPressed && isGrounded()) 
+		{
+			rb.velocity = new Vector2(rb.velocity.x, jumpForce*0.5f);
+			GameLogger.Instance.LogEvent("Player " + playerNumber + " Jumped at Position: " + transform.position);
+			TouchControls.jumpPressed = false;
 		}
-		if (Input.GetButtonDown("Vertical" + playerNumber) && rb.velocity.y > 0f)
+		if ((TouchControls.jumpPressed || Input.GetButtonDown("Vertical" + playerNumber)) && rb.velocity.y > 0f)
 			rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 		
 		// Kick
-		kickPressed = Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));
+		kickPressed = TouchControls.kickPressed || Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));
 		if (kickPressed)
 			GameLogger.Instance.LogEvent("Player " + playerNumber + " Kicked at Position: " + transform.position);
 
@@ -75,8 +93,9 @@ public class PlayerMovement : MonoBehaviour {
 			HandleDoubleClickDash();
 
 		// Powerup
-		if (Input.GetButtonDown("Fire" + playerNumber) && powerReady) {
+		if ((TouchControls.powerPressed || Input.GetButtonDown("Fire" + playerNumber)) && powerReady) {
 			powerSetUp = true;
+			TouchControls.powerPressed = false;
 			
 			Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
 			bodyAnimator.enabled = true;
@@ -95,6 +114,15 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
+	private void FixedUpdate() {
+
+		if (isDashing) return;
+
+		rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+
+		footAnimator.SetBool ("kick", kickPressed);
+	}
+
 	private bool isGrounded(){
 		return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 	}
@@ -108,15 +136,6 @@ public class PlayerMovement : MonoBehaviour {
 
 		SpriteRenderer bodySprite = transform.Find("Body").GetComponent<SpriteRenderer>();
 		bodySprite.color = Color.white;
-	}
-
-	private void FixedUpdate() {
-
-		if (isDashing) return;
-
-		rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-
-		footAnimator.SetBool ("kick", kickPressed);
 	}
 
 	private void HandleDoubleClickDash() {
@@ -138,6 +157,15 @@ public class PlayerMovement : MonoBehaviour {
 				StartCoroutine(Dash(1));
 			}
 			lastRightPressTime = currentTime;
+		}
+	}
+
+	public void TriggerDash(int direction)
+	{
+		if (canDash && rb.velocity.y == 0f)
+		{
+			GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
+			StartCoroutine(Dash(direction));
 		}
 	}
 	
@@ -177,4 +205,7 @@ public class PlayerMovement : MonoBehaviour {
         transform.position = targetPosition;
 		transform.Find("Body").GetComponent<SpriteRenderer>().color = Color.white;	
 	}
+
 }
+
+

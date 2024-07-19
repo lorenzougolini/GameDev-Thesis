@@ -70,3 +70,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Builds and Logs directories
+Game Builds/
+Match Logs/

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+// using System.Diagnostics;
 using UnityEngine;
 
 public class Bot : MonoBehaviour
@@ -42,6 +43,10 @@ public class Bot : MonoBehaviour
 
     private System.Random random = new();
 
+    private Vector3 lastBallPosition;
+    private float ballStuckTime = 0f;
+    private float ballStuckThreshold = 1.5f;
+
     void Start()
     {
         InitializeBot();
@@ -82,6 +87,9 @@ public class Bot : MonoBehaviour
 
     private void PerformActions()
     {
+
+        // CheckBallStuck();
+
         Move();
         Jump();
         Kick();
@@ -90,13 +98,57 @@ public class Bot : MonoBehaviour
         ReactToOpponentPower();
     }
 
+    private void CheckBallStuck()
+    {
+        float ballXMovement = Mathf.Abs(ball.transform.position.x - lastBallPosition.x);
+        float ballYMovement = Mathf.Abs(ball.transform.position.y - lastBallPosition.y);
+
+        Debug.Log($"X movement: {ballXMovement}\nY movement: {ballYMovement}");
+
+        if (ballYMovement < 0.8 && ballXMovement < 0.8)
+        {
+            ballStuckTime += Time.deltaTime;
+            Debug.Log($"Stuck Time: {ballStuckTime}");
+        }
+        else
+        {
+            ballStuckTime = 0f;
+        }
+
+        if (ballStuckTime > ballStuckThreshold)
+        {
+            Debug.Log($"Ball is stuck at position: {ball.transform.position}");
+            HandleStuckBall();
+            ballStuckTime = 0f;
+        }
+        
+        lastBallPosition = ball.transform.position;
+    }
+
+    private void HandleStuckBall()
+    {
+        // Debug.Break();
+        if (ball.transform.position.y >= transform.position.y)
+        {
+            // Ball is stuck on the head, move to the side and jump
+            float direction = ball.transform.position.x > transform.position.x ? -1 : 1;
+            rb.velocity = new Vector2(direction * speed, jumpForce);
+        }
+        else
+        {
+            // Ball is under the bot, move to the side
+            float direction = ball.transform.position.x > transform.position.x ? -1 : 1;
+            rb.velocity = new Vector2(direction * speed, rb.velocity.y);
+        }
+    }
+
     private void Move()
     {
-        if (BallIsOverhead())
-        {
-            MoveFromBall();
-            return;
-        }
+        // if (BallIsOverhead())
+        // {
+        //     MoveFromBall();
+        //     return;
+        // }
 
         if (HasToDefend())
         {
@@ -161,21 +213,36 @@ public class Bot : MonoBehaviour
         // transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
         
         //* right but bot is stupid
-        Vector3 targetPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
-        Vector3 moveDirection = (targetPosition - transform.position).normalized;
-        transform.position += moveDirection * speed * Time.deltaTime;
+        if (MathF.Abs(ball.transform.position.x - transform.position.x) > 5)
+        {
+            if (canDash && !isDashing)
+            {
+                int dashDirection = xPosition > transform.position.x ? 1 : -1;
+                StartCoroutine(Dash(dashDirection));
+            }
+        }
+        else 
+        {
+            Vector3 targetPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
+            Vector3 moveDirection = (targetPosition - transform.position).normalized;
+            transform.position += moveDirection * speed * Time.deltaTime;
+        }
+
+        // Vector3 targetPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
+        // Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        // transform.position += moveDirection * speed * Time.deltaTime;
     }
 
-    private bool BallIsOverhead()
-    {
-        return Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f && ball.transform.position.y >= transform.position.y && ball.transform.position.y - transform.position.y < 0.5f;
-    }
+    // private bool BallIsOverhead()
+    // {
+    //     return Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f && ball.transform.position.y >= transform.position.y && ball.transform.position.y - transform.position.y < 0.5f;
+    // }
 
-    private void MoveFromBall()
-    {
-        float direction = ball.transform.position.x > transform.position.x ? -1 : 1;
-        rb.velocity = new Vector2(direction * speed, rb.velocity.y);
-    }
+    // private void MoveFromBall()
+    // {
+    //     float direction = ball.transform.position.x > transform.position.x ? -1 : 1;
+    //     rb.velocity = new Vector2(direction * speed, rb.velocity.y);
+    // }
 
     private bool IsFieldClear()
     {
