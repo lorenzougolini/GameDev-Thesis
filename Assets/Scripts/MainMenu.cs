@@ -9,31 +9,31 @@ public class MainMenu : MonoBehaviour
 {
 
     public static PlayingMode mode;
-    private string platform;
+    private string sceneFromPlatform = "PlayScene";
 
     private void Start() 
     {
-        DetectPlatform();
+        // DetectPlatform();
     }
 
     private void DetectPlatform()
     {
         if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
-            platform = "PlaySceneMobile";
+            sceneFromPlatform = "PlaySceneMobile";
         else
-            platform = "PlayScene";
+            sceneFromPlatform = "PlayScene";
     }
 
     public void PlaySingleGame() 
     {
         mode = PlayingMode.SINGLE;
-        SceneManager.LoadSceneAsync(platform);
+        SceneManager.LoadSceneAsync(sceneFromPlatform);
     }
 
     public void PlayMultiGame() 
     {
         mode = PlayingMode.MULTI;
-        SceneManager.LoadSceneAsync(platform);
+        SceneManager.LoadSceneAsync(sceneFromPlatform);
     }
 
     public void QuitGame() 
@@ -41,6 +41,6 @@ public class MainMenu : MonoBehaviour
         //! TO CHANGE
         // Application.Quit();
         mode = PlayingMode.NONE;
-        SceneManager.LoadSceneAsync(platform);
+        SceneManager.LoadSceneAsync(sceneFromPlatform);
     }
 }

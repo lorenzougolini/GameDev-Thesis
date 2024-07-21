@@ -7,6 +7,7 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
 
     public GameObject gameCanva;
 
@@ -25,8 +26,19 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D ballRb;
  
     public GameLogger gameLogger;
+    public Telemetry.LevelData levelData;
 
-    // Start is called before the first frame update
+    private void Awake() 
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            // generate match id 
+            Telemetry.GenerateNewMatchID();
+        }
+    }
+
     void Start() {
         if (MainMenu.mode == PlayingMode.SINGLE)
         // if (mode == PlayingMode.SINGLE)
@@ -47,6 +59,13 @@ public class GameManager : MonoBehaviour
         GameLogger.Instance.SetLogFilePath(logFilePath);
         GameLogger.Instance.LogEvent("Game Started in " + MainMenu.mode + " mode");
 
+        levelData.playerPosition = Vector2.zero;
+        levelData.opponentPosition = Vector2.zero;
+        levelData.ballPosition = Vector2.zero;
+        levelData.playerAction = "";
+        levelData.opponentAction = "";
+        levelData.playerScore = 0;
+        levelData.opponentScore = 0;
         StartCoroutine(LogGameState());
     }
 
@@ -297,13 +316,14 @@ public class GameManager : MonoBehaviour
         while (true) {
             yield return new WaitForSeconds(0.05f * 3); // Approximately every 3 frames at 60fps
 
-            float elapsedTime = Time.time;
-            float timeRemaining = Gui.S.matchDuration;
+            // float elapsedTime = Time.time;
+            // float timeRemaining = Gui.S.matchDuration;
 
-            Vector3 player1Position = Vector3.zero;
-            Vector3 player2Position = Vector3.zero;
-            Vector3 ballPosition = Vector3.zero;
+            Vector2 player1Position = Vector2.zero;
+            Vector2 player2Position = Vector2.zero;
+            Vector2 ballPosition = Vector2.zero;
 
+            GameObject ball = gameObjects.Find(obj => obj.CompareTag("Ball"));
             foreach (GameObject obj in gameObjects) {
                 if (obj.GetComponent<PlayerMovement>())
                     if (obj.GetComponent<PlayerMovement>().playerNumber == 1)
@@ -319,13 +339,17 @@ public class GameManager : MonoBehaviour
 
             // GameObject player1 = gameObjects.Find(obj => obj.CompareTag("Player") && (obj.GetComponent<PlayerMovement>().playerNumber == 1 || obj.GetComponent<Bot>() != null));
             // GameObject player2 = gameObjects.Find(obj => obj.CompareTag("Enemy") && (obj.GetComponent<PlayerMovement>().playerNumber == 2 || obj.GetComponent<Bot>() != null));
-            GameObject ball = gameObjects.Find(obj => obj.CompareTag("Ball"));
 
-            if (player1 != null) player1Position = player1.transform.position;
-            if (player2 != null) player2Position = player2.transform.position;
-            if (ball != null) ballPosition = ball.transform.position;
+            if (player1 != null) player1Position = (Vector2)player1.transform.position;
+            if (player2 != null) player2Position = (Vector2)player2.transform.position;
+            if (ball != null) ballPosition = (Vector2)ball.transform.position;
 
-            GameLogger.Instance.LogEvent($"Elapsed Time: {elapsedTime}, Time Remaining: {timeRemaining}, Player 1 Position: {player1Position}, Player 2 Position: {player2Position}, Ball Position: {ballPosition}");
+            // GameLogger.Instance.LogEvent($"Elapsed Time: {elapsedTime}, Time Remaining: {timeRemaining}, Player 1 Position: {player1Position}, Player 2 Position: {player2Position}, Ball Position: {ballPosition}");
+
+            levelData.playerPosition = player1Position;
+            levelData.opponentPosition = player2Position;
+            levelData.ballPosition = ballPosition;  
+            StartCoroutine(Telemetry.SubmitGoogleForm(levelData));
         }
     }
 }
