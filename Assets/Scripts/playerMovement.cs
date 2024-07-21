@@ -72,12 +72,14 @@ public class PlayerMovement : MonoBehaviour
 		if (Input.GetButtonDown("Vertical" + playerNumber) && isGrounded()) 
 		{
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-			GameLogger.Instance.LogEvent("Player " + playerNumber + " Jumped at Position: " + transform.position);
+			GameManager.Instance.matchTelemetry.playerAction = "Jump";
+			// GameLogger.Instance.LogEvent("Player " + playerNumber + " Jumped at Position: " + transform.position);
 			
 		} else if (TouchControls.jumpPressed && isGrounded()) 
 		{
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce*0.5f);
-			GameLogger.Instance.LogEvent("Player " + playerNumber + " Jumped at Position: " + transform.position);
+			GameManager.Instance.matchTelemetry.playerAction = "Jump";
+			// GameLogger.Instance.Log-Event("Player " + playerNumber + " Jumped at Position: " + transform.position);
 			TouchControls.jumpPressed = false;
 		}
 		if ((TouchControls.jumpPressed || Input.GetButtonDown("Vertical" + playerNumber)) && rb.velocity.y > 0f)
@@ -86,7 +88,8 @@ public class PlayerMovement : MonoBehaviour
 		// Kick
 		kickPressed = TouchControls.kickPressed || Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));
 		if (kickPressed)
-			GameLogger.Instance.LogEvent("Player " + playerNumber + " Kicked at Position: " + transform.position);
+			GameManager.Instance.matchTelemetry.playerAction = "Kick";
+			// GameLogger.Instance.LogEvent("Player " + playerNumber + " Kicked at Position: " + transform.position);
 
 		// Dash
 		if (!ResetObjects.S.resetting)
@@ -96,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
 		if ((TouchControls.powerPressed || Input.GetButtonDown("Fire" + playerNumber)) && powerReady) {
 			powerSetUp = true;
 			TouchControls.powerPressed = false;
+			GameManager.Instance.matchTelemetry.playerAction = "Power Set Up";
 			
 			Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
 			bodyAnimator.enabled = true;
@@ -128,6 +132,8 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 	public void PowerUsed() {
+        GameManager.Instance.matchTelemetry.opponentAction = "Power Used";
+
 		powerReady = false;
 		powerSetUp = false;
 
@@ -143,7 +149,8 @@ public class PlayerMovement : MonoBehaviour
 		if ((Input.GetKeyDown(KeyCode.A) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.LeftArrow) && playerNumber == 2)) {
 			float currentTime = Time.time;
 			if (currentTime - lastLeftPressTime < doubleClickThreshold && canDash && rb.velocity.y == 0f) {
-				GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
+				GameManager.Instance.matchTelemetry.playerAction = "Dash";
+				// GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
 				StartCoroutine(Dash(-1));
 			}
 			lastLeftPressTime = currentTime;
@@ -153,7 +160,8 @@ public class PlayerMovement : MonoBehaviour
 		if ((Input.GetKeyDown(KeyCode.D) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.RightArrow) && playerNumber == 2)) {
 			float currentTime = Time.time;
 			if (currentTime - lastRightPressTime < doubleClickThreshold && canDash && rb.velocity.y == 0f) {
-				GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
+				GameManager.Instance.matchTelemetry.playerAction = "Dash";
+				// GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
 				StartCoroutine(Dash(1));
 			}
 			lastRightPressTime = currentTime;
@@ -164,14 +172,16 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (canDash && rb.velocity.y == 0f)
 		{
-			GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
+			GameManager.Instance.matchTelemetry.playerAction = "Dash";
+			// GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
 			StartCoroutine(Dash(direction));
 		}
 	}
 	
 	public void TakeDamage(int direction) {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
-		GameLogger.Instance.LogEvent("Player " + playerNumber + " Took Damage at Position: " + transform.position);
+		GameManager.Instance.matchTelemetry.playerAction = "Damage Taken";
+		// GameLogger.Instance.LogEvent("Player " + playerNumber + " Took Damage at Position: " + transform.position);
         StartCoroutine(Knockback(knockbackPosition));
     }
 

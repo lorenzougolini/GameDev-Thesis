@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D ballRb;
  
     public GameLogger gameLogger;
-    public Telemetry.LevelData levelData;
+    public Telemetry.MatchTelemetry matchTelemetry;
 
     private void Awake() 
     {
@@ -59,13 +59,13 @@ public class GameManager : MonoBehaviour
         GameLogger.Instance.SetLogFilePath(logFilePath);
         GameLogger.Instance.LogEvent("Game Started in " + MainMenu.mode + " mode");
 
-        levelData.playerPosition = Vector2.zero;
-        levelData.opponentPosition = Vector2.zero;
-        levelData.ballPosition = Vector2.zero;
-        levelData.playerAction = "";
-        levelData.opponentAction = "";
-        levelData.playerScore = 0;
-        levelData.opponentScore = 0;
+        matchTelemetry.playerPosition = Vector2.zero;
+        matchTelemetry.opponentPosition = Vector2.zero;
+        matchTelemetry.ballPosition = Vector2.zero;
+        matchTelemetry.playerAction = "";
+        matchTelemetry.opponentAction = "";
+        matchTelemetry.playerScore = 0;
+        matchTelemetry.opponentScore = 0;
         StartCoroutine(LogGameState());
     }
 
@@ -314,7 +314,7 @@ public class GameManager : MonoBehaviour
         GameObject player2 = null;
 
         while (true) {
-            yield return new WaitForSeconds(0.05f * 3); // Approximately every 3 frames at 60fps
+            yield return new WaitForSeconds(0.1f); // Approximately every 3 frames at 60fps
 
             // float elapsedTime = Time.time;
             // float timeRemaining = Gui.S.matchDuration;
@@ -346,10 +346,26 @@ public class GameManager : MonoBehaviour
 
             // GameLogger.Instance.LogEvent($"Elapsed Time: {elapsedTime}, Time Remaining: {timeRemaining}, Player 1 Position: {player1Position}, Player 2 Position: {player2Position}, Ball Position: {ballPosition}");
 
-            levelData.playerPosition = player1Position;
-            levelData.opponentPosition = player2Position;
-            levelData.ballPosition = ballPosition;  
-            StartCoroutine(Telemetry.SubmitGoogleForm(levelData));
+            matchTelemetry.playerPosition = player1Position;
+            matchTelemetry.opponentPosition = player2Position;
+            matchTelemetry.ballPosition = ballPosition;
+            // matchTelemetry.playerScore = Gui.S.player1Goals;
+            // matchTelemetry.opponentScore = Gui.S.player2Goals;
+
+            StartCoroutine(Telemetry.SubmitGoogleForm(matchTelemetry));
         }
+    }
+
+    public void ClearTelemetryData()
+    {
+        Telemetry.GenerateNewMatchID();
+
+        matchTelemetry.playerPosition = Vector2.zero;
+        matchTelemetry.opponentPosition = Vector2.zero;
+        matchTelemetry.ballPosition = Vector2.zero;
+        matchTelemetry.playerAction = "";
+        matchTelemetry.opponentAction = "";
+        matchTelemetry.playerScore = 0;
+        matchTelemetry.opponentScore = 0;
     }
 }

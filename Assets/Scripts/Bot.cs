@@ -321,7 +321,8 @@ public class Bot : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
-            GameLogger.Instance.LogEvent("Bot Jumped at Position: " + transform.position);
+            GameManager.Instance.matchTelemetry.opponentAction = "Jump";
+            // GameLogger.Instance.LogEvent("Bot Jumped at Position: " + transform.position);
         }
     }
 
@@ -332,7 +333,8 @@ public class Bot : MonoBehaviour
         if ((opponentDistance < kickRange) ^ (ballDistance < kickRange) && random.NextDouble() < 0.5 && canKick)
         {
             kickPressed = true;
-            GameLogger.Instance.LogEvent("Bot Kicked at Position: " + transform.position);
+            GameManager.Instance.matchTelemetry.opponentAction = "Kick";
+            // GameLogger.Instance.LogEvent("Bot Kicked at Position: " + transform.position);
             StartCoroutine(KickCooldown());
         }
         else
@@ -346,6 +348,7 @@ public class Bot : MonoBehaviour
         if (powerReady && random.NextDouble() < prob)
         {
             powerSetUp = true;
+			GameManager.Instance.matchTelemetry.opponentAction = "Power Set Up";
 
             Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
             bodyAnimator.enabled = true;
@@ -356,6 +359,8 @@ public class Bot : MonoBehaviour
 
     public void PowerUsed()
     {
+        GameManager.Instance.matchTelemetry.opponentAction = "Power Used";
+        
         powerReady = false;
         powerSetUp = false;
 
@@ -433,7 +438,8 @@ public class Bot : MonoBehaviour
     public void TakeDamage(int direction)
     {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
-        GameLogger.Instance.LogEvent("Bot Took Damage at Position: " + transform.position);
+        GameManager.Instance.matchTelemetry.opponentAction = "Damage Taken";
+        // GameLogger.Instance.LogEvent("Bot Took Damage at Position: " + transform.position);
         StartCoroutine(Knockback(knockbackPosition));
     }
 
