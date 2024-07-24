@@ -12,12 +12,17 @@ public class AgentController : Agent
     [SerializeField] private SpriteRenderer floor;
 
     private bool isGrounded;
+    private float jumpDiscount = 0f;
+    private float elapsedTime = 0f;
+
+    private Rigidbody2D ballRb;
 
     private Rigidbody2D rb;
 
     public override void Initialize()
     {
         rb = GetComponent<Rigidbody2D>();
+        ballRb = ball.GetComponent<Rigidbody2D>();
     }
 
     public override void OnEpisodeBegin()
@@ -27,8 +32,11 @@ public class AgentController : Agent
         ball.localPosition = new Vector3(Random.Range(-7f, agentXpos), 2f);
 
         rb.velocity = Vector2.zero;
+        // ballRb.velocity = Vector2.zero;
+        ballRb.velocity += new Vector2(Random.Range(0, 2f), Random.Range(-2f, 2f));
 
         isGrounded = true;
+        elapsedTime = 0f;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -53,6 +61,7 @@ public class AgentController : Agent
             // rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce); 
             isGrounded = false;
+            jumpDiscount += 0.2f;
         }
     }
 
@@ -69,13 +78,13 @@ public class AgentController : Agent
     {
         if (isOwnGoal)
         {
-            AddReward(-5f);
+            AddReward(-10f + (jumpDiscount*0.01f) + (elapsedTime*0.01f));
             floor.color = Color.red;
             EndEpisode();
         }
         else
         {
-            AddReward(5f);
+            AddReward(10f - (jumpDiscount*0.01f) - (elapsedTime*0.01f));
             floor.color = Color.green;
             EndEpisode();
         }

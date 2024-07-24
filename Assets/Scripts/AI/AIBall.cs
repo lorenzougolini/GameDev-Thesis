@@ -11,12 +11,12 @@ public class AIBall : MonoBehaviour
 
     private void Update()
     {
-        CheckIfBelowFloor();
+        CheckIfBelow();
     }
 
-    private void CheckIfBelowFloor()
+    private void CheckIfBelow()
     {
-        if (transform.position.y <= floorLevel)
+        if (transform.position.y <= agent.transform.position.y)
         {
             agent.AddReward(-3f);
             agent.EndEpisode(); 

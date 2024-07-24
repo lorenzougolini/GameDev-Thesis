@@ -111,7 +111,7 @@ public class Gui : MonoBehaviour {
         finalScoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();
         Time.timeScale = 0;
 
-        GameLogger.Instance.SaveLogsToFile();
+        // GameLogger.Instance.SaveLogsToFile();
         GameManager.Instance.ClearTelemetryData();
     }
 

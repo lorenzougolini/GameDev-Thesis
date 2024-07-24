@@ -8,7 +8,7 @@ public enum PlayingMode { SINGLE, MULTI, NONE, AI }
 public class MainMenu : MonoBehaviour
 {
 
-    public static PlayingMode mode;
+    [SerializeField] public static PlayingMode mode;
     private string sceneFromPlatform = "PlayScene";
 
     private void Start() 

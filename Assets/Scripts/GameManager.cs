@@ -60,9 +60,6 @@ public class GameManager : MonoBehaviour
         GameLogger.Instance.SetLogFilePath(logFilePath);
         GameLogger.Instance.LogEvent("Game Started in " + MainMenu.mode + " mode");
 
-        matchTelemetry.playerPosition = Vector2.zero;
-        matchTelemetry.opponentPosition = Vector2.zero;
-        matchTelemetry.ballPosition = Vector2.zero;
         matchTelemetry.playerAction = "";
         matchTelemetry.opponentAction = "";
         matchTelemetry.playerScore = 0;
