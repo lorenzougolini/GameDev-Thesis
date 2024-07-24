@@ -75,6 +75,8 @@ public class Telemetry : MonoBehaviour
             else
                 Debug.Log("Form upload complete!");
         }
+
+        // yield return null;
     }
 
     public static void GenerateNewMatchID()

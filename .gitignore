@@ -74,3 +74,6 @@ $RECYCLE.BIN/
 # Builds and Logs directories
 Game Builds/
 Match Logs/
+MLvenv/
+ML-Agents/
+results/

@@ -41,12 +41,13 @@ public class GameManager : MonoBehaviour
 
     void Start() {
         if (MainMenu.mode == PlayingMode.SINGLE)
-        // if (mode == PlayingMode.SINGLE)
             StartCoroutine(SetUpSingleGame());
         else if (MainMenu.mode == PlayingMode.MULTI)
             StartCoroutine(SetUpMultiGame());
         else if (MainMenu.mode == PlayingMode.NONE)
             StartCoroutine(SetUpBotGame());
+        // else if (MainMenu.mode == PlayingMode.AI)
+        //     return;
 
         Gui.S.player1Goals = 0;
         Gui.S.player2Goals = 0;

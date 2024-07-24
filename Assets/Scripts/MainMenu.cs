@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum PlayingMode { SINGLE, MULTI, NONE }
+public enum PlayingMode { SINGLE, MULTI, NONE, AI }
 
 public class MainMenu : MonoBehaviour
 {
