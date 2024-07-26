@@ -12,12 +12,16 @@ public class AgentController : Agent
     [SerializeField] private SpriteRenderer floor;
 
     private bool isGrounded;
-    private float jumpDiscount = 0f;
+    private float jumpCount = 0f;
     private float elapsedTime = 0f;
 
-    private Rigidbody2D ballRb;
+    private float lastHitTime = 0f;
+    private float hitInterval = 1f;
+    private int consecutiveHits;
 
+    private Rigidbody2D ballRb;
     private Rigidbody2D rb;
+
 
     public override void Initialize()
     {
@@ -32,8 +36,8 @@ public class AgentController : Agent
         ball.localPosition = new Vector3(Random.Range(-7f, agentXpos), 2f);
 
         rb.velocity = Vector2.zero;
-        // ballRb.velocity = Vector2.zero;
-        ballRb.velocity += new Vector2(Random.Range(0, 2f), Random.Range(-2f, 2f));
+        ballRb.velocity = Vector2.zero;
+        ballRb.velocity += new Vector2(Random.Range(0, 2f), Random.Range(0, 2f));
 
         isGrounded = true;
         elapsedTime = 0f;
@@ -61,7 +65,7 @@ public class AgentController : Agent
             // rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce); 
             isGrounded = false;
-            jumpDiscount += 0.2f;
+            jumpCount += 1f;
         }
     }
 
@@ -78,13 +82,13 @@ public class AgentController : Agent
     {
         if (isOwnGoal)
         {
-            AddReward(-10f + (jumpDiscount*0.01f) + (elapsedTime*0.01f));
+            AddReward(-10f - (jumpCount*0.01f) - (elapsedTime*0.01f));
             floor.color = Color.red;
             EndEpisode();
         }
         else
         {
-            AddReward(10f - (jumpDiscount*0.01f) - (elapsedTime*0.01f));
+            AddReward(15f - (jumpCount*0.01f) - (elapsedTime*0.01f));
             floor.color = Color.green;
             EndEpisode();
         }
@@ -94,19 +98,30 @@ public class AgentController : Agent
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            AddReward(1f);
-            // EndEpisode();
+            AddReward(2f);
+
+            if (Time.time - lastHitTime <= hitInterval)
+            {
+                consecutiveHits++;
+                AddReward(0.05f * consecutiveHits);
+            }
+            else
+            {
+                consecutiveHits = 1;
+            }
+
+            lastHitTime = Time.time;
         }
         
         if (other.gameObject.CompareTag("Wall"))
         {
-            AddReward(-1f);
+            AddReward(-0.5f);
             // EndEpisode();
         }
 
         if (other.gameObject.CompareTag("GoalRight"))
         {
-            AddReward(-1f);
+            AddReward(-2f);
             // EndEpisode();
         }
 
