@@ -10,6 +10,7 @@ public class AgentController : Agent
 
     [SerializeField] private Transform ball;
     [SerializeField] private SpriteRenderer floor;
+	[SerializeField] private TrailRenderer tr;
 
     private bool isGrounded;
     private float jumpCount = 0f;
@@ -19,9 +20,14 @@ public class AgentController : Agent
     private float hitInterval = 1f;
     private int consecutiveHits;
 
+    private bool canDash = true;
+    private bool isDashing = false;
+    private float dashPower = 16f;
+    private float dashTime = 0.2f;
+    private float dashCooldown = 1f;
+
     private Rigidbody2D ballRb;
     private Rigidbody2D rb;
-
 
     public override void Initialize()
     {
@@ -41,12 +47,18 @@ public class AgentController : Agent
 
         isGrounded = true;
         elapsedTime = 0f;
+        jumpCount = 0f;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation((Vector2)transform.localPosition);
+        
         sensor.AddObservation((Vector2)ball.localPosition);
+        sensor.AddObservation(ballRb.velocity);
+        
+        sensor.AddObservation(Mathf.Abs(transform.localPosition.x - ball.localPosition.x)); // distance from ball
+
         sensor.AddObservation(isGrounded);
     }
 
@@ -54,18 +66,25 @@ public class AgentController : Agent
     {
         float move = actions.ContinuousActions[0];
         float jump = actions.ContinuousActions[1];
-        
+        float dash = actions.ContinuousActions[2];
+
         float moveSpeed = 8f;
         float jumpForce = 8f;
         
-        transform.localPosition += moveSpeed * Time.deltaTime * new Vector3(move, 0f);
+        if (!isDashing) 
+            transform.localPosition += moveSpeed * Time.deltaTime * new Vector3(move, 0f);
 
-        if (jump > 0 && isGrounded)
+        if (jump > 0 && isGrounded && !isDashing)
         {
             // rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             rb.velocity = new Vector2(rb.velocity.x, jumpForce); 
             isGrounded = false;
             jumpCount += 1f;
+        }
+
+        if (dash > 0 && isGrounded && canDash && !isDashing)
+        {
+            StartCoroutine(Dash(-move));
         }
     }
 
@@ -74,6 +93,7 @@ public class AgentController : Agent
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         continuousActions[0] = Input.GetAxisRaw("Horizontal1");
         continuousActions[1] = Input.GetAxisRaw("Vertical1");
+        continuousActions[2] = Input.GetKey(KeyCode.Space) ? 1f : 0f;
         // Debug.Log($"Horizontal axis: {continuousActions[0]}");
 
     }
@@ -127,5 +147,28 @@ public class AgentController : Agent
 
         if (other.gameObject.CompareTag("Ground"))
             isGrounded = true;
+    }
+
+    private IEnumerator Dash(float direction)
+    {
+        float startBallDist = Mathf.Abs(transform.localPosition.x - ball.localPosition.x);
+
+        canDash = false;
+        isDashing = true;
+        float originalVelocityX = rb.velocity.x;
+        rb.velocity = new Vector2(direction * transform.localScale.x * dashPower, rb.velocity.y);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashTime);
+        tr.emitting = false;
+        rb.velocity = new Vector2(originalVelocityX, rb.velocity.y);
+        isDashing = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+
+        float endBallDist = Mathf.Abs(transform.localPosition.x - ball.localPosition.x);
+        if (endBallDist < startBallDist)
+            AddReward(0.5f);
+        else
+            AddReward(-0.5f);
     }
 }

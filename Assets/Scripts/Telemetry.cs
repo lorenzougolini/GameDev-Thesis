@@ -62,21 +62,21 @@ public class Telemetry : MonoBehaviour
         form.AddField(_gform_player_score, lvlData.playerScore);
         form.AddField(_gform_opponent_score, lvlData.opponentScore);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(urlGoogleFormResponse, form))
-        {
-            // send data
-            yield return www.SendWebRequest();
+        // using (UnityWebRequest www = UnityWebRequest.Post(urlGoogleFormResponse, form))
+        // {
+        //     // send data
+        //     yield return www.SendWebRequest();
 
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-                Debug.LogError(www.responseCode);
-            }
-            else
-                Debug.Log("Form upload complete!");
-        }
+        //     if (www.result != UnityWebRequest.Result.Success)
+        //     {
+        //         Debug.LogError(www.error);
+        //         Debug.LogError(www.responseCode);
+        //     }
+        //     else
+        //         Debug.Log("Form upload complete!");
+        // }
 
-        // yield return null;
+        yield return null;
     }
 
     public static void GenerateNewMatchID()
