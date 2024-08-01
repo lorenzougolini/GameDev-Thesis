@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Foot : MonoBehaviour {
 	
@@ -18,22 +19,21 @@ public class Foot : MonoBehaviour {
         previousPosition = currentPosition;
 	}
 
-	void OnCollisionEnter2D(Collision2D coll) {
-
-		if (MainMenu.mode == PlayingMode.MULTI) {
-
-			HandleCollision(coll);
-			
-		} else {
-			
-			HandleCollision(coll);
-		}
+	void OnCollisionEnter2D(Collision2D coll) 
+	{
+		HandleCollision(coll);
 	}
 
 	void HandleCollision(Collision2D coll) {
 		if (coll.gameObject.tag == "Ball" && IsKickPressed()) {
 			Vector2 kickForce = CalculateKickForce();
-            coll.rigidbody.AddForce(kickForce, ForceMode2D.Impulse);
+			coll.rigidbody.AddForce(kickForce, ForceMode2D.Impulse);
+
+			// Take the parent object
+			GameObject parentObject = transform.parent.gameObject;
+            parentObject.TryGetComponent<AgentController>(out AgentController agent);
+			if (agent)
+				agent.ballHit = true;
 		}
 
 		if ((coll.gameObject.tag == "Enemy" || coll.gameObject.tag == "Player") && IsKickPressed()) {
@@ -45,16 +45,22 @@ public class Foot : MonoBehaviour {
 	}
 
 	bool IsKickPressed() {
-		if (MainMenu.mode == PlayingMode.MULTI) {
-            return GetComponentInParent<PlayerMovement>().kickPressed;
-        } else if (MainMenu.mode == PlayingMode.SINGLE) {
-            if (transform.parent.gameObject.CompareTag("Player")) {
-                return GetComponentInParent<PlayerMovement>().kickPressed;
-            } else if (transform.parent.gameObject.CompareTag("Enemy")) {
-                return GetComponentInParent<Bot>().kickPressed;
-            }
-        } else if (MainMenu.mode == PlayingMode.NONE) {
-			return GetComponentInParent<Bot>().kickPressed;
+		try
+		{
+			if (MainMenu.mode == PlayingMode.MULTI) {
+	            return GetComponentInParent<PlayerMovement>().kickPressed;
+	        } else if (MainMenu.mode == PlayingMode.SINGLE) {
+	            if (transform.parent.gameObject.CompareTag("Player")) {
+	                return GetComponentInParent<PlayerMovement>().kickPressed;
+	            } else if (transform.parent.gameObject.CompareTag("Enemy")) {
+	                return GetComponentInParent<Bot>().kickPressed;
+	            }
+	        } else if (MainMenu.mode == PlayingMode.NONE) {
+				return GetComponentInParent<Bot>().kickPressed;
+			}
+		} catch (Exception) 
+		{
+			return GetComponentInParent<AgentController>().kicking;
 		}
         return false;
 	}

@@ -45,6 +45,15 @@ public class Ball : MonoBehaviour {
 				GameLogger.Instance.LogEvent("Player 2 Used Power");
 			}
 
+		} else if (coll.gameObject.tag == "Agent") {
+
+			if (coll.gameObject.GetComponent<AgentController>().powerSetUp) {
+			
+				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
+				coll.gameObject.GetComponent<AgentController>().PowerUsed();
+				GameLogger.Instance.LogEvent("Player 1 Used Power");
+			}
+
 		} else if (isShooting) {
 			
 			StopCoroutine("UsePowerUp");

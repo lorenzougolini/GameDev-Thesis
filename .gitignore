@@ -77,3 +77,6 @@ Match Logs/
 MLvenv/
 ML-Agents/
 results/
+
+# NN Models
+*.onnx*

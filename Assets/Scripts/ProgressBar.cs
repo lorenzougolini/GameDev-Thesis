@@ -36,25 +36,29 @@ public class ProgressBar : MonoBehaviour {
             current = max;
     }
 
+    public void SetCurrent(float i)
+    {
+        current = i;
+    }
+
     void GetCurrentFill() {
         float fillAmount = (float) current / (float) max;
         mask.fillAmount = fillAmount;
     }
 
     void CheckPulsatingEffect() {
-        if (current >= max) {
-            try {
-                associatedPlayer.GetComponent<PlayerMovement>().powerReady = true;
-            } catch (Exception) {
-                associatedPlayer.GetComponent<Bot>().powerReady = true;
-            }
+        bool powerReady = current >= max;
+        if (associatedPlayer.TryGetComponent(out PlayerMovement playerMovement)) {
+            playerMovement.powerReady = powerReady;
+        } else if (associatedPlayer.TryGetComponent(out Bot bot)) {
+            bot.powerReady = powerReady;
+        } else if (associatedPlayer.TryGetComponent(out AgentController agentController)) {
+            agentController.powerReady = powerReady;
+        }
+        
+        if (powerReady) {
             pulsatingEffect.StartPulsating(powerText.gameObject, 1f, 2f, 5f);
         } else {
-            try {
-                associatedPlayer.GetComponent<PlayerMovement>().powerReady = false;
-            } catch (Exception) {
-                associatedPlayer.GetComponent<Bot>().powerReady = false;
-            }
             pulsatingEffect.StopPulsating();
         }
     }

@@ -4,13 +4,17 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
+using TMPro;
 
 public class AgentController : Agent
 {
 
     [SerializeField] private Transform ball;
-    [SerializeField] private SpriteRenderer floor;
+    [SerializeField] public Transform opponentGoal;
+    [SerializeField] public SpriteRenderer floor;
+    [SerializeField] public TextMeshProUGUI floorText;
 	[SerializeField] private TrailRenderer tr;
+    private Animator footAnimator;
 
     private bool isGrounded;
     private float jumpCount = 0f;
@@ -26,8 +30,16 @@ public class AgentController : Agent
     private float dashTime = 0.2f;
     private float dashCooldown = 1f;
 
+    public bool kicking;
+    public bool ballHit;
+
+    public bool powerReady;
+    public bool powerSetUp;
+    public bool isUsingPower;
+
     private Rigidbody2D ballRb;
     private Rigidbody2D rb;
+	[SerializeField] private ProgressBar progressBar;
 
     public override void Initialize()
     {
@@ -43,11 +55,22 @@ public class AgentController : Agent
 
         rb.velocity = Vector2.zero;
         ballRb.velocity = Vector2.zero;
-        ballRb.velocity += new Vector2(Random.Range(0, 2f), Random.Range(0, 2f));
+        ballRb.velocity += new Vector2(Random.Range(0, 5f), Random.Range(0, 5f));
+        // remove rotation of the ball
+        ballRb.angularVelocity = 0f;
+
+        progressBar.SetCurrent(Random.Range(0, 100f));
 
         isGrounded = true;
         elapsedTime = 0f;
         jumpCount = 0f;
+        PowerUsed();
+    }
+
+    private void Update()
+    {
+        elapsedTime += Time.deltaTime;
+        progressBar.UpdateCurrent(0.1f);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -64,36 +87,67 @@ public class AgentController : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float move = actions.ContinuousActions[0];
-        float jump = actions.ContinuousActions[1];
-        float dash = actions.ContinuousActions[2];
+        float moveAction = actions.DiscreteActions[0];
+        float jumpAction = actions.DiscreteActions[1];
+        float dashAction = actions.DiscreteActions[2];
+        float kickAction = actions.DiscreteActions[3];
+        float powerAction = actions.DiscreteActions[4];
 
         float moveSpeed = 8f;
         float jumpForce = 8f;
         
-        if (!isDashing) 
-            transform.localPosition += moveSpeed * Time.deltaTime * new Vector3(move, 0f);
-
-        if (jump > 0 && isGrounded && !isDashing)
+        if (!isDashing)
         {
-            // rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce); 
+            if (moveAction == 1)
+            {
+                transform.localPosition += moveSpeed * Time.deltaTime * Vector3.left;
+            }
+            else if (moveAction == 2)
+            {
+                transform.localPosition += moveSpeed * Time.deltaTime * Vector3.right;
+            }
+        }
+
+        if (jumpAction == 1 && isGrounded && !isDashing)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
             jumpCount += 1f;
         }
 
-        if (dash > 0 && isGrounded && canDash && !isDashing)
+        if (dashAction == 1 && isGrounded && canDash && !isDashing)
         {
-            StartCoroutine(Dash(-move));
+            StartCoroutine(Dash(moveAction == 1 ? -1 : 1));
         }
+
+        if (kickAction == 1)
+        {
+            kicking = true;
+            footAnimator = transform.Find("Foot").GetComponent<Animator>();
+            footAnimator.SetBool("kick", true);
+            StartCoroutine(Kick());
+        }
+
+        if (powerAction == 1 && powerReady)
+        {
+            powerSetUp = true;
+			
+			Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
+			bodyAnimator.enabled = true;
+
+			progressBar.current = 0f;
+        }
+            
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-        continuousActions[0] = Input.GetAxisRaw("Horizontal1");
-        continuousActions[1] = Input.GetAxisRaw("Vertical1");
-        continuousActions[2] = Input.GetKey(KeyCode.Space) ? 1f : 0f;
+        ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
+        discreteActions[0] = Input.GetAxisRaw("Horizontal1") < 0 ? 1 : (Input.GetAxisRaw("Horizontal1") > 0 ? 2 : 0);
+        discreteActions[1] = Input.GetAxisRaw("Vertical1") > 0 ? 1 : 0;
+        discreteActions[2] = Input.GetKey(KeyCode.Space) ? 1 : 0;
+        discreteActions[3] = Input.GetAxisRaw("Jump1") > 0 ? 1 : 0;
+        discreteActions[4] = Input.GetButtonDown("Fire1") ? 1 : 0;
         // Debug.Log($"Horizontal axis: {continuousActions[0]}");
 
     }
@@ -102,14 +156,16 @@ public class AgentController : Agent
     {
         if (isOwnGoal)
         {
-            AddReward(-10f - (jumpCount*0.01f) - (elapsedTime*0.01f));
+            AddReward(-10f - (jumpCount*0.05f) - (elapsedTime*0.01f));
             floor.color = Color.red;
+            floorText.text = "Own Goal";
             EndEpisode();
         }
         else
         {
-            AddReward(15f - (jumpCount*0.01f) - (elapsedTime*0.01f));
+            AddReward(15f - (jumpCount*0.05f) - (elapsedTime*0.01f));
             floor.color = Color.green;
+            floorText.text = "Goal";
             EndEpisode();
         }
     }
@@ -149,6 +205,18 @@ public class AgentController : Agent
             isGrounded = true;
     }
 
+    public void PowerUsed() 
+    {
+		powerReady = false;
+		powerSetUp = false;
+
+		Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
+		bodyAnimator.enabled = false;
+
+		SpriteRenderer bodySprite = transform.Find("Body").GetComponent<SpriteRenderer>();
+		bodySprite.color = Color.white;
+	}
+
     private IEnumerator Dash(float direction)
     {
         float startBallDist = Mathf.Abs(transform.localPosition.x - ball.localPosition.x);
@@ -169,6 +237,27 @@ public class AgentController : Agent
         if (endBallDist < startBallDist)
             AddReward(0.5f);
         else
-            AddReward(-0.5f);
+            AddReward(-1.5f);
+    }
+
+    private IEnumerator Kick()
+    {
+        float startBallDistToGoal = Mathf.Abs(opponentGoal.transform.localPosition.x - ball.localPosition.x);
+        
+        if (ballHit)
+            AddReward(0.5f);
+        else
+            AddReward(-1.5f);
+
+        yield return new WaitForSeconds(0.1f);
+        footAnimator.SetBool("kick", false);
+        kicking = false;
+        ballHit = false;
+
+        float endBallDistToGoal = Mathf.Abs(opponentGoal.transform.localPosition.x - ball.localPosition.x);
+        if (endBallDistToGoal <= startBallDistToGoal)
+            AddReward(0.5f);
+        else
+            AddReward(-1.5f);
     }
 }
