@@ -9,8 +9,11 @@ public class Foot : MonoBehaviour {
 	private Vector2 previousPosition;
     private Vector2 currentVelocity;
 
+	[SerializeField] private AiEnvManager aiEnvManager;
+
     void Start() {
         previousPosition = transform.localPosition;
+		// aiEnvManager = FindObjectOfType<AiEnvManager>();
     }
 
 	private void Update() {
@@ -39,6 +42,8 @@ public class Foot : MonoBehaviour {
 		if ((coll.gameObject.tag == "Enemy" || coll.gameObject.tag == "Player") && IsKickPressed()) {
 			if (coll.gameObject != this.transform.parent.gameObject) {
 				GameManager.KickOpponent(coll.gameObject.tag);
+				if (aiEnvManager)
+					aiEnvManager.KickOpponent(coll.gameObject.tag);
 			}
 		}
 

@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
 		else
 			progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
 		
+		
         moveLeftToRight = GameObject.FindGameObjectWithTag("Ball").transform.position.x > transform.position.x;
 	}
 

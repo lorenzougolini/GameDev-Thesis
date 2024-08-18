@@ -29,11 +29,10 @@ public class ProgressBar : MonoBehaviour {
         CheckPulsatingEffect();
     }
 
-    public void UpdateCurrent(float i) {
-        if (current < max)
-            current += i;
-        else
-            current = max;
+    public void UpdateCurrent(float i)
+    {
+        current += i;
+        current = Mathf.Clamp(current, 0, max);
     }
 
     public void SetCurrent(float i)
