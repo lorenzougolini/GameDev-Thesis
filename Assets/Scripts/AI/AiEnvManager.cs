@@ -86,28 +86,38 @@ public class AiEnvManager : MonoBehaviour
 
     private void EndGame()
     {
-        float rewardDifference = Mathf.Abs(player1.Score - player2.Score);
-        // Calculate rewards based on the game result
-        if (player1.Score > player2.Score)
-        {
-            player1.AddReward(rewardDifference * 2f);
-            player2.AddReward(-rewardDifference * 2f);
-        }
-        else if (player2.Score > player1.Score)
-        {
-            player1.AddReward(-rewardDifference * 2f);
-            player2.AddReward(rewardDifference * 2f);
-        }
-        else
-        {
-            player1.AddReward(-5f);
-            player2.AddReward(-5f);
-        }
+        // float rewardDifference = Mathf.Abs(player1.Score - player2.Score);
+        // // Calculate rewards based on the game result
+        // if (player1.Score > player2.Score)
+        // {
+        //     player1.AddReward(rewardDifference * 2f);
+        //     player2.AddReward(-rewardDifference * 2f);
+        // }
+        // else if (player2.Score > player1.Score)
+        // {
+        //     player1.AddReward(-rewardDifference * 2f);
+        //     player2.AddReward(rewardDifference * 2f);
+        // }
+        // else
+        // {
+        //     player1.AddReward(-5f);
+        //     player2.AddReward(-5f);
+        // }
 
-        if (rewardDifference >= 3)
+        // if (rewardDifference >= 3)
+        // {
+        //     player1.AddReward(-3f);
+        //     player2.AddReward(-3f);
+        // }
+
+        // i want the players to receive a reward if they score more than 5 goals
+        if (player1.Score >= 7)
         {
-            player1.AddReward(-3f);
-            player2.AddReward(-3f);
+            player1.AddReward(10f);
+        }
+        else if (player2.Score >= 7)
+        {
+            player2.AddReward(10f);
         }
 
         player1.EndEpisode();

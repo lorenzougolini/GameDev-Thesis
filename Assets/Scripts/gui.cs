@@ -31,7 +31,7 @@ public class Gui : MonoBehaviour {
     private bool isEnded = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         S = this;
 
 		scoreText = GameObject.Find("ScoreText").GetComponent<Text> ();

@@ -47,12 +47,21 @@ public class ProgressBar : MonoBehaviour {
 
     void CheckPulsatingEffect() {
         bool powerReady = current >= max;
-        if (associatedPlayer.TryGetComponent(out PlayerMovement playerMovement)) {
+        if (associatedPlayer.TryGetComponent(out PlayerMovement playerMovement)) 
+        {
             playerMovement.powerReady = powerReady;
-        } else if (associatedPlayer.TryGetComponent(out Bot bot)) {
+        }
+        else if (associatedPlayer.TryGetComponent(out Bot bot)) 
+        {
             bot.powerReady = powerReady;
-        } else if (associatedPlayer.TryGetComponent(out AgentController agentController)) {
+        } 
+        else if (associatedPlayer.TryGetComponent(out AgentController agentController)) 
+        {
             agentController.powerReady = powerReady;
+        } 
+        else if (associatedPlayer.TryGetComponent(out AIPlayerMovement aIPlayerMovement)) 
+        {
+            aIPlayerMovement.powerReady = powerReady;
         }
         
         if (powerReady) {

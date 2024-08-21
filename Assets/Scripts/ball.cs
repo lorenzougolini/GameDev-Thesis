@@ -13,49 +13,75 @@ public class Ball : MonoBehaviour {
 		animator = GetComponent<Animator>();
 	}
 
-	private void OnCollisionEnter2D(Collision2D coll) {
+	private void OnCollisionEnter2D(Collision2D coll) 
+	{
 		if (ResetObjects.S.resetting) return;
-		if (coll.gameObject.tag == "Player") {
+		if (coll.gameObject.tag == "Player") 
+		{
+			coll.gameObject.TryGetComponent(out PlayerMovement playerMovement);
+			coll.gameObject.TryGetComponent(out Bot bot);
+			coll.gameObject.TryGetComponent(out AIPlayerMovement aIPlayerMovement);
 
-			if (coll.gameObject.GetComponent<PlayerMovement>() && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
-				
+			if (playerMovement && playerMovement.powerSetUp) 
+			{
 				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
-				coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
+				playerMovement.PowerUsed();
 				GameLogger.Instance.LogEvent("Player 1 Used Power");
 			
-			} else if (coll.gameObject.GetComponent<Bot>() && coll.gameObject.GetComponent<Bot>().powerSetUp) {
-			
+			}
+			else if (bot && bot.powerSetUp) 
+			{
 				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
-				coll.gameObject.GetComponent<Bot>().PowerUsed();
+				bot.PowerUsed();
+				GameLogger.Instance.LogEvent("Player 1 Used Power");
+			}
+			else if (aIPlayerMovement && aIPlayerMovement.powerSetUp)
+			{
+				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
+				aIPlayerMovement.PowerUsed();
 				GameLogger.Instance.LogEvent("Player 1 Used Power");
 			}
 
-		} else if (coll.gameObject.tag == "Enemy") {
-			
-			if (coll.gameObject.GetComponent<PlayerMovement>() && coll.gameObject.GetComponent<PlayerMovement>().powerSetUp) {
-			
+		} 
+		else if (coll.gameObject.tag == "Enemy") 
+		{
+			coll.gameObject.TryGetComponent(out PlayerMovement playerMovement);
+			coll.gameObject.TryGetComponent(out Bot bot);
+			coll.gameObject.TryGetComponent(out AgentController agentController);
+
+			if (playerMovement && playerMovement.powerSetUp) 
+			{
 				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
-				coll.gameObject.GetComponent<PlayerMovement>().PowerUsed();
+				playerMovement.PowerUsed();
 				GameLogger.Instance.LogEvent("Player 2 Used Power");
-			
-			} else if (coll.gameObject.GetComponent<Bot>() && coll.gameObject.GetComponent<Bot>().powerSetUp) {
-			
+			} 
+			else if (bot && bot.powerSetUp) 
+			{
 				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
-				coll.gameObject.GetComponent<Bot>().PowerUsed();
+				bot.PowerUsed();
+				GameLogger.Instance.LogEvent("Player 2 Used Power");
+			}
+			else if (agentController && agentController.powerSetUp) 
+			{
+				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
+				agentController.PowerUsed();
 				GameLogger.Instance.LogEvent("Player 2 Used Power");
 			}
 
-		} else if (coll.gameObject.tag == "Agent") {
+		} 
+		else if (coll.gameObject.tag == "Agent") 
+		{
 
-			if (coll.gameObject.GetComponent<AgentController>().powerSetUp) {
-			
+			if (coll.gameObject.GetComponent<AgentController>().powerSetUp) 
+			{
 				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
 				coll.gameObject.GetComponent<AgentController>().PowerUsed();
 				GameLogger.Instance.LogEvent("Player 1 Used Power");
 			}
 
-		} else if (isShooting) {
-			
+		} 
+		else if (isShooting) 
+		{
 			StopCoroutine("UsePowerUp");
 			isShooting = false;
 			Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -63,7 +89,8 @@ public class Ball : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D coll) {
+	void OnTriggerEnter2D(Collider2D coll) 
+	{
 		if (coll.gameObject.tag == "GoalRight") {
 			
 			if (isShooting) isShooting = false;
@@ -90,12 +117,18 @@ public class Ball : MonoBehaviour {
         }
     }
 
-	IEnumerator UsePowerUp(GameObject player, Vector2 direction) {
-		try {
-			player.GetComponent<PlayerMovement>().isUsingPower = true;
-		} catch (Exception) {
-			player.GetComponent<Bot>().isUsingPower = true;
-		}
+	IEnumerator UsePowerUp(GameObject player, Vector2 direction) 
+	{
+		player.TryGetComponent(out PlayerMovement playerMovement);
+		player.TryGetComponent(out Bot bot);
+		player.TryGetComponent(out AgentController agentController);
+
+		if (playerMovement)
+			playerMovement.isUsingPower = true;
+		else if (bot)
+			bot.isUsingPower = true;
+		else if (agentController)
+			agentController.isUsingPower = true;
 
 		float rotationDuration = 1f;
 		float moveSpeed = 80f;
@@ -153,10 +186,12 @@ public class Ball : MonoBehaviour {
 		// tr.material.SetColor("_TintColor", Color.white);
 		//!
 		isShooting = false;
-		try {
-			player.GetComponent<PlayerMovement>().isUsingPower = false;
-		} catch (Exception) {
-			player.GetComponent<Bot>().isUsingPower = false;
-		}
+
+		if (playerMovement)
+			playerMovement.isUsingPower = false;
+		else if (bot)
+			bot.isUsingPower = false;
+		else if (agentController)
+			agentController.isUsingPower = false;
 	}
 }

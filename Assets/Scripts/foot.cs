@@ -50,23 +50,20 @@ public class Foot : MonoBehaviour {
 	}
 
 	bool IsKickPressed() {
-		try
-		{
-			if (MainMenu.mode == PlayingMode.MULTI) {
-	            return GetComponentInParent<PlayerMovement>().kickPressed;
-	        } else if (MainMenu.mode == PlayingMode.SINGLE) {
-	            if (transform.parent.gameObject.CompareTag("Player")) {
-	                return GetComponentInParent<PlayerMovement>().kickPressed;
-	            } else if (transform.parent.gameObject.CompareTag("Enemy")) {
-	                return GetComponentInParent<Bot>().kickPressed;
-	            }
-	        } else if (MainMenu.mode == PlayingMode.NONE) {
-				return GetComponentInParent<Bot>().kickPressed;
-			}
-		} catch (Exception) 
-		{
-			return GetComponentInParent<AgentController>().kicking;
-		}
+		transform.parent.TryGetComponent(out PlayerMovement playerMovement);
+		transform.parent.TryGetComponent(out Bot bot);
+		transform.parent.TryGetComponent(out AgentController agentController);
+		transform.parent.TryGetComponent(out AIPlayerMovement aIPlayerMovement);
+		
+		if (playerMovement)
+			return playerMovement.kickPressed;
+		else if (bot)
+			return bot.kickPressed;
+		else if (agentController)
+			return agentController.kicking;
+		else if (aIPlayerMovement)
+			return aIPlayerMovement.kickPressed;
+		
         return false;
 	}
 

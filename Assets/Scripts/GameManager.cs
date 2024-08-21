@@ -9,12 +9,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    [SerializeField] PlayingMode playingMode;
+
     public GameObject gameCanva;
 
     public GameObject ballPrefab;
     public GameObject playerPrefab;
     public GameObject botPrefab;
     public GameObject defensePrefab;
+    public GameObject AIPlayerPrefab;
 
     public GameObject progressBar;
 
@@ -40,6 +43,23 @@ public class GameManager : MonoBehaviour
     }
 
     void Start() {
+
+        if (playingMode == PlayingMode.TEST)
+        {
+            StartCoroutine(TestInit());
+
+            Gui.S.player1Goals = 0;
+            Gui.S.player2Goals = 0;
+            Gui.S.playing = false;
+
+            Gui.S.matchDuration = matchDuration;
+
+            StartCountdown();
+            
+            return;
+        }
+            
+
         if (MainMenu.mode == PlayingMode.SINGLE)
             StartCoroutine(SetUpSingleGame());
         else if (MainMenu.mode == PlayingMode.MULTI)
@@ -151,17 +171,30 @@ public class GameManager : MonoBehaviour
         AddGameObject(player1);
 
         // Instantiate player 2 bot
-        GameObject bot = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        // GameObject bot = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        GameObject bot = Instantiate(AIPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
         bot.tag = "Enemy";
-        Bot botMove = bot.GetComponent<Bot>();
-        botMove.speed = 6f;
-        botMove.jumpForce = 16f;
-        botMove.opponentGoalPosition = new Vector3(-9.8f, 1, 0);
+        bot.TryGetComponent<Bot>(out Bot botMove);
+        bot.TryGetComponent<AgentController>(out AgentController agentController);
+        if (botMove)
+        {
+            botMove.speed = 6f;
+            botMove.jumpForce = 16f;
+            botMove.opponentGoalPosition = new Vector3(-9.8f, 1, 0);
+            GameObject defense = Instantiate(defensePrefab, new Vector3(9.5f, 1, 0), Quaternion.identity);
+            botMove.defense = defense.transform;
+        } 
+        else 
+        {
+            agentController.speed = 6f;
+            agentController.jumpForce = 8f;
+            agentController.opponentGoal = GameObject.FindGameObjectWithTag("GoalLeft").transform;
+            agentController.ownGoal = GameObject.FindGameObjectWithTag("GoalRight").transform;
+            agentController.ball = ball.transform;
+            agentController.opponent = player1.transform;
+        }
         Transform footBot = bot.transform.Find("Foot");
-        footBot.GetComponent<Animator>().SetBool("isFlipped", false);
-
-        GameObject defense = Instantiate(defensePrefab, new Vector3(9.5f, 1, 0), Quaternion.identity);
-        bot.GetComponent<Bot>().defense = defense.transform;
+        footBot.GetComponent<Animator>().SetBool("isFlipped", true);
 
         AddGameObject(bot);
 
@@ -250,6 +283,39 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator TestInit()
+    {
+        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
+        ballRb = ball.GetComponent<Rigidbody2D>();
+        ballRb.isKinematic = true;
+        AddGameObject(ball);
+
+        GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+        GameObject player2 = GameObject.FindGameObjectWithTag("Enemy");
+        AddGameObject(player1);
+        AddGameObject(player2);
+
+        // Instantiate progress bar 1
+        GameObject progBar1 = Instantiate(progressBar, new Vector3(-469, 426, 0), Quaternion.identity);
+        progBar1.transform.SetParent(gameCanva.transform, false);
+        ProgressBar progBar1controller = progBar1.GetComponent<ProgressBar>();
+        Gui.S.progressBar1 = progBar1controller;
+        progBar1controller.associatedPlayer = GameObject.FindGameObjectWithTag("Player");
+
+        // Instantiate progress bar 2
+        GameObject progBar2 = Instantiate(progressBar, new Vector3(469, 426, 0), Quaternion.identity);
+        progBar2.transform.SetParent(gameCanva.transform, false);
+        ProgressBar progBar2controller = progBar2.GetComponent<ProgressBar>();
+        Gui.S.progressBar2 = progBar2controller;    
+        progBar2controller.associatedPlayer = GameObject.FindGameObjectWithTag("Enemy");
+        
+        Transform maskTransform = progBar2.transform.Find("Mask");
+        Image maskImage = maskTransform.GetComponent<Image>();
+        maskImage.fillOrigin = 0;
+
+        yield return null;
+    }
+
     void StartCountdown() {
         StartCoroutine(Countdown());
     }
@@ -287,23 +353,40 @@ public class GameManager : MonoBehaviour
     }
 
     public static void KickOpponent(string kickedTag) {
-        if (kickedTag == "Player") {
+        if (kickedTag == "Player") 
+        {
             GameObject player = gameObjects.Find(obj => obj.CompareTag("Player"));
-            if (player)
-                if (MainMenu.mode == PlayingMode.MULTI)
-                    player.GetComponent<PlayerMovement>().TakeDamage(-1);
-                else if (MainMenu.mode == PlayingMode.SINGLE)
-                    player.GetComponent<PlayerMovement>().TakeDamage(-1);
-                else if (MainMenu.mode == PlayingMode.NONE)
-                    player.GetComponent<Bot>().TakeDamage(-1);
+            
+            player.TryGetComponent(out PlayerMovement playerMovement);
+            player.TryGetComponent(out AIPlayerMovement aIPlayerMovement);
+            player.TryGetComponent(out Bot bot);
+            player.TryGetComponent(out AgentController agentController);
+            
+            if (playerMovement)
+                playerMovement.TakeDamage(-1);
+            if (bot)
+                bot.TakeDamage(-1);
+            if (agentController)
+                agentController.TakeDamage(-1);
         }
         else if (kickedTag == "Enemy") {
             GameObject enemy = gameObjects.Find(obj => obj.CompareTag("Enemy"));
             if (enemy)
-                if (MainMenu.mode == PlayingMode.MULTI)
-                    enemy.GetComponent<PlayerMovement>().TakeDamage(1);
-                else
-                    enemy.GetComponent<Bot>().TakeDamage(1);
+            {
+                enemy.TryGetComponent(out PlayerMovement playerMovement);
+                enemy.TryGetComponent(out AIPlayerMovement aIPlayerMovement);
+                enemy.TryGetComponent(out Bot bot);
+                enemy.TryGetComponent(out AgentController agentController);
+
+                if (playerMovement)
+                    playerMovement.TakeDamage(1);
+                if (bot)
+                    bot.TakeDamage(1);
+                if (aIPlayerMovement)
+                    aIPlayerMovement.TakeDamage(1);
+                if (agentController)
+                    agentController.TakeDamage(1);
+            }
         }
     }
 
