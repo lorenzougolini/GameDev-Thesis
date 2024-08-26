@@ -77,6 +77,8 @@ Match Logs/
 MLvenv/
 ML-Agents/
 results/
+ImitationLearning/
+Logs/
 
 # NN Models
 *.onnx*

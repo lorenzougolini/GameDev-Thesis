@@ -42,6 +42,9 @@ public class AiEnvManager : MonoBehaviour
 
         player1.progressBar.UpdateCurrent(0.1f);
         player2.progressBar.UpdateCurrent(0.1f);
+
+        if (!checkBallInside())
+            ResetBall();
     }
 
     private void ResetGame()
@@ -80,45 +83,46 @@ public class AiEnvManager : MonoBehaviour
 
         ball.localPosition = new Vector3(-1.5f, 2f);
         ballRb.velocity = Vector2.zero;
+        ballRb.angularVelocity = 0f;
         aIBall.StopPower();
 
     }
 
     private void EndGame()
     {
-        // float rewardDifference = Mathf.Abs(player1.Score - player2.Score);
-        // // Calculate rewards based on the game result
-        // if (player1.Score > player2.Score)
-        // {
-        //     player1.AddReward(rewardDifference * 2f);
-        //     player2.AddReward(-rewardDifference * 2f);
-        // }
-        // else if (player2.Score > player1.Score)
-        // {
-        //     player1.AddReward(-rewardDifference * 2f);
-        //     player2.AddReward(rewardDifference * 2f);
-        // }
-        // else
-        // {
-        //     player1.AddReward(-5f);
-        //     player2.AddReward(-5f);
-        // }
+        float rewardDifference = Mathf.Abs(player1.Score - player2.Score);
+        // Calculate rewards based on the game result
+        if (player1.Score > player2.Score)
+        {
+            player1.AddReward(rewardDifference * 2f);
+            player2.AddReward(-rewardDifference * 2f);
+        }
+        else if (player2.Score > player1.Score)
+        {
+            player1.AddReward(-rewardDifference * 2f);
+            player2.AddReward(rewardDifference * 2f);
+        }
+        else
+        {
+            player1.AddReward(-5f);
+            player2.AddReward(-5f);
+        }
 
-        // if (rewardDifference >= 3)
-        // {
-        //     player1.AddReward(-3f);
-        //     player2.AddReward(-3f);
-        // }
+        if (rewardDifference >= 3)
+        {
+            player1.AddReward(-3f);
+            player2.AddReward(-3f);
+        }
 
         // i want the players to receive a reward if they score more than 5 goals
-        if (player1.Score >= 7)
-        {
-            player1.AddReward(10f);
-        }
-        else if (player2.Score >= 7)
-        {
-            player2.AddReward(10f);
-        }
+        // if (player1.Score >= 7)
+        // {
+        //     player1.AddReward(10f);
+        // }
+        // else if (player2.Score >= 7)
+        // {
+        //     player2.AddReward(10f);
+        // }
 
         player1.EndEpisode();
         player2.EndEpisode();
@@ -133,5 +137,15 @@ public class AiEnvManager : MonoBehaviour
         else if (kickedTag == "Enemy")
 
             player2.TakeDamage(1);
+    }
+
+    private bool checkBallInside()
+    {
+        return ball.localPosition.x >= -14 && ball.localPosition.x <= 11 && ball.localPosition.y >= -1 && ball.localPosition.y <= 10;
+    }
+
+    private void ResetBall()
+    {
+        ball.localPosition = new Vector3(-1.5f, 2f);
     }
 }

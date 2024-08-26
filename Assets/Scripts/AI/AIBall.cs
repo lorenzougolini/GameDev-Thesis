@@ -20,7 +20,7 @@ public class AIBall : MonoBehaviour
 
     private void Update()
     {
-        TrackAirTime();
+        // TrackAirTime();
         CheckBelowFloor();
         CheckIfBelow();
     }
@@ -32,8 +32,8 @@ public class AIBall : MonoBehaviour
             airTime += Time.deltaTime;
             if (airTime > 5f)
             {
-                // agent1.AddReward(0.5f);
-                // agent2.AddReward(0.5f);
+                agent1.AddReward(0.5f);
+                agent2.AddReward(0.5f);
                 airTime = 0f;
             }
         }
@@ -63,10 +63,10 @@ public class AIBall : MonoBehaviour
 
     private void CheckIfBelow()
     {
-        // if (transform.localPosition.y <= agent1.transform.localPosition.y && MathF.Abs(transform.localPosition.x - agent1.transform.localPosition.x) <= 1f)
-        //     agent1.AddReward(-0.1f);
-        // if (transform.localPosition.y <= agent2.transform.localPosition.y && MathF.Abs(transform.localPosition.x - agent2.transform.localPosition.x) <= 1f)
-        //     agent2.AddReward(-0.1f);
+        if (transform.localPosition.y <= agent1.transform.localPosition.y && MathF.Abs(transform.localPosition.x - agent1.transform.localPosition.x) <= 1f)
+            agent1.AddReward(-1f);
+        if (transform.localPosition.y <= agent2.transform.localPosition.y && MathF.Abs(transform.localPosition.x - agent2.transform.localPosition.x) <= 1f)
+            agent2.AddReward(-1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

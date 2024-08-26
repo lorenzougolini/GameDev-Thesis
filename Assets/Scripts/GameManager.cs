@@ -308,6 +308,7 @@ public class GameManager : MonoBehaviour
         ProgressBar progBar2controller = progBar2.GetComponent<ProgressBar>();
         Gui.S.progressBar2 = progBar2controller;    
         progBar2controller.associatedPlayer = GameObject.FindGameObjectWithTag("Enemy");
+        player2.GetComponent<AgentController>().progressBar = progBar2controller;
         
         Transform maskTransform = progBar2.transform.Find("Mask");
         Image maskImage = maskTransform.GetComponent<Image>();
@@ -356,18 +357,21 @@ public class GameManager : MonoBehaviour
         if (kickedTag == "Player") 
         {
             GameObject player = gameObjects.Find(obj => obj.CompareTag("Player"));
-            
-            player.TryGetComponent(out PlayerMovement playerMovement);
-            player.TryGetComponent(out AIPlayerMovement aIPlayerMovement);
-            player.TryGetComponent(out Bot bot);
-            player.TryGetComponent(out AgentController agentController);
-            
-            if (playerMovement)
-                playerMovement.TakeDamage(-1);
-            if (bot)
-                bot.TakeDamage(-1);
-            if (agentController)
-                agentController.TakeDamage(-1);
+
+            if (player)
+            {
+                player.TryGetComponent(out PlayerMovement playerMovement);
+                player.TryGetComponent(out AIPlayerMovement aIPlayerMovement);
+                player.TryGetComponent(out Bot bot);
+                player.TryGetComponent(out AgentController agentController);
+                
+                if (playerMovement)
+                    playerMovement.TakeDamage(-1);
+                if (bot)
+                    bot.TakeDamage(-1);
+                if (agentController)
+                    agentController.TakeDamage(-1);
+            }
         }
         else if (kickedTag == "Enemy") {
             GameObject enemy = gameObjects.Find(obj => obj.CompareTag("Enemy"));

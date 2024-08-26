@@ -108,10 +108,10 @@ public class AIPlayerMovement : Agent
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
-        if (discreteActions[1] == 1 && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
+        // if (discreteActions[1] == 1 && rb.velocity.y > 0f)
+        // {
+        //     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        // }
 
         // Dash
         if (discreteActions[2] == 1)

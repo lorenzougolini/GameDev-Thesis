@@ -2,8 +2,8 @@ behaviors:
   Agent1 Controller:
     trainer_type: ppo
     hyperparameters:
-      batch_size: 10
-      buffer_size: 100
+      batch_size: 256
+      buffer_size: 1024
       learning_rate: 3.0e-4
       beta: 5.0e-4
       epsilon: 0.2
@@ -20,6 +20,12 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
+      gail:
+        strength: 0.5
+        demo_path: C:\Users\lore1\OneDrive - uniroma1.it\Thesis\GameDev - Thesis\ImitationLearning\ImitationPlayerd_1.demo
+    behavioral_cloning:
+      strength: 0.3
+      demo_path: C:\Users\lore1\OneDrive - uniroma1.it\Thesis\GameDev - Thesis\ImitationLearning\ImitationPlayerd_1.demo
     max_steps: 500000
     time_horizon: 64
     summary_freq: 10000
@@ -27,8 +33,8 @@ behaviors:
   Agent2 Controller:
     trainer_type: ppo
     hyperparameters:
-      batch_size: 10
-      buffer_size: 100
+      batch_size: 256
+      buffer_size: 1024
       learning_rate: 3.0e-4
       beta: 5.0e-4
       epsilon: 0.2

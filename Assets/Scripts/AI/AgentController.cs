@@ -29,7 +29,7 @@ public class AgentController : Agent
     private float elapsedTime = 0f;
 
     public float speed = 6f;
-    public float jumpForce = 6f;
+    public float jumpForce = 16f;
 
     private float lastHitTime = 0f;
     private float hitInterval = 1f;
@@ -206,12 +206,12 @@ public class AgentController : Agent
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            // AddReward(2f);
+            AddReward(2f);
 
             if (Time.time - lastHitTime <= hitInterval)
             {
                 consecutiveHits++;
-                // AddReward(0.05f * consecutiveHits);
+                AddReward(0.05f * consecutiveHits);
             }
             else
             {
@@ -305,20 +305,20 @@ public class AgentController : Agent
         canDash = true;
 
         float endBallDist = Mathf.Abs(transform.localPosition.x - ball.localPosition.x);
-        // if (endBallDist < startBallDist)
-        //     AddReward(0.5f);
-        // else
-        //     AddReward(-1.5f);
+        if (endBallDist < startBallDist)
+            AddReward(0.5f);
+        else
+            AddReward(-1.5f);
     }
 
     private IEnumerator Kick()
     {
         float startBallDistToGoal = Mathf.Abs(opponentGoal.transform.localPosition.x - ball.localPosition.x);
         
-        // if (ballHit)
-        //     AddReward(0.5f);
-        // else
-        //     AddReward(-1.5f);
+        if (ballHit)
+            AddReward(0.5f);
+        else
+            AddReward(-1.5f);
 
         yield return new WaitForSeconds(0.1f);
         footAnimator.SetBool("kick", false);
@@ -326,10 +326,10 @@ public class AgentController : Agent
         ballHit = false;
 
         float endBallDistToGoal = Mathf.Abs(opponentGoal.transform.localPosition.x - ball.localPosition.x);
-        // if (endBallDistToGoal <= startBallDistToGoal)
-        //     AddReward(0.5f);
-        // else
-        //     AddReward(-1.5f);
+        if (endBallDistToGoal <= startBallDistToGoal)
+            AddReward(0.5f);
+        else
+            AddReward(-1.5f);
     }
 
     private IEnumerator Knockback(Vector3 targetPosition) 
