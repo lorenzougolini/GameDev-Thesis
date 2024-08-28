@@ -44,20 +44,20 @@ public class GameManager : MonoBehaviour
 
     void Start() {
 
-        if (playingMode == PlayingMode.TEST)
-        {
-            StartCoroutine(TestInit());
+        // if (playingMode == PlayingMode.TEST)
+        // {
+        //     StartCoroutine(TestInit());
 
-            Gui.S.player1Goals = 0;
-            Gui.S.player2Goals = 0;
-            Gui.S.playing = false;
+        //     Gui.S.player1Goals = 0;
+        //     Gui.S.player2Goals = 0;
+        //     Gui.S.playing = false;
 
-            Gui.S.matchDuration = matchDuration;
+        //     Gui.S.matchDuration = matchDuration;
 
-            StartCountdown();
+        //     StartCountdown();
             
-            return;
-        }
+        //     return;
+        // }
             
 
         if (MainMenu.mode == PlayingMode.SINGLE)

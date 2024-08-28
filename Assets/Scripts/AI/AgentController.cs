@@ -68,6 +68,13 @@ public class AgentController : Agent
             playerNumber = 1;
         else if (transform.CompareTag("Enemy"))
             playerNumber = 2;
+
+        // check if gui object exists and access its progressBar2
+        if (Gui.S)
+        {
+            progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
+        }
+
     }
 
     public void ResetPlayer()
