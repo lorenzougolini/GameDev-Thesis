@@ -8,7 +8,6 @@ using TMPro;
 
 public class AgentController : Agent
 {
-
     public Transform ball;
     [SerializeField] public Transform ownGoal;
     [SerializeField] public Transform opponentGoal;
@@ -24,7 +23,7 @@ public class AgentController : Agent
     public int playerNumber;
 
     private bool isGrounded;
-    private float jumpCount = 0f;
+    public float jumpCount = 0f;
 
     private float elapsedTime = 0f;
 
@@ -97,18 +96,36 @@ public class AgentController : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation((Vector2)transform.localPosition);
-        
-        sensor.AddObservation((Vector2)ball.localPosition);
+        Vector2 agentPosition = (Vector2)transform.localPosition;
+        Vector2 ballPosition = (Vector2)ball.localPosition;
+        Vector2 opponentPosition = (Vector2)opponent.localPosition;
+
+        // agent
+        sensor.AddObservation(agentPosition);
+
+        // ball
+        sensor.AddObservation(ballPosition);
         if (ballRb)
             sensor.AddObservation(ballRb.velocity);
         else
             findBall();
-        
-        sensor.AddObservation((Vector2)opponent.localPosition);
-        // sensor.AddObservation(Mathf.Abs(transform.localPosition.x - ball.localPosition.x)); // distance from ball
 
-        // sensor.AddObservation(isGrounded);
+        // opponent
+        sensor.AddObservation(opponentPosition);
+
+        // relative positions
+        // sensor.AddObservation(agentPosition - ballPosition);
+        // sensor.AddObservation(agentPosition - opponentPosition);
+
+        // // distances
+        // sensor.AddObservation(Vector2.Distance(agentPosition, ballPosition));
+        // sensor.AddObservation(Vector2.Distance(agentPosition, opponentPosition));
+
+        // // power-up charge
+        // sensor.AddObservation(progressBar.current);
+
+        // time
+        // sensor.AddObservation(AiGameManager.instance.timeRemaining);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -139,11 +156,11 @@ public class AgentController : Agent
             isGrounded = false;
             jumpCount += 1f;
         }
-        if (jumpAction == 1 && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-            isGrounded = false;
-        }
+        // if (jumpAction == 1 && rb.velocity.y > 0f)
+        // {
+        //     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        //     isGrounded = false;
+        // }
 
         if (dashAction == 1 && isGrounded && canDash && !isDashing && !isUsingPower)
         {
@@ -194,7 +211,7 @@ public class AgentController : Agent
     {
         if (isOwnGoal)
         {
-            AddReward(-10f - (jumpCount*0.05f) - (elapsedTime*0.01f));
+            AddReward(-10f - (elapsedTime*0.01f));
             // floor.color = Color.red;
             // floorText.text = "Own Goal";
             // EndEpisode();
@@ -202,7 +219,7 @@ public class AgentController : Agent
         }
         else
         {
-            AddReward(15f - (jumpCount*0.05f) - (elapsedTime*0.01f));
+            AddReward(15f - (elapsedTime*0.01f));
             // floor.color = Color.green;
             // floorText.text = "Goal";
             // EndEpisode();

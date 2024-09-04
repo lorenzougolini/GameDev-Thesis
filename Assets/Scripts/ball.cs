@@ -96,7 +96,7 @@ public class Ball : MonoBehaviour {
 			if (isShooting) isShooting = false;
 
 			Gui.S.player1Goals++;
-			GameManager.Instance.matchTelemetry.playerScore++;
+			GameManager.Instance.matchTelemetryStruct.playerScore++;
             Gui.S.ScoreGoalText(1);
             ResetObjects.S.Reset();
 			Gui.S.progressBar2.UpdateCurrent(15f);
@@ -108,7 +108,7 @@ public class Ball : MonoBehaviour {
 			if (isShooting) isShooting = false;
 
             Gui.S.player2Goals++;
-			GameManager.Instance.matchTelemetry.opponentScore++;
+			GameManager.Instance.matchTelemetryStruct.opponentScore++;
             Gui.S.ScoreGoalText(2);
             ResetObjects.S.Reset();
 			Gui.S.progressBar1.UpdateCurrent(15f);

@@ -63,7 +63,8 @@ public class AIPlayerMovement : Agent
     {
         // Reset player position and state at the beginning of each episode.
         rb.velocity = Vector2.zero;
-        transform.position = new Vector3(-7, 1, 0);
+        transform.localPosition = new Vector3(-7, 1, 0);
+        // transform.localPosition = new Vector3(-13, -4, 0);
         powerReady = false;
         powerSetUp = false;
         isUsingPower = false;
@@ -71,15 +72,18 @@ public class AIPlayerMovement : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Collect observations from the environment
-        sensor.AddObservation(transform.position.x); // Player's position
-        sensor.AddObservation(rb.velocity); // Player's velocity
-        sensor.AddObservation(isGrounded()); // Is the player grounded?
-        sensor.AddObservation(GameObject.FindGameObjectWithTag("Ball").transform.position); // Ball's position
-        sensor.AddObservation(moveLeftToRight); // Is the ball to the right or left?
-        sensor.AddObservation(kickPressed); // Is the kick pressed?
-        sensor.AddObservation(powerReady); // Is the power-up ready?
-        sensor.AddObservation(isDashing); // Is the player dashing?
+        Transform ball = GameObject.FindGameObjectWithTag("Ball").transform;
+        Rigidbody2D ballRb = ball.GetComponent<Rigidbody2D>();
+
+        Transform opponent = GameObject.FindGameObjectWithTag("Enemy").transform;
+
+        sensor.AddObservation((Vector2)transform.localPosition);
+        
+        sensor.AddObservation((Vector2)ball.localPosition);
+        if (ballRb)
+            sensor.AddObservation(ballRb.velocity);
+        
+        sensor.AddObservation((Vector2)opponent.localPosition);
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)

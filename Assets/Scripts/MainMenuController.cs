@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum PlayingMode { SINGLE, MULTI, NONE, AI, TEST }
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject IdInputPanel;
+    public TMP_InputField IdInputField;
 
     public GameObject waitingRoom;
     public GameObject loadingText;
@@ -39,14 +42,16 @@ public class MainMenu : MonoBehaviour
     public void PlaySingleGame() 
     {
         mode = PlayingMode.SINGLE;
-        StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
+        IdInputPanel.SetActive(true);
+        // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
         // SceneManager.LoadSceneAsync(sceneFromPlatform);
     }
 
     public void PlayMultiGame() 
     {
         mode = PlayingMode.MULTI;
-        StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
+        IdInputPanel.SetActive(true);
+        // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
 
         // SceneManager.LoadSceneAsync(sceneFromPlatform);
     }
@@ -56,9 +61,18 @@ public class MainMenu : MonoBehaviour
         //! TO CHANGE
         // Application.Quit();
         mode = PlayingMode.NONE;
-        StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
+        IdInputPanel.SetActive(true);
+        // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
 
         // SceneManager.LoadSceneAsync(sceneFromPlatform);
+    }
+
+    public void IdSubmit()
+    {
+        GameIdController.SetGameId(IdInputField.text);
+        GameIdController.SetRoundNumber();
+        IdInputPanel.SetActive(false);
+        StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
     }
 
     public IEnumerator WaitingRoomCoroutine(string scene)
@@ -74,7 +88,7 @@ public class MainMenu : MonoBehaviour
         }
 
         //set waiting time to be random within the range
-        waitingTime = Random.Range(30, 60);
+        waitingTime = Random.Range(20, 40);
         Debug.Log("Random waiting time: " + waitingTime);
         float elapsedTime = 0f;
 

@@ -321,7 +321,7 @@ public class Bot : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
-            GameManager.Instance.matchTelemetry.opponentAction = "Jump";
+            GameManager.Instance.matchTelemetryStruct.opponentAction = "Jump";
             // GameLogger.Instance.LogEvent("Bot Jumped at Position: " + transform.position);
         }
     }
@@ -333,7 +333,7 @@ public class Bot : MonoBehaviour
         if ((opponentDistance < kickRange) ^ (ballDistance < kickRange) && random.NextDouble() < 0.5 && canKick)
         {
             kickPressed = true;
-            GameManager.Instance.matchTelemetry.opponentAction = "Kick";
+            GameManager.Instance.matchTelemetryStruct.opponentAction = "Kick";
             // GameLogger.Instance.LogEvent("Bot Kicked at Position: " + transform.position);
             StartCoroutine(KickCooldown());
         }
@@ -348,7 +348,7 @@ public class Bot : MonoBehaviour
         if (powerReady && random.NextDouble() < prob)
         {
             powerSetUp = true;
-			GameManager.Instance.matchTelemetry.opponentAction = "Power Set Up";
+			GameManager.Instance.matchTelemetryStruct.opponentAction = "Power Set Up";
 
             Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
             bodyAnimator.enabled = true;
@@ -359,7 +359,7 @@ public class Bot : MonoBehaviour
 
     public void PowerUsed()
     {
-        GameManager.Instance.matchTelemetry.opponentAction = "Power Used";
+        GameManager.Instance.matchTelemetryStruct.opponentAction = "Power Used";
         
         powerReady = false;
         powerSetUp = false;
@@ -438,7 +438,7 @@ public class Bot : MonoBehaviour
     public void TakeDamage(int direction)
     {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
-        GameManager.Instance.matchTelemetry.opponentAction = "Damage Taken";
+        GameManager.Instance.matchTelemetryStruct.opponentAction = "Damage Taken";
         // GameLogger.Instance.LogEvent("Bot Took Damage at Position: " + transform.position);
         StartCoroutine(Knockback(knockbackPosition));
     }

@@ -5,10 +5,10 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Telemetry : MonoBehaviour
+public class MatchTelemetry : MonoBehaviour
 {
 
-    public struct MatchTelemetry {
+    public struct MatchTelemetryStruct {
         public string matchID;
         public Vector2 playerPosition;
         public Vector2 opponentPosition;
@@ -38,9 +38,10 @@ public class Telemetry : MonoBehaviour
     private const string _gform_player_score = "entry.324271870";
     private const string _gform_opponent_score = "entry.836300563";
 
-    private static Guid matchId;
+    // private static Guid matchId;
+    private static string matchId;
 
-    public static IEnumerator SubmitGoogleForm(MatchTelemetry lvlData)
+    public static IEnumerator SubmitGoogleForm(MatchTelemetryStruct lvlData)
     {
         CultureInfo ci = CultureInfo.GetCultureInfo("en-GB");
         Thread.CurrentThread.CurrentCulture = ci;
@@ -50,7 +51,7 @@ public class Telemetry : MonoBehaviour
         
         WWWForm form = new();
 
-        form.AddField(_gform_match_id, GUIDToShortString(matchId));
+        form.AddField(_gform_match_id, matchId);
         form.AddField(_gform_player_positionX, lvlData.playerPosition.x.ToString());
         form.AddField(_gform_player_positionY, lvlData.playerPosition.y.ToString());
         form.AddField(_gform_opponent_positionX, lvlData.opponentPosition.x.ToString());
@@ -62,26 +63,27 @@ public class Telemetry : MonoBehaviour
         form.AddField(_gform_player_score, lvlData.playerScore);
         form.AddField(_gform_opponent_score, lvlData.opponentScore);
 
-        // using (UnityWebRequest www = UnityWebRequest.Post(urlGoogleFormResponse, form))
-        // {
-        //     // send data
-        //     yield return www.SendWebRequest();
+        using (UnityWebRequest www = UnityWebRequest.Post(urlGoogleFormResponse, form))
+        {
+            // send data
+            // yield return www.SendWebRequest();
 
-        //     if (www.result != UnityWebRequest.Result.Success)
-        //     {
-        //         Debug.LogError(www.error);
-        //         Debug.LogError(www.responseCode);
-        //     }
-        //     else
-        //         Debug.Log("Form upload complete!");
-        // }
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+                Debug.LogError(www.responseCode);
+            }
+            else
+                Debug.Log("Form upload complete!");
+        }
 
         yield return null;
     }
 
     public static void GenerateNewMatchID()
     {
-        matchId = Guid.NewGuid();
+        // matchId = Guid.NewGuid();
+        matchId = GameIdController.gameId;
     }
 
     public static string GUIDToShortString(Guid guid)

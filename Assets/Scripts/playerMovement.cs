@@ -73,13 +73,13 @@ public class PlayerMovement : MonoBehaviour
 		if (Input.GetButtonDown("Vertical" + playerNumber) && isGrounded()) 
 		{
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-			GameManager.Instance.matchTelemetry.playerAction = "Jump";
+			GameManager.Instance.matchTelemetryStruct.playerAction = "Jump";
 			// GameLogger.Instance.LogEvent("Player " + playerNumber + " Jumped at Position: " + transform.position);
 			
 		} else if (TouchControls.jumpPressed && isGrounded()) 
 		{
 			rb.velocity = new Vector2(rb.velocity.x, jumpForce*0.5f);
-			GameManager.Instance.matchTelemetry.playerAction = "Jump";
+			GameManager.Instance.matchTelemetryStruct.playerAction = "Jump";
 			// GameLogger.Instance.Log-Event("Player " + playerNumber + " Jumped at Position: " + transform.position);
 			TouchControls.jumpPressed = false;
 		}
@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
 		// Kick
 		kickPressed = TouchControls.kickPressed || Convert.ToBoolean(Input.GetAxis("Jump" + playerNumber));
 		if (kickPressed)
-			GameManager.Instance.matchTelemetry.playerAction = "Kick";
+			GameManager.Instance.matchTelemetryStruct.playerAction = "Kick";
 			// GameLogger.Instance.LogEvent("Player " + playerNumber + " Kicked at Position: " + transform.position);
 
 		// Dash
@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 		if ((TouchControls.powerPressed || Input.GetButtonDown("Fire" + playerNumber)) && powerReady) {
 			powerSetUp = true;
 			TouchControls.powerPressed = false;
-			GameManager.Instance.matchTelemetry.playerAction = "Power Set Up";
+			GameManager.Instance.matchTelemetryStruct.playerAction = "Power Set Up";
 			
 			Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
 			bodyAnimator.enabled = true;
@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
 	}
 
 	public void PowerUsed() {
-        GameManager.Instance.matchTelemetry.opponentAction = "Power Used";
+        GameManager.Instance.matchTelemetryStruct.opponentAction = "Power Used";
 
 		powerReady = false;
 		powerSetUp = false;
@@ -150,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
 		if ((Input.GetKeyDown(KeyCode.A) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.LeftArrow) && playerNumber == 2)) {
 			float currentTime = Time.time;
 			if (currentTime - lastLeftPressTime < doubleClickThreshold && canDash && rb.velocity.y == 0f) {
-				GameManager.Instance.matchTelemetry.playerAction = "Dash";
+				GameManager.Instance.matchTelemetryStruct.playerAction = "Dash";
 				// GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
 				StartCoroutine(Dash(-1));
 			}
@@ -161,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
 		if ((Input.GetKeyDown(KeyCode.D) && playerNumber == 1) || (Input.GetKeyDown(KeyCode.RightArrow) && playerNumber == 2)) {
 			float currentTime = Time.time;
 			if (currentTime - lastRightPressTime < doubleClickThreshold && canDash && rb.velocity.y == 0f) {
-				GameManager.Instance.matchTelemetry.playerAction = "Dash";
+				GameManager.Instance.matchTelemetryStruct.playerAction = "Dash";
 				// GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
 				StartCoroutine(Dash(1));
 			}
@@ -173,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (canDash && rb.velocity.y == 0f)
 		{
-			GameManager.Instance.matchTelemetry.playerAction = "Dash";
+			GameManager.Instance.matchTelemetryStruct.playerAction = "Dash";
 			// GameLogger.Instance.LogEvent("Player " + playerNumber + " Dashed at Position: " + transform.position);
 			StartCoroutine(Dash(direction));
 		}
@@ -181,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
 	
 	public void TakeDamage(int direction) {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
-		GameManager.Instance.matchTelemetry.playerAction = "Damage Taken";
+		GameManager.Instance.matchTelemetryStruct.playerAction = "Damage Taken";
 		// GameLogger.Instance.LogEvent("Player " + playerNumber + " Took Damage at Position: " + transform.position);
         StartCoroutine(Knockback(knockbackPosition));
     }

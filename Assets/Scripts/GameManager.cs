@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] PlayingMode playingMode;
+    [SerializeField] public PlayingMode playingMode;
+
+    // public int RoundNumber = 1;
 
     public GameObject gameCanva;
 
@@ -29,7 +31,7 @@ public class GameManager : MonoBehaviour
     private Rigidbody2D ballRb;
  
     public GameLogger gameLogger;
-    public Telemetry.MatchTelemetry matchTelemetry;
+    public MatchTelemetry.MatchTelemetryStruct matchTelemetryStruct;
 
     private void Awake() 
     {
@@ -38,26 +40,26 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             // generate match id 
-            Telemetry.GenerateNewMatchID();
+            MatchTelemetry.GenerateNewMatchID();
         }
     }
 
     void Start() {
 
-        // if (playingMode == PlayingMode.TEST)
-        // {
-        //     StartCoroutine(TestInit());
+        if (playingMode == PlayingMode.TEST)
+        {
+            StartCoroutine(TestInit());
 
-        //     Gui.S.player1Goals = 0;
-        //     Gui.S.player2Goals = 0;
-        //     Gui.S.playing = false;
+            Gui.S.player1Goals = 0;
+            Gui.S.player2Goals = 0;
+            Gui.S.playing = false;
 
-        //     Gui.S.matchDuration = matchDuration;
+            Gui.S.matchDuration = matchDuration;
 
-        //     StartCountdown();
+            StartCountdown();
             
-        //     return;
-        // }
+            return;
+        }
             
 
         if (MainMenu.mode == PlayingMode.SINGLE)
@@ -80,10 +82,10 @@ public class GameManager : MonoBehaviour
         GameLogger.Instance.SetLogFilePath(logFilePath);
         GameLogger.Instance.LogEvent("Game Started in " + MainMenu.mode + " mode");
 
-        matchTelemetry.playerAction = "";
-        matchTelemetry.opponentAction = "";
-        matchTelemetry.playerScore = 0;
-        matchTelemetry.opponentScore = 0;
+        matchTelemetryStruct.playerAction = "";
+        matchTelemetryStruct.opponentAction = "";
+        matchTelemetryStruct.playerScore = 0;
+        matchTelemetryStruct.opponentScore = 0;
         StartCoroutine(LogGameState());
     }
 
@@ -171,8 +173,8 @@ public class GameManager : MonoBehaviour
         AddGameObject(player1);
 
         // Instantiate player 2 bot
-        // GameObject bot = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
-        GameObject bot = Instantiate(AIPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        GameObject bot = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        // GameObject bot = Instantiate(AIPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
         bot.tag = "Enemy";
         bot.TryGetComponent<Bot>(out Bot botMove);
         bot.TryGetComponent<AgentController>(out AgentController agentController);
@@ -308,8 +310,17 @@ public class GameManager : MonoBehaviour
         ProgressBar progBar2controller = progBar2.GetComponent<ProgressBar>();
         Gui.S.progressBar2 = progBar2controller;    
         progBar2controller.associatedPlayer = GameObject.FindGameObjectWithTag("Enemy");
-        player2.GetComponent<AgentController>().progressBar = progBar2controller;
-        
+        player2.TryGetComponent<AgentController>(out AgentController agentController);
+        player2.TryGetComponent<Bot>(out Bot bot);
+        if (agentController)
+            agentController.progressBar = progBar2controller;
+        if (bot) 
+        {
+            GameObject defense = Instantiate(defensePrefab, new Vector3(9.5f, 1, 0), Quaternion.identity);
+            bot.defense = defense.transform;
+        }
+        // else if (bot)
+        //     bot.progressBar = progBar2controller;
         Transform maskTransform = progBar2.transform.Find("Mask");
         Image maskImage = maskTransform.GetComponent<Image>();
         maskImage.fillOrigin = 0;
@@ -431,26 +442,42 @@ public class GameManager : MonoBehaviour
 
             // GameLogger.Instance.LogEvent($"Elapsed Time: {elapsedTime}, Time Remaining: {timeRemaining}, Player 1 Position: {player1Position}, Player 2 Position: {player2Position}, Ball Position: {ballPosition}");
 
-            matchTelemetry.playerPosition = player1Position;
-            matchTelemetry.opponentPosition = player2Position;
-            matchTelemetry.ballPosition = ballPosition;
+            matchTelemetryStruct.playerPosition = player1Position;
+            matchTelemetryStruct.opponentPosition = player2Position;
+            matchTelemetryStruct.ballPosition = ballPosition;
             // matchTelemetry.playerScore = Gui.S.player1Goals;
             // matchTelemetry.opponentScore = Gui.S.player2Goals;
 
-            StartCoroutine(Telemetry.SubmitGoogleForm(matchTelemetry));
+            StartCoroutine(MatchTelemetry.SubmitGoogleForm(matchTelemetryStruct));
         }
     }
 
     public void ClearTelemetryData()
     {
-        Telemetry.GenerateNewMatchID();
+        MatchTelemetry.GenerateNewMatchID();
 
-        matchTelemetry.playerPosition = Vector2.zero;
-        matchTelemetry.opponentPosition = Vector2.zero;
-        matchTelemetry.ballPosition = Vector2.zero;
-        matchTelemetry.playerAction = "";
-        matchTelemetry.opponentAction = "";
-        matchTelemetry.playerScore = 0;
-        matchTelemetry.opponentScore = 0;
+        matchTelemetryStruct.playerPosition = Vector2.zero;
+        matchTelemetryStruct.opponentPosition = Vector2.zero;
+        matchTelemetryStruct.ballPosition = Vector2.zero;
+        matchTelemetryStruct.playerAction = "";
+        matchTelemetryStruct.opponentAction = "";
+        matchTelemetryStruct.playerScore = 0;
+        matchTelemetryStruct.opponentScore = 0;
+    }
+
+    private void Update() {
+        if (Gui.S.playing && !checkBallInside())
+            ResetBall();
+    }
+    private bool checkBallInside()
+    {
+        Transform ball = GameObject.FindGameObjectWithTag("Ball").transform;
+        return ball.localPosition.x >= -14 && ball.localPosition.x <= 11 && ball.localPosition.y >= -1 && ball.localPosition.y <= 10;
+    }
+
+    private void ResetBall()
+    {
+        Transform ball = GameObject.FindGameObjectWithTag("Ball").transform;
+        ball.localPosition = new Vector3(-1.5f, 2f);
     }
 }

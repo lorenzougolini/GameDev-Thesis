@@ -40,6 +40,8 @@ public class AiEnvManager : MonoBehaviour
     {
         scoreText.text = $"{player1.Score} - {player2.Score}";
 
+        // player1.progressBar.UpdateCurrent(2f);
+        // player2.progressBar.UpdateCurrent(2f);
         player1.progressBar.UpdateCurrent(0.1f);
         player2.progressBar.UpdateCurrent(0.1f);
 
@@ -108,11 +110,14 @@ public class AiEnvManager : MonoBehaviour
             player2.AddReward(-5f);
         }
 
-        if (rewardDifference >= 3)
-        {
-            player1.AddReward(-3f);
-            player2.AddReward(-3f);
-        }
+        // if (rewardDifference >= 3)
+        // {
+        //     player1.AddReward(-3f);
+        //     player2.AddReward(-3f);
+        // }
+
+        player1.AddReward(-player1.jumpCount*0.2f);
+        player2.AddReward(-player2.jumpCount*0.2f);
 
         // i want the players to receive a reward if they score more than 5 goals
         // if (player1.Score >= 7)

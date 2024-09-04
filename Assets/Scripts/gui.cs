@@ -12,7 +12,8 @@ public class Gui : MonoBehaviour {
     public bool playing = false;
 
     public Text scoreText;
-    public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI finalScoreText1;
+    public TextMeshProUGUI finalScoreText2;
     public GameObject goalText;
 
     public ProgressBar progressBar1;
@@ -20,6 +21,7 @@ public class Gui : MonoBehaviour {
     
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] GameObject endGameMenu;
+    [SerializeField] GameObject endGameMenuToForm;
     [SerializeField] GameObject pauseMenu;
     
     public float matchDuration;
@@ -30,8 +32,8 @@ public class Gui : MonoBehaviour {
     private bool isPaused = false;
     private bool isEnded = false;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake () {
         S = this;
 
 		scoreText = GameObject.Find("ScoreText").GetComponent<Text> ();
@@ -101,14 +103,37 @@ public class Gui : MonoBehaviour {
     }
 
     public void Pause() {
+        playing = false;
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
         isPaused = true;
     }
 
     public void EndGame() {
-        endGameMenu.SetActive(true);
-        finalScoreText.text = player1Goals.ToString() + " - " + player2Goals.ToString();
+        playing = false;
+        if (GameManager.Instance.playingMode == PlayingMode.TEST)
+        {
+            GameObject.FindGameObjectWithTag("Player").TryGetComponent<AIPlayerMovement>(out AIPlayerMovement aiPlayerMovement);
+            if (aiPlayerMovement)
+            {
+                aiPlayerMovement.EndEpisode();
+            }
+        }
+
+        // if (GameIdController.RoundNumber == 3)
+        // {
+        //     endGameMenu.SetActive(true);
+        //     finalScoreText1.text = player1Goals.ToString() + " - " + player2Goals.ToString();
+        // }
+        // else
+        // {
+        //     endGameMenuToForm.SetActive(true);
+        //     finalScoreText2.text = player1Goals.ToString() + " - " + player2Goals.ToString();
+        // }
+        endGameMenuToForm.SetActive(true);
+        finalScoreText2.text = player1Goals.ToString() + " - " + player2Goals.ToString();
+
+        Debug.Log($"game id is: {GameIdController.gameId}");
         Time.timeScale = 0;
 
         // GameLogger.Instance.SaveLogsToFile();
@@ -121,12 +146,26 @@ public class Gui : MonoBehaviour {
     }
 
     public void Resume() {
+        playing = true;
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
         isPaused = false;
     }
+    
+    public void GoToForm() {
+        SceneManager.LoadScene("FormScene");
+    }
 
     public void Restart() {
+        if (GameManager.Instance.playingMode == PlayingMode.TEST)
+        {
+            GameObject.FindGameObjectWithTag("Player").TryGetComponent<AIPlayerMovement>(out AIPlayerMovement aiPlayerMovement);
+            if (aiPlayerMovement)
+            {
+                aiPlayerMovement.EndEpisode();
+            }
+        }
+
         Time.timeScale = 1;
 
         string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
@@ -134,6 +173,7 @@ public class Gui : MonoBehaviour {
         GameLogger.Instance.ClearLogs();
         GameManager.Instance.ClearTelemetryData();
 
+        GameIdController.SetRoundNumber(0);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

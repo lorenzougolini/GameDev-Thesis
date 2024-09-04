@@ -7,16 +7,30 @@ using UnityEngine;
 public class AiGameManager : MonoBehaviour
 {
     public float elapsedTime;
+    public float timeRemaining;
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] float gameDuration;
 
     public event Action OnGameEnd;
 
+    // generate instance
+    public static AiGameManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        timerText.text = (gameDuration - elapsedTime).ToString("F1");
+        timeRemaining = gameDuration - elapsedTime;
+
+        timerText.text = timeRemaining.ToString("F1");
 
         if (elapsedTime >= gameDuration)
         {
