@@ -12,7 +12,7 @@ public class AiEnvManager : MonoBehaviour
     [SerializeField] private Transform ball;
     // [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private float gameDuration = 60f;
+    // [SerializeField] private float gameDuration = 60f;
 
     private Rigidbody2D ballRb;
     private AIBall aIBall;
@@ -26,7 +26,10 @@ public class AiEnvManager : MonoBehaviour
         ballRb = ball.GetComponent<Rigidbody2D>();
         gameManager = FindObjectOfType<AiGameManager>();
         if (gameManager != null)
+        {
+            gameManager.OnRoundEnd += EndRound;
             gameManager.OnGameEnd += EndGame;
+        }
         
         aIBall = FindObjectOfType<AIBall>();
 
@@ -40,10 +43,10 @@ public class AiEnvManager : MonoBehaviour
     {
         scoreText.text = $"{player1.Score} - {player2.Score}";
 
-        // player1.progressBar.UpdateCurrent(2f);
-        // player2.progressBar.UpdateCurrent(2f);
-        player1.progressBar.UpdateCurrent(0.1f);
-        player2.progressBar.UpdateCurrent(0.1f);
+        player1.progressBar.UpdateCurrent(2f);
+        player2.progressBar.UpdateCurrent(2f);
+        // player1.progressBar.UpdateCurrent(0.1f);
+        // player2.progressBar.UpdateCurrent(0.1f);
 
         if (!checkBallInside())
             ResetBall();
@@ -57,6 +60,8 @@ public class AiEnvManager : MonoBehaviour
         ballRb.velocity = Vector2.zero;
         ballRb.angularVelocity = 0f;
 
+        player1.PreviousRoundScore = player1.Score;
+        player2.PreviousRoundScore = player2.Score;
         player1.Score = 0;
         player2.Score = 0;
 
@@ -90,7 +95,7 @@ public class AiEnvManager : MonoBehaviour
 
     }
 
-    private void EndGame()
+    private void EndRound()
     {
         float rewardDifference = Mathf.Abs(player1.Score - player2.Score);
         // Calculate rewards based on the game result
@@ -104,31 +109,34 @@ public class AiEnvManager : MonoBehaviour
             player1.AddReward(-rewardDifference * 2f);
             player2.AddReward(rewardDifference * 2f);
         }
-        else
+
+        if ((player1.Score == player2.Score) || (player1.Score == 0 && player2.Score == 0))
         {
-            player1.AddReward(-5f);
-            player2.AddReward(-5f);
+            player1.AddReward(-3f);
+            player2.AddReward(-3f);
         }
 
-        // if (rewardDifference >= 3)
-        // {
-        //     player1.AddReward(-3f);
-        //     player2.AddReward(-3f);
-        // }
+        // compare with previous round score
+        if (player1.Score > player1.PreviousRoundScore)
+            player1.AddReward(2f);
+        else if (player1.Score < player1.PreviousRoundScore)
+            player1.AddReward(-2f);
+
+        if (player2.Score > player2.PreviousRoundScore)
+            player2.AddReward(2f);
+        else if (player2.Score < player2.PreviousRoundScore)
+            player2.AddReward(-2f);
 
         player1.AddReward(-player1.jumpCount*0.2f);
         player2.AddReward(-player2.jumpCount*0.2f);
 
-        // i want the players to receive a reward if they score more than 5 goals
-        // if (player1.Score >= 7)
-        // {
-        //     player1.AddReward(10f);
-        // }
-        // else if (player2.Score >= 7)
-        // {
-        //     player2.AddReward(10f);
-        // }
+        // player1.EndEpisode();
+        // player2.EndEpisode();
+        ResetGame();
+    }
 
+    private void EndGame()
+    {
         player1.EndEpisode();
         player2.EndEpisode();
         ResetGame();

@@ -173,8 +173,8 @@ public class GameManager : MonoBehaviour
         AddGameObject(player1);
 
         // Instantiate player 2 bot
-        GameObject bot = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
-        // GameObject bot = Instantiate(AIPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        // GameObject bot = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        GameObject bot = Instantiate(AIPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
         bot.tag = "Enemy";
         bot.TryGetComponent<Bot>(out Bot botMove);
         bot.TryGetComponent<AgentController>(out AgentController agentController);
@@ -213,6 +213,9 @@ public class GameManager : MonoBehaviour
         ProgressBar progBar2controller = progBar2.GetComponent<ProgressBar>();
         Gui.S.progressBar2 = progBar2controller;    
         progBar2controller.associatedPlayer = bot;
+        if (agentController)
+            agentController.progressBar = progBar2controller;
+
         
         Transform maskTransform = progBar2.transform.Find("Mask");
         Image maskImage = maskTransform.GetComponent<Image>();
@@ -328,14 +331,21 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    void StartCountdown() {
+    private void StartCountdown() 
+    {
         StartCoroutine(Countdown());
     }
 
-    IEnumerator Countdown() {
+    IEnumerator Countdown()
+    {
+        Gui.S.goalText.SetActive(true);
+        Gui.S.goalText.GetComponent<Text>().text = $"Round {GameIdController.RoundNumber}";
+        yield return new WaitForSeconds(1.5f);
+
         int countdown = 3;
+
         while (countdown > 0) {
-            Gui.S.goalText.SetActive(true);
+            // Gui.S.goalText.SetActive(true);
             Gui.S.goalText.GetComponent<Text>().text = countdown.ToString();
             yield return new WaitForSeconds(1f);
             countdown--;
@@ -474,7 +484,6 @@ public class GameManager : MonoBehaviour
         Transform ball = GameObject.FindGameObjectWithTag("Ball").transform;
         return ball.localPosition.x >= -14 && ball.localPosition.x <= 11 && ball.localPosition.y >= -1 && ball.localPosition.y <= 10;
     }
-
     private void ResetBall()
     {
         Transform ball = GameObject.FindGameObjectWithTag("Ball").transform;

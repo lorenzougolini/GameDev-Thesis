@@ -65,7 +65,7 @@ public class FormTelemetry : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post(urlGoogleFormResponse, form))
         {
             // send data
-            // yield return www.SendWebRequest();
+            yield return www.SendWebRequest();
 
             if (www.result != UnityWebRequest.Result.Success)
             {

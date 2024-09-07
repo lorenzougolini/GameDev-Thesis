@@ -57,6 +57,10 @@ public class AgentController : Agent
     private Rigidbody2D rb;
 
     public int Score;
+    public int PreviousRoundScore;
+
+    private Vector3 lastPosition;
+    private float timeInOwnHalf;
 
     public void Start()
     {
@@ -70,9 +74,7 @@ public class AgentController : Agent
 
         // check if gui object exists and access its progressBar2
         if (Gui.S)
-        {
             progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
-        }
 
     }
 
@@ -84,18 +86,17 @@ public class AgentController : Agent
         isGrounded = true;
         elapsedTime = 0f;
         jumpCount = 0f;
-        // PowerUsed();
-        // Score = 0;
     }
 
     private void Update()
     {
         elapsedTime += Time.deltaTime;
-        // progressBar.UpdateCurrent(0.1f);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
+        // if (!Gui.S.playing) return;
+
         Vector2 agentPosition = (Vector2)transform.localPosition;
         Vector2 ballPosition = (Vector2)ball.localPosition;
         Vector2 opponentPosition = (Vector2)opponent.localPosition;
@@ -108,24 +109,27 @@ public class AgentController : Agent
         if (ballRb)
             sensor.AddObservation(ballRb.velocity);
         else
-            findBall();
+            sensor.AddObservation(findBall());
 
         // opponent
         sensor.AddObservation(opponentPosition);
 
         // relative positions
-        // sensor.AddObservation(agentPosition - ballPosition);
-        // sensor.AddObservation(agentPosition - opponentPosition);
+        sensor.AddObservation(agentPosition - ballPosition);
+        sensor.AddObservation(agentPosition - opponentPosition);
 
-        // // distances
-        // sensor.AddObservation(Vector2.Distance(agentPosition, ballPosition));
-        // sensor.AddObservation(Vector2.Distance(agentPosition, opponentPosition));
+        // distances
+        sensor.AddObservation(Vector2.Distance(agentPosition, ballPosition));
+        sensor.AddObservation(Vector2.Distance(agentPosition, opponentPosition));
 
-        // // power-up charge
-        // sensor.AddObservation(progressBar.current);
+        // power-up charge
+        sensor.AddObservation(progressBar.current);
 
         // time
-        // sensor.AddObservation(AiGameManager.instance.timeRemaining);
+        if (AiGameManager.instance)
+            sensor.AddObservation(AiGameManager.instance.timeRemaining);
+        else
+            sensor.AddObservation(Gui.S.matchDuration);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -156,11 +160,6 @@ public class AgentController : Agent
             isGrounded = false;
             jumpCount += 1f;
         }
-        // if (jumpAction == 1 && rb.velocity.y > 0f)
-        // {
-        //     rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        //     isGrounded = false;
-        // }
 
         if (dashAction == 1 && isGrounded && canDash && !isDashing && !isUsingPower)
         {
@@ -212,17 +211,10 @@ public class AgentController : Agent
         if (isOwnGoal)
         {
             AddReward(-10f - (elapsedTime*0.01f));
-            // floor.color = Color.red;
-            // floorText.text = "Own Goal";
-            // EndEpisode();
-            // ResetPlayer();
         }
         else
         {
             AddReward(15f - (elapsedTime*0.01f));
-            // floor.color = Color.green;
-            // floorText.text = "Goal";
-            // EndEpisode();
         }
     }
 
@@ -374,9 +366,10 @@ public class AgentController : Agent
 		transform.Find("Body").GetComponent<SpriteRenderer>().color = Color.white;	
 	}
 
-    private void findBall()
+    private Vector2 findBall()
     {
         ball = GameObject.FindGameObjectWithTag("Ball").transform;
         ballRb = ball.GetComponent<Rigidbody2D>();
+        return ballRb.velocity;
     }
 }

@@ -36,3 +36,53 @@ The following packages were added:
   com.unity.modules.vr@1.0.0
   com.unity.modules.wind@1.0.0
   com.unity.modules.xr@1.0.0
+
+=== Thu Sep  5 13:35:36 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.2d.animation from version 5.1.1 to 9.1.0
+  com.unity.2d.pixel-perfect from version 4.0.1 to 5.0.3
+  com.unity.2d.psdimporter from version 4.2.0 to 8.0.4
+  com.unity.2d.spriteshape from version 5.2.0 to 9.0.2
+  com.unity.collab-proxy from version 1.15.13 to 2.3.1
+  com.unity.ide.rider from version 2.0.7 to 3.0.28
+  com.unity.ide.visualstudio from version 2.0.14 to 2.0.22
+  com.unity.test-framework from version 1.1.31 to 1.1.33
+  com.unity.timeline from version 1.4.8 to 1.7.6
+
+=== Thu Sep  5 13:35:37 2024
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.2d.animation@9.1.0
+  com.unity.2d.pixel-perfect@5.0.3
+  com.unity.2d.psdimporter@8.0.4
+  com.unity.2d.sprite@1.0.0
+  com.unity.2d.spriteshape@9.0.2
+  com.unity.2d.tilemap@1.0.0
+  com.unity.ide.rider@3.0.28
+  com.unity.test-framework@1.1.33
+  com.unity.timeline@1.7.6
+The following packages were updated:
+  com.unity.collab-proxy from version 2.1.0 to 2.3.1
+
+=== Thu Sep  5 14:07:16 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.2d.animation from version 5.1.1 to 9.1.0
+  com.unity.2d.pixel-perfect from version 4.0.1 to 5.0.3
+  com.unity.2d.psdimporter from version 4.2.0 to 8.0.4
+  com.unity.2d.spriteshape from version 5.2.0 to 9.0.2
+  com.unity.collab-proxy from version 1.15.13 to 2.3.1
+  com.unity.ide.rider from version 2.0.7 to 3.0.28
+  com.unity.ide.visualstudio from version 2.0.14 to 2.0.22
+  com.unity.test-framework from version 1.1.31 to 1.1.33
+  com.unity.timeline from version 1.4.8 to 1.7.6

@@ -22,10 +22,10 @@ behaviors:
         strength: 1.0
       gail:
         strength: 0.5
-        demo_path: C:\Users\lore1\OneDrive - uniroma1.it\Thesis\GameDev - Thesis\ImitationLearning\ImitationPlayerd_6.demo
+        demo_path: \ImitationLearning\ImitationPlayerd_6.demo
     behavioral_cloning:
       strength: 0.8
-      demo_path: C:\Users\lore1\OneDrive - uniroma1.it\Thesis\GameDev - Thesis\ImitationLearning\ImitationPlayerd_6.demo
+      demo_path: \ImitationLearning\ImitationPlayerd_6.demo
       steps: 50000
     max_steps: 1000000
     time_horizon: 64

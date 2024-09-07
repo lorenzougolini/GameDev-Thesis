@@ -14,6 +14,8 @@ public class MainMenu : MonoBehaviour
 
     public GameObject waitingRoom;
     public GameObject loadingText;
+    public GameObject startingText;
+    public GameObject loadingSpinner;
 
     private TextMeshProUGUI mainText;
     private TextMeshProUGUI dotsText;
@@ -43,6 +45,8 @@ public class MainMenu : MonoBehaviour
     {
         mode = PlayingMode.SINGLE;
         IdInputPanel.SetActive(true);
+        IdInputField.Select();
+
         // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
         // SceneManager.LoadSceneAsync(sceneFromPlatform);
     }
@@ -51,8 +55,9 @@ public class MainMenu : MonoBehaviour
     {
         mode = PlayingMode.MULTI;
         IdInputPanel.SetActive(true);
-        // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
+        IdInputField.Select();
 
+        // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
         // SceneManager.LoadSceneAsync(sceneFromPlatform);
     }
 
@@ -100,7 +105,9 @@ public class MainMenu : MonoBehaviour
         }
 
         dotsText.text = "";
-        mainText.text = "Game is starting!!";
+        loadingText.SetActive(false);
+        loadingSpinner.SetActive(false);
+        startingText.SetActive(true);
 
         // waitingRoom.SetActive(false);
         asyncLoad.allowSceneActivation = true;

@@ -11,6 +11,8 @@ public class AiGameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] float gameDuration;
 
+    public int roundNumber = 1;
+    public event Action OnRoundEnd;
     public event Action OnGameEnd;
 
     // generate instance
@@ -34,13 +36,30 @@ public class AiGameManager : MonoBehaviour
 
         if (elapsedTime >= gameDuration)
         {
+            EndRound();
+        }
+    }
+
+    void EndRound()
+    {   
+        OnRoundEnd?.Invoke();
+
+        // if it's the third round, end the game
+        if (roundNumber == 3)
+        {
             EndGame();
+        }
+        else
+        {
+            roundNumber += 1;
+            elapsedTime = 0f;
         }
     }
 
     void EndGame()
     {
-        OnGameEnd?.Invoke();
+        roundNumber = 1;
         elapsedTime = 0f;
+        OnGameEnd?.Invoke();
     }
 }
