@@ -20,6 +20,16 @@ public class FormController : MonoBehaviour
     [SerializeField] private GameObject question9;
     [SerializeField] private GameObject question10;
     
+    public GameObject waitingRoom;
+    public GameObject loadingText;
+    public GameObject startingText;
+    public GameObject loadingSpinner;
+
+    private TextMeshProUGUI mainText;
+    private TextMeshProUGUI dotsText;
+
+    [Range(10, 15)] public float waitingTime;
+
     public FormTelemetry.FormTelemetryStruct formTelemetryStruct;
 
     private void Start()
@@ -31,30 +41,33 @@ public class FormController : MonoBehaviour
 
         formTelemetryStruct.matchID = GameIdController.gameId;
         formTelemetryStruct.roundNumber = GameIdController.RoundNumber.ToString();
+
+        mainText = loadingText.transform.Find("MainText").GetComponent<TextMeshProUGUI>();
+        dotsText = loadingText.transform.Find("DotsText").GetComponent<TextMeshProUGUI>();
     }
 
     private void FillStructure()
     {
         // question1 gets anwered with a slider 1 to 5
-        formTelemetryStruct.answer1 = question1.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer2 = question2.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer3 = question3.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer4 = question4.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer5 = question5.GetComponentInChildren<Slider>().value.ToString();
+        formTelemetryStruct.answer0 = question1.GetComponentInChildren<Slider>().value.ToString();
+        formTelemetryStruct.answer1 = question2.GetComponentInChildren<Slider>().value.ToString();
+        formTelemetryStruct.answer2 = question3.GetComponentInChildren<Slider>().value.ToString();
+        formTelemetryStruct.answer3 = question4.GetComponentInChildren<Slider>().value.ToString();
+        formTelemetryStruct.answer4 = question5.GetComponentInChildren<Slider>().value.ToString();
 
         // question6 has two checkboxes (yes, no)
         if (question6.transform.GetChild(2).GetComponent<Toggle>().isOn)
-            formTelemetryStruct.answer6 = "Yes";
+            formTelemetryStruct.answer5 = "Yes";
         else
-            formTelemetryStruct.answer6 = "No";
+            formTelemetryStruct.answer5 = "No";
 
-        formTelemetryStruct.answer7 = question7.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer8 = question8.GetComponentInChildren<Slider>().value.ToString();
+        formTelemetryStruct.answer6 = question7.GetComponentInChildren<Slider>().value.ToString();
+        formTelemetryStruct.answer7 = question8.GetComponentInChildren<Slider>().value.ToString();
         if (question9.transform.GetChild(2).GetComponent<Toggle>().isOn)
-            formTelemetryStruct.answer9 = "Yes";
+            formTelemetryStruct.answer8 = "Yes";
         else
-            formTelemetryStruct.answer9 = "No";
-        formTelemetryStruct.answer10 = question10.GetComponentInChildren<Slider>().value.ToString();
+            formTelemetryStruct.answer8 = "No";
+        formTelemetryStruct.answer9 = question10.GetComponentInChildren<Slider>().value.ToString();
     }
 
     public void ButtonPressed()
@@ -74,6 +87,7 @@ public class FormController : MonoBehaviour
         else
         {
             GameIdController.SetRoundNumber();
+            // SceneManager.LoadScene("PlayScene");
             SceneManager.LoadScene("PlayScene");
         }
     }
