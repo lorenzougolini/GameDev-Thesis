@@ -99,3 +99,8 @@ Logs/
 # Ignore specific large files you may not need in version control
 *.a
 *.lib
+
+# vscode 
+.vscode/
+.plastic/
+*.vsidx
