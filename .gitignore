@@ -102,5 +102,6 @@ Logs/
 
 # vscode 
 .vscode/
+.vs/
 .plastic/
 *.vsidx
