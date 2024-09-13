@@ -80,15 +80,15 @@ public class FormController : MonoBehaviour
     {
         yield return StartCoroutine(FormTelemetry.SubmitFeedbackForm(formTelemetryStruct));
         
-        if (GameIdController.RoundNumber == 3)
-        {
-            SceneManager.LoadScene("MenuScene");
-        }
-        else
-        {
-            GameIdController.SetRoundNumber();
-            // SceneManager.LoadScene("PlayScene");
-            SceneManager.LoadScene("PlayScene");
-        }
+        // if (GameIdController.RoundNumber == 3)
+        // {
+        //     SceneManager.LoadScene("MenuScene");
+        // }
+        // else
+        // {
+        //     GameIdController.IncrementRoundNumber();
+        //     SceneManager.LoadScene("PlayScene");
+        // }
+        SceneManager.LoadScene("MenuScene");
     }
 }

@@ -131,6 +131,11 @@ public class Gui : MonoBehaviour {
         //     finalScoreText2.text = player1Goals.ToString() + " - " + player2Goals.ToString();
         // }
         endGameMenuToForm.SetActive(true);
+        if (GameIdController.RoundNumber == 3)
+        {
+            endGameMenuToForm.transform.Find("EndGamePanel").transform.Find("Buttons").transform.Find("ContinueButton").GetComponentInChildren<TextMeshProUGUI>().text = "GO TO THE FORM";
+        }
+        
         finalScoreText2.text = player1Goals.ToString() + " - " + player2Goals.ToString();
 
         Debug.Log($"game id is: {GameIdController.gameId}");
@@ -152,8 +157,16 @@ public class Gui : MonoBehaviour {
         isPaused = false;
     }
     
-    public void GoToForm() {
-        SceneManager.LoadScene("FormScene");
+    public void EndRoundButton() {
+        if (GameIdController.RoundNumber == 3)
+        {
+            SceneManager.LoadScene("FormScene");
+        }
+        else
+        {
+            GameIdController.IncrementRoundNumber();
+            SceneManager.LoadScene("PlayScene");
+        }
     }
 
     public void Restart() {

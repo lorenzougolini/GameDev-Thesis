@@ -75,7 +75,7 @@ public class MainMenu : MonoBehaviour
     public void IdSubmit()
     {
         GameIdController.SetGameId(IdInputField.text);
-        GameIdController.SetRoundNumber();
+        GameIdController.IncrementRoundNumber();
         IdInputPanel.SetActive(false);
         StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
     }

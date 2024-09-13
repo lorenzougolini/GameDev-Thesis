@@ -127,8 +127,8 @@ public class AiEnvManager : MonoBehaviour
         else if (player2.Score < player2.PreviousRoundScore)
             player2.AddReward(-2f);
 
-        player1.AddReward(-player1.jumpCount*0.2f);
-        player2.AddReward(-player2.jumpCount*0.2f);
+        player1.AddReward(-player1.jumpCount*0.6f);
+        player2.AddReward(-player2.jumpCount*0.6f);
 
         // player1.EndEpisode();
         // player2.EndEpisode();

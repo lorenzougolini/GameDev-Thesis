@@ -12,10 +12,11 @@ public class GameIdController : MonoBehaviour
         gameId = id;
     }
 
-    public static void SetRoundNumber()
+    public static void IncrementRoundNumber()
     {
         RoundNumber += 1;
     }
+    
     public static void SetRoundNumber(int round)
     {
         RoundNumber = round;
