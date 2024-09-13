@@ -7,19 +7,39 @@ using UnityEngine.Networking;
 
 public class FormTelemetry : MonoBehaviour
 {
-    public struct FormTelemetryStruct {
+    public struct FormStruct {
         public string matchID;
-        public string roundNumber;
-        public string answer0;
-        public string answer1;
-        public string answer2;
+        public string answer1_1;
+        public string answer1_2;
+        public string answer1_3;
+        public string answer1_4;
+        public string answer1_5;
+        public string answer1_6;
+        public string answer1_7;
+        public string answer1_8;
+        public string answer1_9;
+        public string answer1_10;
+        public string answer1_11;
+        public string answer1_12;
+        public string answer1_13;
+        public string answer1_14;
+        public string answer2_1;
+        public string answer2_2;
+        public string answer2_3;
+        public string answer2_4;
+        public string answer2_5;
+        public string answer2_6;
+        public string answer2_7;
+        public string answer2_8;
+        public string answer2_10;
+        public string answer2_11;
+        public string answer2_12;
+        public string answer2_13;
+        public string answer2_14;
+        public string answer2_15;
+        public string answer2_16;
+        public string answer2_17;
         public string answer3;
-        public string answer4;
-        public string answer5;
-        public string answer6;
-        public string answer7;
-        public string answer8;
-        public string answer9;
     }
 
     // Form link
@@ -43,43 +63,43 @@ public class FormTelemetry : MonoBehaviour
     private const string _gform_question_9 = "entry.1610878678";
     private const string _gform_question_10 = "entry.917199916";
 
-    public static IEnumerator SubmitFeedbackForm(FormTelemetryStruct feedbackData)
+    public static IEnumerator SubmitFeedbackForm(FormStruct feedbackData)
     {
-        CultureInfo cultureInfo = CultureInfo.GetCultureInfo("en-GB");
-        Thread.CurrentThread.CurrentCulture = cultureInfo;
+        // CultureInfo cultureInfo = CultureInfo.GetCultureInfo("en-GB");
+        // Thread.CurrentThread.CurrentCulture = cultureInfo;
 
-        string urlGoogleFormResponse = GoogleFormBaseUrl + "formResponse";
-        Debug.Log("Submitting form to " + urlGoogleFormResponse);
-        Debug.Log("Submitting formspree to " + FormSpreeUrl);
+        // string urlGoogleFormResponse = GoogleFormBaseUrl + "formResponse";
+        // Debug.Log("Submitting form to " + urlGoogleFormResponse);
+        // Debug.Log("Submitting formspree to " + FormSpreeUrl);
         
-        WWWForm googleForm = new();
-        WWWForm formspreeForm = new();
+        // WWWForm googleForm = new();
+        // WWWForm formspreeForm = new();
 
-        googleForm.AddField(_gform_match_id, feedbackData.matchID);
-        googleForm.AddField(_gform_round_number, feedbackData.roundNumber);
-        googleForm.AddField(_gform_question_1, feedbackData.answer0);
-        googleForm.AddField(_gform_question_2, feedbackData.answer1);
-        googleForm.AddField(_gform_question_3, feedbackData.answer2);
-        googleForm.AddField(_gform_question_4, feedbackData.answer3);
-        googleForm.AddField(_gform_question_5, feedbackData.answer4);
-        googleForm.AddField(_gform_question_6, feedbackData.answer5);
-        googleForm.AddField(_gform_question_7, feedbackData.answer6);
-        googleForm.AddField(_gform_question_8, feedbackData.answer7);
-        googleForm.AddField(_gform_question_9, feedbackData.answer8);
-        googleForm.AddField(_gform_question_10, feedbackData.answer9);
+        // googleForm.AddField(_gform_match_id, feedbackData.matchID);
+        // googleForm.AddField(_gform_round_number, feedbackData.roundNumber);
+        // googleForm.AddField(_gform_question_1, feedbackData.answer0);
+        // googleForm.AddField(_gform_question_2, feedbackData.answer1);
+        // googleForm.AddField(_gform_question_3, feedbackData.answer2);
+        // googleForm.AddField(_gform_question_4, feedbackData.answer3);
+        // googleForm.AddField(_gform_question_5, feedbackData.answer4);
+        // googleForm.AddField(_gform_question_6, feedbackData.answer5);
+        // googleForm.AddField(_gform_question_7, feedbackData.answer6);
+        // googleForm.AddField(_gform_question_8, feedbackData.answer7);
+        // googleForm.AddField(_gform_question_9, feedbackData.answer8);
+        // googleForm.AddField(_gform_question_10, feedbackData.answer9);
 
-        formspreeForm.AddField("matchID", feedbackData.matchID);
-        formspreeForm.AddField("roundNumber", feedbackData.roundNumber);
-        formspreeForm.AddField("answer1", feedbackData.answer0);
-        formspreeForm.AddField("answer2", feedbackData.answer1);
-        formspreeForm.AddField("answer3", feedbackData.answer2);
-        formspreeForm.AddField("answer4", feedbackData.answer3);
-        formspreeForm.AddField("answer5", feedbackData.answer4);
-        formspreeForm.AddField("answer6", feedbackData.answer5);
-        formspreeForm.AddField("answer7", feedbackData.answer6);
-        formspreeForm.AddField("answer8", feedbackData.answer7);
-        formspreeForm.AddField("answer9", feedbackData.answer8);
-        formspreeForm.AddField("answer10", feedbackData.answer9);
+        // formspreeForm.AddField("matchID", feedbackData.matchID);
+        // formspreeForm.AddField("roundNumber", feedbackData.roundNumber);
+        // formspreeForm.AddField("answer1", feedbackData.answer0);
+        // formspreeForm.AddField("answer2", feedbackData.answer1);
+        // formspreeForm.AddField("answer3", feedbackData.answer2);
+        // formspreeForm.AddField("answer4", feedbackData.answer3);
+        // formspreeForm.AddField("answer5", feedbackData.answer4);
+        // formspreeForm.AddField("answer6", feedbackData.answer5);
+        // formspreeForm.AddField("answer7", feedbackData.answer6);
+        // formspreeForm.AddField("answer8", feedbackData.answer7);
+        // formspreeForm.AddField("answer9", feedbackData.answer8);
+        // formspreeForm.AddField("answer10", feedbackData.answer9);
 
         // google form connection
         // using (UnityWebRequest www = UnityWebRequest.Post(urlGoogleFormResponse, googleForm))
@@ -112,7 +132,7 @@ public class FormTelemetry : MonoBehaviour
 
         // firebase database connection
         string jsonFeedbackData = JsonUtility.ToJson(feedbackData);
-        using (UnityWebRequest www = UnityWebRequest.Put($"{FirebaseUrl}/{feedbackData.matchID}/round{feedbackData.roundNumber}.json", jsonFeedbackData))
+        using (UnityWebRequest www = UnityWebRequest.Put($"{FirebaseUrl}/{feedbackData.matchID}/.json", jsonFeedbackData))
         {
             www.SetRequestHeader("Content-Type", "application/json");
             // send data

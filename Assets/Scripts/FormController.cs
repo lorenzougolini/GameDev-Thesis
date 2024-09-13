@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,73 +8,124 @@ using UnityEngine.UI;
 
 public class FormController : MonoBehaviour
 {
+    public int _currentQuestion = 1;
+
     [SerializeField] public TextMeshProUGUI ButtonText;
 
-    [SerializeField] private GameObject question1;
-    [SerializeField] private GameObject question2;
+    [SerializeField] private GameObject questionView1;
+    [SerializeField] private GameObject questionView2;
+    [SerializeField] private GameObject questionView3;
+
+    [SerializeField] private GameObject questionList1;
+    [SerializeField] private GameObject questionList2;
     [SerializeField] private GameObject question3;
-    [SerializeField] private GameObject question4;
-    [SerializeField] private GameObject question5;
-    [SerializeField] private GameObject question6;
-    [SerializeField] private GameObject question7;
-    [SerializeField] private GameObject question8;
-    [SerializeField] private GameObject question9;
-    [SerializeField] private GameObject question10;
-    
-    public GameObject waitingRoom;
-    public GameObject loadingText;
-    public GameObject startingText;
-    public GameObject loadingSpinner;
+    [SerializeField] private TextMeshProUGUI ErrorMsg1;
+    [SerializeField] private TextMeshProUGUI ErrorMsg2;
+    [SerializeField] private TextMeshProUGUI ErrorMsg3;
 
-    private TextMeshProUGUI mainText;
-    private TextMeshProUGUI dotsText;
+    private List<ToggleGroup> toggleGroups1;
+    private List<ToggleGroup> toggleGroups2;
 
-    [Range(10, 15)] public float waitingTime;
+    // [SerializeField] private ToggleGroup question1_1;
+    // [SerializeField] private ToggleGroup question1_2;
+    // [SerializeField] private ToggleGroup question1_3;
+    // [SerializeField] private ToggleGroup question1_4;
+    // [SerializeField] private ToggleGroup question1_5;
+    // [SerializeField] private ToggleGroup question1_6;
+    // [SerializeField] private ToggleGroup question1_7;
+    // [SerializeField] private ToggleGroup question1_8;
+    // [SerializeField] private ToggleGroup question1_9;
+    // [SerializeField] private ToggleGroup question1_10;
+    // [SerializeField] private ToggleGroup question1_11;
+    // [SerializeField] private ToggleGroup question1_12;
+    // [SerializeField] private ToggleGroup question1_13;
+    // [SerializeField] private ToggleGroup question1_14;
 
-    public FormTelemetry.FormTelemetryStruct formTelemetryStruct;
+    public FormTelemetry.FormStruct formTelemetryStruct;
 
     private void Start()
     {
-        if (GameIdController.RoundNumber == 3)
-            ButtonText.text = "End Game";
-        else
-            ButtonText.text = "Continue";
+        toggleGroups1 = questionList1.GetComponentsInChildren<ToggleGroup>().ToList();
+        toggleGroups2 = questionList2.GetComponentsInChildren<ToggleGroup>().ToList();
+        
+        // if (GameIdController.RoundNumber == 3)
+        //     ButtonText.text = "End Game";
+        // else
+        //     ButtonText.text = "Continue";
 
         formTelemetryStruct.matchID = GameIdController.gameId;
-        formTelemetryStruct.roundNumber = GameIdController.RoundNumber.ToString();
-
-        mainText = loadingText.transform.Find("MainText").GetComponent<TextMeshProUGUI>();
-        dotsText = loadingText.transform.Find("DotsText").GetComponent<TextMeshProUGUI>();
     }
 
-    private void FillStructure()
+    private bool FillStructure()
     {
-        // question1 gets anwered with a slider 1 to 5
-        formTelemetryStruct.answer0 = question1.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer1 = question2.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer2 = question3.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer3 = question4.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer4 = question5.GetComponentInChildren<Slider>().value.ToString();
+        if (_currentQuestion == 1)
+        {
+            for (int i = 0; i < toggleGroups1.Count; i++)
+            {
+                ToggleGroup toggleGroup = toggleGroups1[i];
+                Toggle selectedToggle = toggleGroup.ActiveToggles().FirstOrDefault();
+                if (selectedToggle != null)
+                {
+                    formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString() + "_" + (i + 1)).SetValue(formTelemetryStruct, selectedToggle.name);
+                }
+                else
+                {
+                    ErrorMsg1.text = "Please answer all questions";
+                    return false;
+                }
+            }
+            return true;
+        }
 
-        // question6 has two checkboxes (yes, no)
-        if (question6.transform.GetChild(2).GetComponent<Toggle>().isOn)
-            formTelemetryStruct.answer5 = "Yes";
-        else
-            formTelemetryStruct.answer5 = "No";
+        if (_currentQuestion == 2)
+        {
+            for (int i = 0; i < toggleGroups2.Count; i++)
+            {
+                ToggleGroup toggleGroup = toggleGroups2[i];
+                Toggle selectedToggle = toggleGroup.ActiveToggles().FirstOrDefault();
+                if (selectedToggle != null)
+                {
+                    formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString() + "_" + (i + 1)).SetValue(formTelemetryStruct, selectedToggle.name);
+                }
+                else
+                {
+                    ErrorMsg2.text = "Please answer all questions";
+                    return false;
+                }
+            }
+            return true;
+        }
 
-        formTelemetryStruct.answer6 = question7.GetComponentInChildren<Slider>().value.ToString();
-        formTelemetryStruct.answer7 = question8.GetComponentInChildren<Slider>().value.ToString();
-        if (question9.transform.GetChild(2).GetComponent<Toggle>().isOn)
-            formTelemetryStruct.answer8 = "Yes";
-        else
-            formTelemetryStruct.answer8 = "No";
-        formTelemetryStruct.answer9 = question10.GetComponentInChildren<Slider>().value.ToString();
+        if (_currentQuestion == 3)
+        {
+            formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString()).SetValue(formTelemetryStruct, question3.GetComponent<Slider>().value.ToString());
+            return true;
+        }
+
+        return false;
+
     }
 
     public void ButtonPressed()
     {
-        FillStructure();
-        StartCoroutine(SubmitAndLoad());
+        if (_currentQuestion == 1 && FillStructure())
+        {
+            questionView1.SetActive(false);
+            questionView2.SetActive(true);
+            _currentQuestion = 2;
+            return;
+        }
+
+        if (_currentQuestion == 2 && FillStructure())
+        {
+            questionView2.SetActive(false);
+            questionView3.SetActive(true);
+            _currentQuestion = 3;
+            return;
+        }
+
+        if (FillStructure())
+            StartCoroutine(SubmitAndLoad());
     }
 
     IEnumerator SubmitAndLoad()
