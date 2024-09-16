@@ -26,34 +26,27 @@ public class FormController : MonoBehaviour
     private List<ToggleGroup> toggleGroups1;
     private List<ToggleGroup> toggleGroups2;
 
-    // [SerializeField] private ToggleGroup question1_1;
-    // [SerializeField] private ToggleGroup question1_2;
-    // [SerializeField] private ToggleGroup question1_3;
-    // [SerializeField] private ToggleGroup question1_4;
-    // [SerializeField] private ToggleGroup question1_5;
-    // [SerializeField] private ToggleGroup question1_6;
-    // [SerializeField] private ToggleGroup question1_7;
-    // [SerializeField] private ToggleGroup question1_8;
-    // [SerializeField] private ToggleGroup question1_9;
-    // [SerializeField] private ToggleGroup question1_10;
-    // [SerializeField] private ToggleGroup question1_11;
-    // [SerializeField] private ToggleGroup question1_12;
-    // [SerializeField] private ToggleGroup question1_13;
-    // [SerializeField] private ToggleGroup question1_14;
+    // instantiate two list of panels
+    private List<GameObject> panels1;
+    private List<GameObject> panels2;
 
-    public FormTelemetry.FormStruct formTelemetryStruct;
+    public FormTelemetry.FormPart1 formPart1;
+    public FormTelemetry.FormPart2 formPart2;
+    public FormTelemetry.FormPart3 formPart3;
 
     private void Start()
     {
         toggleGroups1 = questionList1.GetComponentsInChildren<ToggleGroup>().ToList();
         toggleGroups2 = questionList2.GetComponentsInChildren<ToggleGroup>().ToList();
         
-        // if (GameIdController.RoundNumber == 3)
-        //     ButtonText.text = "End Game";
-        // else
-        //     ButtonText.text = "Continue";
-
-        formTelemetryStruct.matchID = GameIdController.gameId;
+        panels1 = questionList1.GetComponentsInChildren<Transform>(true)
+                       .Where(t => t.gameObject.name.StartsWith("PanelQ"))
+                       .Select(t => t.gameObject)
+                       .ToList();
+        panels2 = questionList2.GetComponentsInChildren<Transform>(true)
+                       .Where(t => t.gameObject.name.StartsWith("PanelQ"))
+                       .Select(t => t.gameObject)
+                       .ToList();
     }
 
     private bool FillStructure()
@@ -66,11 +59,35 @@ public class FormController : MonoBehaviour
                 Toggle selectedToggle = toggleGroup.ActiveToggles().FirstOrDefault();
                 if (selectedToggle != null)
                 {
-                    formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString() + "_" + (i + 1)).SetValue(formTelemetryStruct, selectedToggle.name);
+                    Color color = Color.white;
+                    color.a = 0.5f;
+                    panels1[i].GetComponent<Image>().color = color;
+                    // formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString() + "_" + (i + 1)).SetValue(formTelemetryStruct, selectedToggle.name);
+                    switch(i+1)
+                    {
+                        case 1: formPart1.answer1_01 = selectedToggle.name.Last().ToString(); break;
+                        case 2: formPart1.answer1_02 = selectedToggle.name.Last().ToString(); break;
+                        case 3: formPart1.answer1_03 = selectedToggle.name.Last().ToString(); break;
+                        case 4: formPart1.answer1_04 = selectedToggle.name.Last().ToString(); break;
+                        case 5: formPart1.answer1_05 = selectedToggle.name.Last().ToString(); break;
+                        case 6: formPart1.answer1_06 = selectedToggle.name.Last().ToString(); break;
+                        case 7: formPart1.answer1_07 = selectedToggle.name.Last().ToString(); break;
+                        case 8: formPart1.answer1_08 = selectedToggle.name.Last().ToString(); break;
+                        case 9: formPart1.answer1_09 = selectedToggle.name.Last().ToString(); break;
+                        case 10: formPart1.answer1_10 = selectedToggle.name.Last().ToString(); break;
+                        case 11: formPart1.answer1_11 = selectedToggle.name.Last().ToString(); break;
+                        case 12: formPart1.answer1_12 = selectedToggle.name.Last().ToString(); break;
+                        case 13: formPart1.answer1_13 = selectedToggle.name.Last().ToString(); break;
+                        case 14: formPart1.answer1_14 = selectedToggle.name.Last().ToString(); break;
+                    }
+                
                 }
                 else
                 {
                     ErrorMsg1.text = "Please answer all questions";
+                    Color color = Color.red;
+                    color.a = 0.5f;
+                    panels1[i].GetComponent<Image>().color = color;
                     return false;
                 }
             }
@@ -85,20 +102,47 @@ public class FormController : MonoBehaviour
                 Toggle selectedToggle = toggleGroup.ActiveToggles().FirstOrDefault();
                 if (selectedToggle != null)
                 {
-                    formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString() + "_" + (i + 1)).SetValue(formTelemetryStruct, selectedToggle.name);
+                    Color color = Color.white;
+                    color.a = 0.5f;
+                    panels1[i].GetComponent<Image>().color = color;
+                    // formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString() + "_" + (i + 1)).SetValue(formTelemetryStruct, selectedToggle.name);
+                    switch (i+1)
+                    {
+                        case 1: formPart2.answer2_01 = selectedToggle.name.Last().ToString(); break;
+                        case 2: formPart2.answer2_02 = selectedToggle.name.Last().ToString(); break;
+                        case 3: formPart2.answer2_03 = selectedToggle.name.Last().ToString(); break;
+                        case 4: formPart2.answer2_04 = selectedToggle.name.Last().ToString(); break;
+                        case 5: formPart2.answer2_05 = selectedToggle.name.Last().ToString(); break;
+                        case 6: formPart2.answer2_06 = selectedToggle.name.Last().ToString(); break;
+                        case 7: formPart2.answer2_07 = selectedToggle.name.Last().ToString(); break;
+                        case 8: formPart2.answer2_08 = selectedToggle.name.Last().ToString(); break;
+                        case 9: formPart2.answer2_09 = selectedToggle.name.Last().ToString(); break;
+                        case 10: formPart2.answer2_10 = selectedToggle.name.Last().ToString(); break;
+                        case 11: formPart2.answer2_11 = selectedToggle.name.Last().ToString(); break;
+                        case 12: formPart2.answer2_12 = selectedToggle.name.Last().ToString(); break;
+                        case 13: formPart2.answer2_13 = selectedToggle.name.Last().ToString(); break;
+                        case 14: formPart2.answer2_14 = selectedToggle.name.Last().ToString(); break;
+                        case 15: formPart2.answer2_15 = selectedToggle.name.Last().ToString(); break;
+                        case 16: formPart2.answer2_16 = selectedToggle.name.Last().ToString(); break;
+                        case 17: formPart2.answer2_17 = selectedToggle.name.Last().ToString(); break;
+                    }
                 }
                 else
                 {
                     ErrorMsg2.text = "Please answer all questions";
+                    Color color = Color.red;
+                    color.a = 0.5f;
+                    panels2[i].GetComponent<Image>().color = color;
                     return false;
                 }
             }
+
             return true;
         }
 
         if (_currentQuestion == 3)
         {
-            formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString()).SetValue(formTelemetryStruct, question3.GetComponent<Slider>().value.ToString());
+            formPart3.answer3 = question3.GetComponent<Slider>().value.ToString();
             return true;
         }
 
@@ -130,17 +174,9 @@ public class FormController : MonoBehaviour
 
     IEnumerator SubmitAndLoad()
     {
-        yield return StartCoroutine(FormTelemetry.SubmitFeedbackForm(formTelemetryStruct));
+        yield return StartCoroutine(FormTelemetry.DivideAndSubmit(GameIdController.gameId, formPart1, formPart2, formPart3));
+        // yield return StartCoroutine(FormTelemetry.DivideAndSubmit("001", formPart1, formPart2, formPart3));
         
-        // if (GameIdController.RoundNumber == 3)
-        // {
-        //     SceneManager.LoadScene("MenuScene");
-        // }
-        // else
-        // {
-        //     GameIdController.IncrementRoundNumber();
-        //     SceneManager.LoadScene("PlayScene");
-        // }
         SceneManager.LoadScene("MenuScene");
     }
 }
