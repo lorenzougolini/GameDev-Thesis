@@ -142,7 +142,7 @@ public class Gui : MonoBehaviour {
         Time.timeScale = 0;
 
         // GameLogger.Instance.SaveLogsToFile();
-        GameManager.Instance.ClearTelemetryData();
+        GameManager.Instance.SubmitAndClearTelemetry();
     }
 
     public void Home() {
@@ -184,7 +184,7 @@ public class Gui : MonoBehaviour {
         string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
         GameLogger.Instance.SetLogFilePath(logFilePath);
         GameLogger.Instance.ClearLogs();
-        GameManager.Instance.ClearTelemetryData();
+        GameManager.Instance.SubmitAndClearTelemetry();
 
         GameIdController.SetRoundNumber(0);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

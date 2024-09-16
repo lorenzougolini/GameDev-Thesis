@@ -9,8 +9,18 @@ public class Ball : MonoBehaviour {
 
 	private Animator animator;
 
+	public MatchTelemetry.BallTelemetry ballTelemetry;
+
 	private void Start() {
 		animator = GetComponent<Animator>();
+	}
+
+	private void FixedUpdate()
+	{
+		ballTelemetry.time = Time.time;
+		ballTelemetry.position = (Vector2) transform.position;
+		GameManager.Instance.matchTelemetry.ballTelemetry.Add(ballTelemetry);
+		ballTelemetry = new MatchTelemetry.BallTelemetry();
 	}
 
 	private void OnCollisionEnter2D(Collision2D coll) 
@@ -96,7 +106,7 @@ public class Ball : MonoBehaviour {
 			if (isShooting) isShooting = false;
 
 			Gui.S.player1Goals++;
-			GameManager.Instance.matchTelemetryStruct.playerScore++;
+			GameManager.Instance.scoreTelemetry.scoringPlayer = "0";
             Gui.S.ScoreGoalText(1);
             ResetObjects.S.Reset();
 			Gui.S.progressBar2.UpdateCurrent(15f);
@@ -108,7 +118,7 @@ public class Ball : MonoBehaviour {
 			if (isShooting) isShooting = false;
 
             Gui.S.player2Goals++;
-			GameManager.Instance.matchTelemetryStruct.opponentScore++;
+			GameManager.Instance.scoreTelemetry.scoringPlayer = "1";
             Gui.S.ScoreGoalText(2);
             ResetObjects.S.Reset();
 			Gui.S.progressBar1.UpdateCurrent(15f);
@@ -116,6 +126,8 @@ public class Ball : MonoBehaviour {
 			GameLogger.Instance.LogEvent("Player 2 Scored a Goal");
         }
     }
+
+	/* ----------- 	COROUTINES 	----------- */
 
 	IEnumerator UsePowerUp(GameObject player, Vector2 direction) 
 	{
@@ -145,24 +157,6 @@ public class Ball : MonoBehaviour {
 
 		isShooting = true;
 
-		//! NOT WORKING
-		/* 
-		TrailRenderer tr = gameObject.GetComponent<TrailRenderer>();
-
-		// Create a new gradient
-		Gradient gradient = new Gradient();
-
-		// Set the color keys at the relative time 0 and 1 (start and end)
-		gradient.SetKeys(
-			new GradientColorKey[] { new GradientColorKey(Color.blue, 0.0f), new GradientColorKey(Color.blue, 1.0f) },
-			new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) }
-		);
-
-		// Assign the gradient to the TrailRenderer
-		tr.colorGradient = gradient;
-		*/
-		//!
-
 		Vector3 newPos = player.transform.position + new Vector3(direction.x > 0 ? 1 : -1, 0.5f, 0);
 		transform.position = newPos;
 
@@ -182,9 +176,6 @@ public class Ball : MonoBehaviour {
 
 		ballRb.gravityScale = 1;
 
-		//! NOT WORKING
-		// tr.material.SetColor("_TintColor", Color.white);
-		//!
 		isShooting = false;
 
 		if (playerMovement)

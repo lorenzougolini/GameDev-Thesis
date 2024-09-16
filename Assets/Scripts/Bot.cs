@@ -47,6 +47,8 @@ public class Bot : MonoBehaviour
     private float ballStuckTime = 0f;
     private float ballStuckThreshold = 1.5f;
 
+	public MatchTelemetry.OpponentTelemetry opponentTelemetry;
+
     void Start()
     {
         InitializeBot();
@@ -61,6 +63,10 @@ public class Bot : MonoBehaviour
 
     private void FixedUpdate()
     {
+        opponentTelemetry.time = Time.time;
+		opponentTelemetry.position = (Vector2) transform.position;
+		GameManager.Instance.matchTelemetry.opponentTelemetry.Add(opponentTelemetry);
+		opponentTelemetry = new MatchTelemetry.OpponentTelemetry();
         AnimateKick();
     }
 
@@ -218,6 +224,7 @@ public class Bot : MonoBehaviour
             if (canDash && !isDashing)
             {
                 int dashDirection = xPosition > transform.position.x ? 1 : -1;
+                opponentTelemetry.action = "4";
                 StartCoroutine(Dash(dashDirection));
             }
         }
@@ -225,24 +232,10 @@ public class Bot : MonoBehaviour
         {
             Vector3 targetPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
             Vector3 moveDirection = (targetPosition - transform.position).normalized;
+            opponentTelemetry.action = moveDirection.x > 0 ? "0" : "1";
             transform.position += moveDirection * speed * Time.deltaTime;
         }
-
-        // Vector3 targetPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
-        // Vector3 moveDirection = (targetPosition - transform.position).normalized;
-        // transform.position += moveDirection * speed * Time.deltaTime;
     }
-
-    // private bool BallIsOverhead()
-    // {
-    //     return Mathf.Abs(ball.transform.position.x - transform.position.x) < 0.5f && ball.transform.position.y >= transform.position.y && ball.transform.position.y - transform.position.y < 0.5f;
-    // }
-
-    // private void MoveFromBall()
-    // {
-    //     float direction = ball.transform.position.x > transform.position.x ? -1 : 1;
-    //     rb.velocity = new Vector2(direction * speed, rb.velocity.y);
-    // }
 
     private bool IsFieldClear()
     {
@@ -321,8 +314,7 @@ public class Bot : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
-            GameManager.Instance.matchTelemetryStruct.opponentAction = "Jump";
-            // GameLogger.Instance.LogEvent("Bot Jumped at Position: " + transform.position);
+            opponentTelemetry.action = "2";
         }
     }
 
@@ -333,8 +325,7 @@ public class Bot : MonoBehaviour
         if ((opponentDistance < kickRange) ^ (ballDistance < kickRange) && random.NextDouble() < 0.5 && canKick)
         {
             kickPressed = true;
-            GameManager.Instance.matchTelemetryStruct.opponentAction = "Kick";
-            // GameLogger.Instance.LogEvent("Bot Kicked at Position: " + transform.position);
+            opponentTelemetry.action = "3";
             StartCoroutine(KickCooldown());
         }
         else
@@ -348,7 +339,7 @@ public class Bot : MonoBehaviour
         if (powerReady && random.NextDouble() < prob)
         {
             powerSetUp = true;
-			GameManager.Instance.matchTelemetryStruct.opponentAction = "Power Set Up";
+			opponentTelemetry.action = "5";
 
             Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
             bodyAnimator.enabled = true;
@@ -359,7 +350,7 @@ public class Bot : MonoBehaviour
 
     public void PowerUsed()
     {
-        GameManager.Instance.matchTelemetryStruct.opponentAction = "Power Used";
+        opponentTelemetry.action = "6";
         
         powerReady = false;
         powerSetUp = false;
@@ -438,8 +429,7 @@ public class Bot : MonoBehaviour
     public void TakeDamage(int direction)
     {
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
-        GameManager.Instance.matchTelemetryStruct.opponentAction = "Damage Taken";
-        // GameLogger.Instance.LogEvent("Bot Took Damage at Position: " + transform.position);
+        opponentTelemetry.action = "7";
         StartCoroutine(Knockback(knockbackPosition));
     }
 
@@ -459,6 +449,8 @@ public class Bot : MonoBehaviour
     {
         footAnimator.SetBool("kick", kickPressed);
     }
+
+	/* ----------- 	COROUTINES 	----------- */
 
     private IEnumerator KickCooldown()
     {
