@@ -64,9 +64,9 @@ public class AIBall : MonoBehaviour
     private void CheckIfBelow()
     {
         if (transform.localPosition.y <= agent1.transform.localPosition.y && MathF.Abs(transform.localPosition.x - agent1.transform.localPosition.x) <= 1f)
-            agent1.AddReward(-1f);
+            agent1.AddReward(-3f);
         if (transform.localPosition.y <= agent2.transform.localPosition.y && MathF.Abs(transform.localPosition.x - agent2.transform.localPosition.x) <= 1f)
-            agent2.AddReward(-1f);
+            agent2.AddReward(-3f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

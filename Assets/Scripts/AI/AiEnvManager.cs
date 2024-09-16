@@ -112,8 +112,8 @@ public class AiEnvManager : MonoBehaviour
 
         if ((player1.Score == player2.Score) || (player1.Score == 0 && player2.Score == 0))
         {
-            player1.AddReward(-3f);
-            player2.AddReward(-3f);
+            player1.AddReward(-2f);
+            player2.AddReward(-2f);
         }
 
         // compare with previous round score
@@ -127,8 +127,8 @@ public class AiEnvManager : MonoBehaviour
         else if (player2.Score < player2.PreviousRoundScore)
             player2.AddReward(-2f);
 
-        player1.AddReward(-player1.jumpCount*0.6f);
-        player2.AddReward(-player2.jumpCount*0.6f);
+        player1.AddReward(-(player1.jumpCount*0.6f));
+        player2.AddReward(-(player2.jumpCount*0.6f));
 
         // player1.EndEpisode();
         // player2.EndEpisode();

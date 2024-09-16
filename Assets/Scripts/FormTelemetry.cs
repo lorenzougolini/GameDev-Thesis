@@ -31,6 +31,7 @@ public class FormTelemetry : MonoBehaviour
         public string answer2_6;
         public string answer2_7;
         public string answer2_8;
+        public string answer2_9;
         public string answer2_10;
         public string answer2_11;
         public string answer2_12;

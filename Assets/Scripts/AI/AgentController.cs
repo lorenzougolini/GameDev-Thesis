@@ -95,7 +95,7 @@ public class AgentController : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        if (!Gui.S.playing) return;
+        // if (!Gui.S.playing) return;
 
         Vector2 agentPosition = (Vector2)transform.localPosition;
         Vector2 ballPosition = (Vector2)ball.localPosition;
@@ -134,7 +134,7 @@ public class AgentController : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        if (!Gui.S.playing) return;
+        // if (!Gui.S.playing) return;
 
         float moveAction = actions.DiscreteActions[0];
         float jumpAction = actions.DiscreteActions[1];
@@ -227,10 +227,10 @@ public class AgentController : Agent
             if (Time.time - lastHitTime <= hitInterval)
             {
                 consecutiveHits++;
-                AddReward(0.05f * consecutiveHits);
             }
             else
             {
+                AddReward(0.05f * consecutiveHits);
                 consecutiveHits = 1;
             }
 
@@ -334,18 +334,18 @@ public class AgentController : Agent
         if (ballHit)
             AddReward(0.5f);
         else
-            AddReward(-1.5f);
+            AddReward(-0.5f);
 
         yield return new WaitForSeconds(0.1f);
         footAnimator.SetBool("kick", false);
         kicking = false;
         ballHit = false;
 
-        float endBallDistToGoal = Mathf.Abs(opponentGoal.transform.localPosition.x - ball.localPosition.x);
-        if (endBallDistToGoal <= startBallDistToGoal)
-            AddReward(0.5f);
-        else
-            AddReward(-1.5f);
+        // float endBallDistToGoal = Mathf.Abs(opponentGoal.transform.localPosition.x - ball.localPosition.x);
+        // if (endBallDistToGoal <= startBallDistToGoal)
+        //     AddReward(0.5f);
+        // else
+        //     AddReward(-1.5f);
     }
 
     private IEnumerator Knockback(Vector3 targetPosition) 
