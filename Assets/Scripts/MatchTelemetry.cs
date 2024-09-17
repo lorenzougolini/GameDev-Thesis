@@ -15,6 +15,8 @@ public class MatchTelemetry : MonoBehaviour
         public List<OpponentTelemetry> opponentTelemetry;
         public List<BallTelemetry> ballTelemetry;
         public List<ScoreTelemetry> scoreTelemetry;
+        public int player1Goals;
+        public int player2Goals;
     }
 
     public struct PlayerTelemetry

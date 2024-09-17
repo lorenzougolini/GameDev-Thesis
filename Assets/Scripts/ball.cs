@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour {
 	private Animator animator;
 
 	public MatchTelemetry.BallTelemetry ballTelemetry;
+	public MatchTelemetry.ScoreTelemetry scoreTelemetry;
 
 	private void Start() {
 		animator = GetComponent<Animator>();
@@ -21,6 +22,8 @@ public class Ball : MonoBehaviour {
 		ballTelemetry.position = (Vector2) transform.position;
 		GameManager.Instance.matchTelemetry.ballTelemetry.Add(ballTelemetry);
 		ballTelemetry = new MatchTelemetry.BallTelemetry();
+
+		scoreTelemetry = new MatchTelemetry.ScoreTelemetry();
 	}
 
 	private void OnCollisionEnter2D(Collision2D coll) 
@@ -106,7 +109,9 @@ public class Ball : MonoBehaviour {
 			if (isShooting) isShooting = false;
 
 			Gui.S.player1Goals++;
-			GameManager.Instance.scoreTelemetry.scoringPlayer = "0";
+			scoreTelemetry.scoringPlayer = "0";
+			scoreTelemetry.time = Time.time;
+			GameManager.Instance.matchTelemetry.scoreTelemetry.Add(scoreTelemetry);
             Gui.S.ScoreGoalText(1);
             ResetObjects.S.Reset();
 			Gui.S.progressBar2.UpdateCurrent(15f);
@@ -118,7 +123,9 @@ public class Ball : MonoBehaviour {
 			if (isShooting) isShooting = false;
 
             Gui.S.player2Goals++;
-			GameManager.Instance.scoreTelemetry.scoringPlayer = "1";
+			scoreTelemetry.scoringPlayer = "1";
+			scoreTelemetry.time = Time.time;
+			GameManager.Instance.matchTelemetry.scoreTelemetry.Add(scoreTelemetry);
             Gui.S.ScoreGoalText(2);
             ResetObjects.S.Reset();
 			Gui.S.progressBar1.UpdateCurrent(15f);

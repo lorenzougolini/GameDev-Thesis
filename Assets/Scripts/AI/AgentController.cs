@@ -59,8 +59,7 @@ public class AgentController : Agent
     public int Score;
     public int PreviousRoundScore;
 
-    private Vector3 lastPosition;
-    private float timeInOwnHalf;
+    public MatchTelemetry.OpponentTelemetry opponentTelemetry;
 
     public void Start()
     {
@@ -92,6 +91,14 @@ public class AgentController : Agent
     {
         elapsedTime += Time.deltaTime;
     }
+
+    // private void FixedUpdate() 
+    // {
+    //     opponentTelemetry.time = Time.time;
+    //     opponentTelemetry.position = (Vector2) transform.localPosition;
+    //     GameManager.Instance.matchTelemetry.opponentTelemetry.Add(opponentTelemetry);
+    //     opponentTelemetry = new MatchTelemetry.OpponentTelemetry();
+    // }
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -147,10 +154,12 @@ public class AgentController : Agent
             if (moveAction == 1)
             {
                 transform.localPosition += speed * Time.deltaTime * Vector3.left;
+                opponentTelemetry.action = "1";
             }
             else if (moveAction == 2)
             {
                 transform.localPosition += speed * Time.deltaTime * Vector3.right;
+                opponentTelemetry.action = "0";
             }
         }
 
@@ -159,15 +168,18 @@ public class AgentController : Agent
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
             jumpCount += 1f;
+            opponentTelemetry.action = "2";
         }
 
         if (dashAction == 1 && isGrounded && canDash && !isDashing && !isUsingPower)
         {
+            opponentTelemetry.action = "4";
             StartCoroutine(Dash(moveAction == 1 ? 1 : -1));
         }
 
         if (kickAction == 1 && !isUsingPower)
         {
+            opponentTelemetry.action = "3";
             kicking = true;
             footAnimator = transform.Find("Foot").GetComponent<Animator>();
             footAnimator.SetBool("kick", true);
@@ -177,13 +189,13 @@ public class AgentController : Agent
         if (powerAction == 1 && powerReady && !isUsingPower && !powerSetUp)
         {
             powerSetUp = true;
+            opponentTelemetry.action = "5";
 			
 			Animator bodyAnimator = transform.Find("Body").GetComponent<Animator>();
 			bodyAnimator.enabled = true;
 
 			progressBar.current = 0f;
         }
-            
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -255,6 +267,7 @@ public class AgentController : Agent
 
     public void PowerUsed() 
     {
+        opponentTelemetry.action = "6";
 		powerReady = false;
 		powerSetUp = false;
 
@@ -267,6 +280,7 @@ public class AgentController : Agent
 
     public void TakeDamage(int direction) 
     {
+        opponentTelemetry.action = "7";
         Vector3 knockbackPosition = transform.position + direction * knockbackDistance * Vector3.right;
         StartCoroutine(Knockback(knockbackPosition));
     }
@@ -303,6 +317,15 @@ public class AgentController : Agent
 
         return 0; // No dash
     }
+    
+    private Vector2 findBall()
+    {
+        ball = GameObject.FindGameObjectWithTag("Ball").transform;
+        ballRb = ball.GetComponent<Rigidbody2D>();
+        return ballRb.velocity;
+    }
+
+	/* ----------- 	COROUTINES 	----------- */
 
     private IEnumerator Dash(float direction)
     {
@@ -366,10 +389,4 @@ public class AgentController : Agent
 		transform.Find("Body").GetComponent<SpriteRenderer>().color = Color.white;	
 	}
 
-    private Vector2 findBall()
-    {
-        ball = GameObject.FindGameObjectWithTag("Ball").transform;
-        ballRb = ball.GetComponent<Rigidbody2D>();
-        return ballRb.velocity;
-    }
 }

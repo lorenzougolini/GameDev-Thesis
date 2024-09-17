@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject botPrefab;
     public GameObject defensePrefab;
-    public GameObject AIPlayerPrefab;
+    public GameObject RLPlayerPrefab;
+    public GameObject ILPlayerPrefab;
 
     public GameObject progressBar;
 
@@ -33,9 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
  
-    // public GameLogger gameLogger;
     public MatchTelemetry.MatchTelemetryStruct matchTelemetry;
-    public MatchTelemetry.ScoreTelemetry scoreTelemetry;
 
     private void Awake() 
     {
@@ -77,14 +76,8 @@ public class GameManager : MonoBehaviour
 
         Gui.S.matchDuration = matchDuration;
 
-        // string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
-        string logFilePath = Path.Combine("C:/Users/lore1/OneDrive - uniroma1.it/Thesis/GameDev - Thesis/Match Logs", $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
-        GameLogger.Instance.SetLogFilePath(logFilePath);
-
         matchTelemetry = new MatchTelemetry.MatchTelemetryStruct();
-        scoreTelemetry = new MatchTelemetry.ScoreTelemetry();
         matchTelemetry.matchID = GameIdController.gameId;
-        // StartCoroutine(LogGameState());
     }
 
     private void OnEnable() {
@@ -170,9 +163,14 @@ public class GameManager : MonoBehaviour
         footP1.GetComponent<Animator>().SetBool("isFlipped", true);
         AddGameObject(player1);
 
-        // Instantiate player 2 bot
-        // player2 = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
-        player2 = Instantiate(AIPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        // Instantiate player 2
+        if (GameIdController.gameId.Substring(3) == "01")
+            player2 = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        else if (GameIdController.gameId.Substring(3) == "02")
+            player2 = Instantiate(RLPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+        else if (GameIdController.gameId.Substring(3) == "03")
+            player2 = Instantiate(ILPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+
         player2.tag = "Enemy";
         player2.TryGetComponent<Bot>(out Bot botMove);
         player2.TryGetComponent<AgentController>(out AgentController agentController);
@@ -413,43 +411,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // IEnumerator LogGameState() {
-    //     while (true) {
-    //         yield return new WaitForSeconds(0.5f); // Approximately every 3 frames at 60fps
-
-    //         new MatchTelemetry.PlayerTelemetry();
-    //         new MatchTelemetry.OpponentTelemetry();
-    //         new MatchTelemetry.BallTelemetry();
-    //         new MatchTelemetry.ScoreTelemetry();
-
-    //         // float elapsedTime = Time.time;
-    //         // float timeRemaining = Gui.S.matchDuration;
-
-    //         Vector2 player1Position = (Vector2)player1.transform.position;
-    //         Vector2 player2Position = (Vector2)player2.transform.position;
-    //         Vector2 ballPosition = (Vector2)ball.transform.position;
-
-    //         playerTelemetry.position = player1Position;
-    //         opponentTelemetry.position = player2Position;
-    //         ballTelemetry.position = ballPosition;
-
-    //         matchTelemetry.playerPosition = player1Position;
-    //         matchTelemetry.opponentPosition = player2Position;
-    //         matchTelemetry.ballPosition = ballPosition;
-    //         // matchTelemetry.playerScore = Gui.S.player1Goals;
-    //         // matchTelemetry.opponentScore = Gui.S.player2Goals;
-    //     }
-    // }
-
-    private void FixedUpdate()
-    {
-        scoreTelemetry.time = Time.time;
-    }
-
     public void SubmitAndClearTelemetry()
     {
         MatchTelemetry.SubmitMatchTelemetry(matchTelemetry);
-        matchTelemetry = new MatchTelemetry.MatchTelemetryStruct();
+        matchTelemetry.playerTelemetry.Clear();
+        matchTelemetry.opponentTelemetry.Clear();
+        matchTelemetry.ballTelemetry.Clear();
+        matchTelemetry.scoreTelemetry.Clear();
     }
 
     private void Update() 

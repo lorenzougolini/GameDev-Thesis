@@ -47,17 +47,16 @@ public class AIBall : MonoBehaviour
     {
         if (transform.localPosition.y <= floorLevel)
         {
-            agent1.AddReward(-2f);
+            agent1.AddReward(-5f);
             // agent1.floor.color = Color.yellow;
             // agent1.floorText.text = "Ball under floor";
             
-            agent2.AddReward(-2f);
+            agent2.AddReward(-5f);
             // agent2.floor.color = Color.yellow;
             // agent2.floorText.text = "Ball under floor";
             
             agent1.EndEpisode();
             agent2.EndEpisode();
-
         }
     }
 
