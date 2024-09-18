@@ -77,6 +77,10 @@ public class GameManager : MonoBehaviour
         Gui.S.matchDuration = matchDuration;
 
         matchTelemetry = new MatchTelemetry.MatchTelemetryStruct();
+        matchTelemetry.ballTelemetry = new List<MatchTelemetry.BallTelemetry>();
+        matchTelemetry.playerTelemetry = new List<MatchTelemetry.PlayerTelemetry>();
+        matchTelemetry.opponentTelemetry = new List<MatchTelemetry.OpponentTelemetry>();
+        matchTelemetry.scoreTelemetry = new List<MatchTelemetry.ScoreTelemetry>();
         matchTelemetry.matchID = GameIdController.gameId;
     }
 
@@ -165,11 +169,20 @@ public class GameManager : MonoBehaviour
 
         // Instantiate player 2
         if (GameIdController.gameId.Substring(3) == "01")
+        {
             player2 = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+            Debug.Log($"instatiated bot");
+        }
         else if (GameIdController.gameId.Substring(3) == "02")
+        {
             player2 = Instantiate(RLPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+            Debug.Log($"instatiated RL");
+        }
         else if (GameIdController.gameId.Substring(3) == "03")
+        {
             player2 = Instantiate(ILPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
+            Debug.Log($"instatiated IL");
+        }
 
         player2.tag = "Enemy";
         player2.TryGetComponent<Bot>(out Bot botMove);
@@ -413,11 +426,13 @@ public class GameManager : MonoBehaviour
 
     public void SubmitAndClearTelemetry()
     {
-        MatchTelemetry.SubmitMatchTelemetry(matchTelemetry);
+        StartCoroutine(MatchTelemetry.SubmitMatchTelemetry(matchTelemetry));
         matchTelemetry.playerTelemetry.Clear();
         matchTelemetry.opponentTelemetry.Clear();
         matchTelemetry.ballTelemetry.Clear();
         matchTelemetry.scoreTelemetry.Clear();
+        matchTelemetry.player1Goals = 0;
+        matchTelemetry.player2Goals = 0;
     }
 
     private void Update() 

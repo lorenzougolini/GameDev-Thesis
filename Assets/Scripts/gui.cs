@@ -111,14 +111,14 @@ public class Gui : MonoBehaviour {
 
     public void EndGame() {
         playing = false;
-        if (GameManager.Instance.playingMode == PlayingMode.TEST)
-        {
-            GameObject.FindGameObjectWithTag("Player").TryGetComponent<AIPlayerMovement>(out AIPlayerMovement aiPlayerMovement);
-            if (aiPlayerMovement)
-            {
-                aiPlayerMovement.EndEpisode();
-            }
-        }
+        // if (GameManager.Instance.playingMode == PlayingMode.TEST)
+        // {
+        //     GameObject.FindGameObjectWithTag("Player").TryGetComponent<AIPlayerMovement>(out AIPlayerMovement aiPlayerMovement);
+        //     if (aiPlayerMovement)
+        //     {
+        //         aiPlayerMovement.EndEpisode();
+        //     }
+        // }
 
         // if (GameIdController.RoundNumber == 3)
         // {
@@ -130,6 +130,7 @@ public class Gui : MonoBehaviour {
         //     endGameMenuToForm.SetActive(true);
         //     finalScoreText2.text = player1Goals.ToString() + " - " + player2Goals.ToString();
         // }
+
         endGameMenuToForm.SetActive(true);
         if (GameIdController.RoundNumber == 3)
         {
@@ -141,8 +142,11 @@ public class Gui : MonoBehaviour {
         Debug.Log($"game id is: {GameIdController.gameId}");
         Time.timeScale = 0;
 
+        GameManager.Instance.matchTelemetry.player1Goals = player1Goals;
+        GameManager.Instance.matchTelemetry.player2Goals = player2Goals;
+
         // GameLogger.Instance.SaveLogsToFile();
-        GameManager.Instance.SubmitAndClearTelemetry();
+        // GameManager.Instance.SubmitAndClearTelemetry();
     }
 
     public void Home() {
@@ -160,10 +164,12 @@ public class Gui : MonoBehaviour {
     public void EndRoundButton() {
         if (GameIdController.RoundNumber == 3)
         {
+            GameManager.Instance.SubmitAndClearTelemetry();
             SceneManager.LoadScene("FormScene");
         }
         else
         {
+            GameManager.Instance.SubmitAndClearTelemetry();
             GameIdController.IncrementRoundNumber();
             SceneManager.LoadScene("PlayScene");
         }
@@ -181,9 +187,6 @@ public class Gui : MonoBehaviour {
 
         Time.timeScale = 1;
 
-        string logFilePath = Path.Combine(Application.persistentDataPath, $"GameLog_{System.DateTime.Now.ToString("ddMMyyyy_HHmm")}.txt");
-        GameLogger.Instance.SetLogFilePath(logFilePath);
-        GameLogger.Instance.ClearLogs();
         GameManager.Instance.SubmitAndClearTelemetry();
 
         GameIdController.SetRoundNumber(0);

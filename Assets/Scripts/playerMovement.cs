@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public class PlayerMovement : MonoBehaviour 
 {
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
 	public bool kickPressed;
 
 	public MatchTelemetry.PlayerTelemetry playerTelemetry;
+	private float lastTelemetryTime = 0f;
 
 	private void Awake() {
 		Instance = this;
@@ -129,10 +131,14 @@ public class PlayerMovement : MonoBehaviour
 
 		footAnimator.SetBool("kick", kickPressed);
 
-		playerTelemetry.time = Time.time;
-		playerTelemetry.position = (Vector2) transform.position;
-		GameManager.Instance.matchTelemetry.playerTelemetry.Add(playerTelemetry);
-		playerTelemetry = new MatchTelemetry.PlayerTelemetry();
+		if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
+		{
+			playerTelemetry.time = Time.time;
+			playerTelemetry.position = (Vector2) transform.position;
+			GameManager.Instance.matchTelemetry.playerTelemetry.Add(playerTelemetry);
+			playerTelemetry = new MatchTelemetry.PlayerTelemetry();
+			lastTelemetryTime = Time.time;
+		}
 	}
 
 	private bool isGrounded(){

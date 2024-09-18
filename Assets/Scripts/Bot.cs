@@ -48,6 +48,7 @@ public class Bot : MonoBehaviour
     private float ballStuckThreshold = 1.5f;
 
 	public MatchTelemetry.OpponentTelemetry opponentTelemetry;
+	private float lastTelemetryTime = 0f;
 
     void Start()
     {
@@ -63,10 +64,14 @@ public class Bot : MonoBehaviour
 
     private void FixedUpdate()
     {
-        opponentTelemetry.time = Time.time;
-		opponentTelemetry.position = (Vector2) transform.position;
-		GameManager.Instance.matchTelemetry.opponentTelemetry.Add(opponentTelemetry);
-		opponentTelemetry = new MatchTelemetry.OpponentTelemetry();
+        if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
+        {
+            opponentTelemetry.time = Time.time;
+    		opponentTelemetry.position = (Vector2) transform.position;
+    		GameManager.Instance.matchTelemetry.opponentTelemetry.Add(opponentTelemetry);
+    		opponentTelemetry = new MatchTelemetry.OpponentTelemetry();
+            lastTelemetryTime = Time.time;
+        }
         AnimateKick();
     }
 

@@ -104,7 +104,7 @@ public class FormController : MonoBehaviour
                 {
                     Color color = Color.white;
                     color.a = 0.5f;
-                    panels1[i].GetComponent<Image>().color = color;
+                    panels2[i].GetComponent<Image>().color = color;
                     // formTelemetryStruct.GetType().GetField("answer" + _currentQuestion.ToString() + "_" + (i + 1)).SetValue(formTelemetryStruct, selectedToggle.name);
                     switch (i+1)
                     {

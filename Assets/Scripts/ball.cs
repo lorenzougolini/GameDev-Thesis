@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour {
 
 	public MatchTelemetry.BallTelemetry ballTelemetry;
 	public MatchTelemetry.ScoreTelemetry scoreTelemetry;
+	private float lastTelemetryTime = 0f;
 
 	private void Start() {
 		animator = GetComponent<Animator>();
@@ -18,12 +19,15 @@ public class Ball : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		ballTelemetry.time = Time.time;
-		ballTelemetry.position = (Vector2) transform.position;
-		GameManager.Instance.matchTelemetry.ballTelemetry.Add(ballTelemetry);
-		ballTelemetry = new MatchTelemetry.BallTelemetry();
-
-		scoreTelemetry = new MatchTelemetry.ScoreTelemetry();
+		if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
+		{
+			ballTelemetry.time = Time.time;
+			ballTelemetry.position = (Vector2) transform.position;
+			GameManager.Instance.matchTelemetry.ballTelemetry.Add(ballTelemetry);
+			ballTelemetry = new MatchTelemetry.BallTelemetry();
+			scoreTelemetry = new MatchTelemetry.ScoreTelemetry();
+			lastTelemetryTime = Time.time;
+		}
 	}
 
 	private void OnCollisionEnter2D(Collision2D coll) 

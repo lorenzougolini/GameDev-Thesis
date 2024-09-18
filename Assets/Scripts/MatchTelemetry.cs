@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Threading;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -45,13 +44,22 @@ public class MatchTelemetry : MonoBehaviour
         public string scoringPlayer;
     }
 
+    public static float telemetryTimeInterval = 0.5f;
+    
     // Form link
     private const string FirebaseUrl = "https://gamedev-thesis-default-rtdb.europe-west1.firebasedatabase.app/matches/";
 
     public static IEnumerator SubmitMatchTelemetry(MatchTelemetryStruct matchData)
     {
         string url = $"{FirebaseUrl}/{GameIdController.gameId}/{GameIdController.RoundNumber}.json";
-        using (UnityWebRequest www = UnityWebRequest.Put(url, JsonUtility.ToJson(matchData)))
+
+        // string dataJson = JsonUtility.ToJson(matchData);
+
+        JsonSerializerSettings settings = new JsonSerializerSettings();
+        settings.Converters.Add(new Vector2Converter());
+        string dataJson = JsonConvert.SerializeObject(matchData, settings);
+
+        using (UnityWebRequest www = UnityWebRequest.Put(url, dataJson))
         {
             // send data
             yield return www.SendWebRequest();
