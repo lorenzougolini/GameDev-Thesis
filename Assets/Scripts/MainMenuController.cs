@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
     public GameObject startingText;
     public GameObject loadingSpinner;
 
+    public GameObject ErrorMsg;
+
     private TextMeshProUGUI mainText;
     private TextMeshProUGUI dotsText;
 
@@ -74,10 +76,23 @@ public class MainMenu : MonoBehaviour
 
     public void IdSubmit()
     {
-        GameIdController.SetGameId(IdInputField.text);
-        GameIdController.IncrementRoundNumber();
-        IdInputPanel.SetActive(false);
-        StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
+        if (checkValidID())
+        {
+            GameIdController.SetGameId(IdInputField.text);
+            GameIdController.IncrementRoundNumber();
+            IdInputPanel.SetActive(false);
+            StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
+        }
+        else
+        {
+            IdInputField.text = "";
+            StartCoroutine(ViewErrorMsg());
+        }
+    }
+
+    private bool checkValidID()
+    {
+        return IdInputField.text.Length == 5 && IdInputField.text.Substring(3, 1) == "0";
     }
 
     public IEnumerator WaitingRoomCoroutine(string scene)
@@ -112,5 +127,12 @@ public class MainMenu : MonoBehaviour
         // waitingRoom.SetActive(false);
         asyncLoad.allowSceneActivation = true;
         yield return null;
+    }
+
+    public IEnumerator ViewErrorMsg()
+    {
+        ErrorMsg.SetActive(true);
+        yield return new WaitForSeconds(5);
+        ErrorMsg.SetActive(false);
     }
 }
