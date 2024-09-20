@@ -32,8 +32,8 @@ public class AIBall : MonoBehaviour
             airTime += Time.deltaTime;
             if (airTime > 5f)
             {
-                agent1.AddReward(0.5f);
-                agent2.AddReward(0.5f);
+                agent1.AddReward(0.05f);
+                agent2.AddReward(0.05f);
                 airTime = 0f;
             }
         }
@@ -47,11 +47,11 @@ public class AIBall : MonoBehaviour
     {
         if (transform.localPosition.y <= floorLevel)
         {
-            agent1.AddReward(-5f);
+            agent1.AddReward(-0.5f);
             // agent1.floor.color = Color.yellow;
             // agent1.floorText.text = "Ball under floor";
             
-            agent2.AddReward(-5f);
+            agent2.AddReward(-0.5f);
             // agent2.floor.color = Color.yellow;
             // agent2.floorText.text = "Ball under floor";
             
@@ -63,9 +63,9 @@ public class AIBall : MonoBehaviour
     private void CheckIfBelow()
     {
         if (transform.localPosition.y <= agent1.transform.localPosition.y && MathF.Abs(transform.localPosition.x - agent1.transform.localPosition.x) <= 1f)
-            agent1.AddReward(-3f);
+            agent1.AddReward(-0.3f);
         if (transform.localPosition.y <= agent2.transform.localPosition.y && MathF.Abs(transform.localPosition.x - agent2.transform.localPosition.x) <= 1f)
-            agent2.AddReward(-3f);
+            agent2.AddReward(-0.3f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

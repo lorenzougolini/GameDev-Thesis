@@ -101,34 +101,34 @@ public class AiEnvManager : MonoBehaviour
         // Calculate rewards based on the game result
         if (player1.Score > player2.Score)
         {
-            player1.AddReward(rewardDifference * 2f);
-            player2.AddReward(-rewardDifference * 2f);
+            player1.AddReward(rewardDifference * 0.2f);
+            player2.AddReward(-rewardDifference * 0.2f);
         }
         else if (player2.Score > player1.Score)
         {
-            player1.AddReward(-rewardDifference * 2f);
-            player2.AddReward(rewardDifference * 2f);
+            player1.AddReward(-rewardDifference * 0.2f);
+            player2.AddReward(rewardDifference * 0.2f);
         }
 
         if ((player1.Score == player2.Score) || (player1.Score == 0 && player2.Score == 0))
         {
-            player1.AddReward(-2f);
-            player2.AddReward(-2f);
+            player1.AddReward(-0.2f);
+            player2.AddReward(-0.2f);
         }
 
         // compare with previous round score
         if (player1.Score > player1.PreviousRoundScore)
-            player1.AddReward(2f);
+            player1.AddReward(0.2f);
         else if (player1.Score < player1.PreviousRoundScore)
-            player1.AddReward(-2f);
+            player1.AddReward(-0.2f);
 
         if (player2.Score > player2.PreviousRoundScore)
-            player2.AddReward(2f);
+            player2.AddReward(0.2f);
         else if (player2.Score < player2.PreviousRoundScore)
-            player2.AddReward(-2f);
+            player2.AddReward(-0.2f);
 
-        player1.AddReward(-(player1.jumpCount*0.6f));
-        player2.AddReward(-(player2.jumpCount*0.6f));
+        player1.AddReward(-(player1.jumpCount*0.06f));
+        player2.AddReward(-(player2.jumpCount*0.06f));
 
         // player1.EndEpisode();
         // player2.EndEpisode();

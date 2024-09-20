@@ -93,21 +93,21 @@ public class AgentController : Agent
         elapsedTime += Time.deltaTime;
     }
 
-    private void FixedUpdate() 
-    {
-        if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
-        {
-            opponentTelemetry.time = Time.time;
-            opponentTelemetry.position = (Vector2) transform.localPosition;
-            GameManager.Instance.matchTelemetry.opponentTelemetry.Add(opponentTelemetry);
-            opponentTelemetry = new MatchTelemetry.OpponentTelemetry();
-            lastTelemetryTime = Time.time;
-        }
-    }
+    // private void FixedUpdate() 
+    // {
+    //     if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
+    //     {
+    //         opponentTelemetry.time = Time.time;
+    //         opponentTelemetry.position = (Vector2) transform.localPosition;
+    //         GameManager.Instance.matchTelemetry.opponentTelemetry.Add(opponentTelemetry);
+    //         opponentTelemetry = new MatchTelemetry.OpponentTelemetry();
+    //         lastTelemetryTime = Time.time;
+    //     }
+    // }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        if (!Gui.S.playing) return;
+        // if (!Gui.S.playing) return;
 
         Vector2 agentPosition = (Vector2)transform.localPosition;
         Vector2 ballPosition = (Vector2)ball.localPosition;
@@ -146,7 +146,7 @@ public class AgentController : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        if (!Gui.S.playing) return;
+        // if (!Gui.S.playing) return;
 
         float moveAction = actions.DiscreteActions[0];
         float jumpAction = actions.DiscreteActions[1];
@@ -227,11 +227,11 @@ public class AgentController : Agent
     {
         if (isOwnGoal)
         {
-            AddReward(-10f - (elapsedTime*0.01f));
+            AddReward(-1f - (elapsedTime*0.01f));
         }
         else
         {
-            AddReward(15f - (elapsedTime*0.01f));
+            AddReward(1f - (elapsedTime*0.01f));
         }
     }
 
@@ -239,7 +239,7 @@ public class AgentController : Agent
     {
         if (other.gameObject.CompareTag("Ball"))
         {
-            AddReward(2f);
+            AddReward(0.2f);
 
             if (Time.time - lastHitTime <= hitInterval)
             {
@@ -247,7 +247,7 @@ public class AgentController : Agent
             }
             else
             {
-                AddReward(0.05f * consecutiveHits);
+                AddReward(0.005f * consecutiveHits);
                 consecutiveHits = 1;
             }
 
@@ -256,13 +256,13 @@ public class AgentController : Agent
         
         if (other.gameObject.CompareTag("Wall"))
         {
-            AddReward(-0.5f);
+            AddReward(-0.05f);
             // EndEpisode();
         }
 
         if (other.gameObject.CompareTag("GoalRight") || other.gameObject.CompareTag("GoalLeft"))
         {
-            AddReward(-2f);
+            AddReward(-0.2f);
             // EndEpisode();
         }
 
@@ -350,9 +350,9 @@ public class AgentController : Agent
 
         float endBallDist = Mathf.Abs(transform.localPosition.x - ball.localPosition.x);
         if (endBallDist < startBallDist)
-            AddReward(0.5f);
+            AddReward(0.05f);
         else
-            AddReward(-1.5f);
+            AddReward(-0.15f);
     }
 
     private IEnumerator Kick()
@@ -360,9 +360,9 @@ public class AgentController : Agent
         float startBallDistToGoal = Mathf.Abs(opponentGoal.transform.localPosition.x - ball.localPosition.x);
         
         if (ballHit)
-            AddReward(0.5f);
+            AddReward(0.05f);
         else
-            AddReward(-0.5f);
+            AddReward(-0.05f);
 
         yield return new WaitForSeconds(0.1f);
         footAnimator.SetBool("kick", false);
