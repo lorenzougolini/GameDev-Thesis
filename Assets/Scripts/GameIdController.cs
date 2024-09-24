@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameIdController : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class GameIdController : MonoBehaviour
 
     public static void SetGameId(string id)
     {
-        gameId = id;
+        gameId = $"{id}_{DateTime.UtcNow.ToString("yyyyMMdd_HHmmss")}";
     }
 
     public static void IncrementRoundNumber()

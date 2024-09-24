@@ -167,18 +167,20 @@ public class GameManager : MonoBehaviour
         footP1.GetComponent<Animator>().SetBool("isFlipped", true);
         AddGameObject(player1);
 
+        Debug.Log($"id: {GameIdController.gameId} \n substring: {GameIdController.gameId.Substring(3,2)}");
+
         // Instantiate player 2
-        if (GameIdController.gameId.Substring(3) == "01")
+        if (GameIdController.gameId.Substring(3,2) == "01")
         {
             player2 = Instantiate(botPrefab, new Vector3(7, 1, 0), Quaternion.identity);
             Debug.Log($"instatiated bot");
         }
-        else if (GameIdController.gameId.Substring(3) == "02")
+        else if (GameIdController.gameId.Substring(3,2) == "02")
         {
             player2 = Instantiate(RLPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
             Debug.Log($"instatiated RL");
         }
-        else if (GameIdController.gameId.Substring(3) == "03")
+        else if (GameIdController.gameId.Substring(3,2) == "03")
         {
             player2 = Instantiate(ILPlayerPrefab, new Vector3(7, 1, 0), Quaternion.identity);
             Debug.Log($"instatiated IL");

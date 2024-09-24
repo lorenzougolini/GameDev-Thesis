@@ -93,21 +93,21 @@ public class AgentController : Agent
         elapsedTime += Time.deltaTime;
     }
 
-    // private void FixedUpdate() 
-    // {
-    //     if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
-    //     {
-    //         opponentTelemetry.time = Time.time;
-    //         opponentTelemetry.position = (Vector2) transform.localPosition;
-    //         GameManager.Instance.matchTelemetry.opponentTelemetry.Add(opponentTelemetry);
-    //         opponentTelemetry = new MatchTelemetry.OpponentTelemetry();
-    //         lastTelemetryTime = Time.time;
-    //     }
-    // }
+    private void FixedUpdate() 
+    {
+        if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
+        {
+            opponentTelemetry.time = Time.time;
+            opponentTelemetry.position = (Vector2) transform.localPosition;
+            GameManager.Instance.matchTelemetry.opponentTelemetry.Add(opponentTelemetry);
+            opponentTelemetry = new MatchTelemetry.OpponentTelemetry();
+            lastTelemetryTime = Time.time;
+        }
+    }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // if (!Gui.S.playing) return;
+        if (!Gui.S.playing) return;
 
         Vector2 agentPosition = (Vector2)transform.localPosition;
         Vector2 ballPosition = (Vector2)ball.localPosition;
@@ -146,7 +146,7 @@ public class AgentController : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        // if (!Gui.S.playing) return;
+        if (!Gui.S.playing) return;
 
         float moveAction = actions.DiscreteActions[0];
         float jumpAction = actions.DiscreteActions[1];

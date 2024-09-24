@@ -44,7 +44,7 @@ public class MatchTelemetry : MonoBehaviour
         public string scoringPlayer;
     }
 
-    public static float telemetryTimeInterval = 0.5f;
+    public static float telemetryTimeInterval = 0.1f;
     
     // Form link
     private const string FirebaseUrl = "https://gamedev-thesis-default-rtdb.europe-west1.firebasedatabase.app/matches/";
