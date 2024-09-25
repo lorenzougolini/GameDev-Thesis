@@ -5,8 +5,12 @@ using System;
 
 public class GameIdController : MonoBehaviour
 {
-   public static string gameId;
-   public static int RoundNumber = 0;
+
+    public static string gameId;
+    public static int RoundNumber = 0;
+
+    public static bool isTutorial = false;
+    public static bool tutorialCompleted = false;
 
     public static void SetGameId(string id)
     {

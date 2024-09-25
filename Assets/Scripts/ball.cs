@@ -13,20 +13,24 @@ public class Ball : MonoBehaviour {
 	public MatchTelemetry.ScoreTelemetry scoreTelemetry;
 	private float lastTelemetryTime = 0f;
 
+	public TutorialController TutorialController;
+
 	private void Start() {
 		animator = GetComponent<Animator>();
 	}
 
 	private void FixedUpdate()
 	{
-		if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
-		{
-			ballTelemetry.time = Time.time;
-			ballTelemetry.position = (Vector2) transform.position;
-			GameManager.Instance.matchTelemetry.ballTelemetry.Add(ballTelemetry);
-			ballTelemetry = new MatchTelemetry.BallTelemetry();
-			scoreTelemetry = new MatchTelemetry.ScoreTelemetry();
-			lastTelemetryTime = Time.time;
+		if (!GameIdController.isTutorial){	
+			if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
+			{
+				ballTelemetry.time = Time.time;
+				ballTelemetry.position = (Vector2) transform.position;
+				GameManager.Instance.matchTelemetry.ballTelemetry.Add(ballTelemetry);
+				ballTelemetry = new MatchTelemetry.BallTelemetry();
+				scoreTelemetry = new MatchTelemetry.ScoreTelemetry();
+				lastTelemetryTime = Time.time;
+			}
 		}
 	}
 
@@ -43,20 +47,18 @@ public class Ball : MonoBehaviour {
 			{
 				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
 				playerMovement.PowerUsed();
-				GameLogger.Instance.LogEvent("Player 1 Used Power");
+				// GameManager.Instance.matchTelemetry.playerTelemetry.Add(new MatchTelemetry.PlayerTelemetry{action = "6", time = Time.time});
 			
 			}
 			else if (bot && bot.powerSetUp) 
 			{
 				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
 				bot.PowerUsed();
-				GameLogger.Instance.LogEvent("Player 1 Used Power");
 			}
 			else if (aIPlayerMovement && aIPlayerMovement.powerSetUp)
 			{
 				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
 				aIPlayerMovement.PowerUsed();
-				GameLogger.Instance.LogEvent("Player 1 Used Power");
 			}
 
 		} 
@@ -70,19 +72,16 @@ public class Ball : MonoBehaviour {
 			{
 				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
 				playerMovement.PowerUsed();
-				GameLogger.Instance.LogEvent("Player 2 Used Power");
 			} 
 			else if (bot && bot.powerSetUp) 
 			{
 				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
 				bot.PowerUsed();
-				GameLogger.Instance.LogEvent("Player 2 Used Power");
 			}
 			else if (agentController && agentController.powerSetUp) 
 			{
 				StartCoroutine(UsePowerUp(coll.gameObject, -coll.gameObject.transform.right));
 				agentController.PowerUsed();
-				GameLogger.Instance.LogEvent("Player 2 Used Power");
 			}
 
 		} 
@@ -93,7 +92,6 @@ public class Ball : MonoBehaviour {
 			{
 				StartCoroutine(UsePowerUp(coll.gameObject, coll.gameObject.transform.right));
 				coll.gameObject.GetComponent<AgentController>().PowerUsed();
-				GameLogger.Instance.LogEvent("Player 1 Used Power");
 			}
 
 		} 
@@ -112,6 +110,10 @@ public class Ball : MonoBehaviour {
 			
 			if (isShooting) isShooting = false;
 
+			if (GameIdController.isTutorial) {
+				TutorialController.resetObjs();
+			}
+
 			Gui.S.player1Goals++;
 			scoreTelemetry.scoringPlayer = "0";
 			scoreTelemetry.time = Time.time;
@@ -125,6 +127,10 @@ public class Ball : MonoBehaviour {
         if (coll.gameObject.tag == "GoalLeft") {
 
 			if (isShooting) isShooting = false;
+
+			if (GameIdController.isTutorial) {
+				TutorialController.resetObjs();
+			}
 
             Gui.S.player2Goals++;
 			scoreTelemetry.scoringPlayer = "1";

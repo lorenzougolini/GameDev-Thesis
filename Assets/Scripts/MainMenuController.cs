@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,11 +14,16 @@ public class MainMenu : MonoBehaviour
     public TMP_InputField IdInputField;
 
     public GameObject waitingRoom;
+
     public GameObject loadingText;
     public GameObject startingText;
+    
     public GameObject loadingSpinner;
 
     public GameObject ErrorMsg;
+    public GameObject warningText;
+
+    public Button startButton;
 
     private TextMeshProUGUI mainText;
     private TextMeshProUGUI dotsText;
@@ -26,13 +32,27 @@ public class MainMenu : MonoBehaviour
     private string sceneFromPlatform = "PlayScene";
 
     [Range(30, 60)] public float waitingTime;
+    public Camera m_Camera;
+
+    void Awake()
+    {
+        m_Camera = Camera.main;
+    }
 
     private void Start() 
     {
         mainText = loadingText.transform.Find("MainText").GetComponent<TextMeshProUGUI>();
         dotsText = loadingText.transform.Find("DotsText").GetComponent<TextMeshProUGUI>();
         // DetectPlatform();
-
+        if (GameIdController.tutorialCompleted)
+        {
+            startButton.interactable = true;
+        }
+        else
+        {
+            startButton.interactable = false;
+            StartCoroutine(ViewMsg(warningText));
+        }
     }
 
     private void DetectPlatform()
@@ -48,30 +68,16 @@ public class MainMenu : MonoBehaviour
         mode = PlayingMode.SINGLE;
         IdInputPanel.SetActive(true);
         IdInputField.Select();
-
-        // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
-        // SceneManager.LoadSceneAsync(sceneFromPlatform);
     }
 
-    public void PlayMultiGame() 
+    public void PlayTutorial() 
     {
-        mode = PlayingMode.MULTI;
-        IdInputPanel.SetActive(true);
-        IdInputField.Select();
-
-        // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
-        // SceneManager.LoadSceneAsync(sceneFromPlatform);
+        SceneManager.LoadSceneAsync("TutorialScene");
     }
 
     public void QuitGame() 
     {
-        //! TO CHANGE
-        // Application.Quit();
-        mode = PlayingMode.NONE;
-        IdInputPanel.SetActive(true);
-        // StartCoroutine(WaitingRoomCoroutine(sceneFromPlatform));
-
-        // SceneManager.LoadSceneAsync(sceneFromPlatform);
+        Application.Quit();
     }
 
     public void IdSubmit()
@@ -86,7 +92,7 @@ public class MainMenu : MonoBehaviour
         else
         {
             IdInputField.text = "";
-            StartCoroutine(ViewErrorMsg());
+            StartCoroutine(ViewMsg(ErrorMsg));
         }
     }
 
@@ -129,10 +135,10 @@ public class MainMenu : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator ViewErrorMsg()
+    public IEnumerator ViewMsg(GameObject msg)
     {
-        ErrorMsg.SetActive(true);
+        msg.SetActive(true);
         yield return new WaitForSeconds(5);
-        ErrorMsg.SetActive(false);
+        msg.SetActive(false);
     }
 }

@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private Transform groundCheck;
 	[SerializeField] private LayerMask groundLayer;
 	[SerializeField] private TrailRenderer tr;
-	private ProgressBar progressBar;
+	[SerializeField] private ProgressBar progressBar;
 	private Animator footAnimator;
 
 	public bool kickPressed;
@@ -51,10 +51,10 @@ public class PlayerMovement : MonoBehaviour
 
 		footAnimator = transform.Find("Foot").GetComponent<Animator>();
 
-		if (playerNumber == 1)
+		if (playerNumber == 1 && progressBar == null)
 			progressBar = Gui.S.progressBar1.GetComponent<ProgressBar>();
-		else
-			progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
+		// else
+		// 	progressBar = Gui.S.progressBar2.GetComponent<ProgressBar>();
 		
 		
         moveLeftToRight = GameObject.FindGameObjectWithTag("Ball").transform.position.x > transform.position.x;
@@ -63,7 +63,9 @@ public class PlayerMovement : MonoBehaviour
 	void Update() {
 
 		// if (isDashing || !Gui.S.playing) return;
-		if (!Gui.S.playing) return;
+		if (!GameIdController.isTutorial)
+			if (!Gui.S.playing)
+				return;
 
 		// Move
 		if (TouchControls.leftPressed)
@@ -97,7 +99,9 @@ public class PlayerMovement : MonoBehaviour
 
 
 		// Dash
-		if (!ResetObjects.S.resetting)
+		if (GameIdController.isTutorial)
+			HandleDoubleClickDash();
+		else if (!ResetObjects.S.resetting)
 			HandleDoubleClickDash();
 
 		// Powerup
@@ -131,13 +135,16 @@ public class PlayerMovement : MonoBehaviour
 
 		footAnimator.SetBool("kick", kickPressed);
 
-		if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
+		if (!GameIdController.isTutorial)
 		{
-			playerTelemetry.time = Time.time;
-			playerTelemetry.position = (Vector2) transform.position;
-			GameManager.Instance.matchTelemetry.playerTelemetry.Add(playerTelemetry);
-			playerTelemetry = new MatchTelemetry.PlayerTelemetry();
-			lastTelemetryTime = Time.time;
+			if (Time.time - lastTelemetryTime >= MatchTelemetry.telemetryTimeInterval)
+			{
+				playerTelemetry.time = Time.time;
+				playerTelemetry.position = (Vector2) transform.position;
+				GameManager.Instance.matchTelemetry.playerTelemetry.Add(playerTelemetry);
+				playerTelemetry = new MatchTelemetry.PlayerTelemetry();
+				lastTelemetryTime = Time.time;
+			}
 		}
 	}
 
